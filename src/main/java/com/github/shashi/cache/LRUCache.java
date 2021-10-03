@@ -60,7 +60,7 @@ public class LRUCache {
     private int capacity;
 
     public LRUCache(int capacity) {
-        this.map = new HashMap<Integer, Node>();
+        this.map = new HashMap<>();
         this.ll = new DLinkedList();
         this.capacity = capacity;
     }
