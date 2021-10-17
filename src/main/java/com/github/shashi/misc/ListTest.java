@@ -10,6 +10,8 @@ public class ListTest {
         dl.add(3);
         dl.add(4);
         dl.print();
+        List<Integer> list = new ArrayList<>();
+        list.sort(Comparator.reverseOrder());
 
         LinkedList<Integer> ll = new LinkedList<Integer>();
         

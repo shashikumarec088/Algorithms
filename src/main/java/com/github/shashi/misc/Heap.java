@@ -1,6 +1,7 @@
 package com.github.shashi.misc;
 
 import java.util.Arrays;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 public class Heap {
@@ -13,6 +14,7 @@ public class Heap {
         heap.add(4);
         heap.add(5);
         heap.printHeap();
+        TreeSet test = new TreeSet();
     }
     private int[] heap;
     private int size;
@@ -70,7 +72,7 @@ public class Heap {
 
     private void ensureCapacity(){
         if(size == heap.length){
-            Arrays.copyOf(heap, capacity * 2);
+            heap = Arrays.copyOf(heap, capacity * 2);
             capacity = capacity * 2;
         }
     }
