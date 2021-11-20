@@ -58,15 +58,10 @@ public class ClassNameHere {
 
 
 
-        ClassNameHere cl = new ClassNameHere();
-        int [] in = new int[]{2,3,1,2,4,3};
-        int [] post = new int[]{9,15,7,20,3};
-        Node root = cl.constructTreeFromArray(new Integer[]{1,2,2,3,4,4,3});
-
-         boolean s1 = cl.isSymmetricItr(root);
-        System.out.println(s1);
-        System.out.println(s1);
-StringBuilder sb = new StringBuilder();
+        int count = 1;
+        int n = 10;
+        for(;count<=n;count++)
+            System.out.println(count);
 
 
     }

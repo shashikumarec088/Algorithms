@@ -6,6 +6,8 @@ public class Problem153 {
         Problem153 problem153 = new Problem153();
         System.out.println(problem153.findMin(input));
     }
+
+
     public int findMin(int[] nums){
         int l=0,r=nums.length-1;
         while(l<r){
