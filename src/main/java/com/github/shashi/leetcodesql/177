@@ -1,0 +1,21 @@
+CREATE FUNCTION getNthHighestSalary(N INT) RETURNS INT
+BEGIN
+  RETURN (
+     select ifnull(
+      (select salary from
+      (select salary, dense_rank() over(order by salary desc) as rnk
+      from employee) as t1 where rnk=N limit 1),null) as 'getNthHighestSalary(2)'
+
+  );
+END
+
+2nd way
+
+CREATE FUNCTION getNthHighestSalary(N INT) RETURNS INT
+BEGIN
+declare m int;
+set m=N-1;
+  RETURN (
+     select distinct salary from employee order by salary desc limit 1 offset m
+  );
+END

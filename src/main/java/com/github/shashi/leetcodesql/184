@@ -1,0 +1,10 @@
+select d.name as Department, t2.name as Employee, salary from
+(select name, salary, departmentId, dense_rank() over(partition by
+departmentId order by salary desc) as dr from employee) t2
+inner join Department d on t2.departmentId=d.id and t2.dr=1;
+
+2nd way using groupby
+select d.name as Department,e.name as Employee, salary from
+Employee e inner join Department d on e.DepartmentId=d.id
+where (e.DepartmentId,e.salary) in (select DepartmentId,
+max(salary) from employee group by DepartmentId);

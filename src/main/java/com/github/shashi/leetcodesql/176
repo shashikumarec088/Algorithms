@@ -1,0 +1,10 @@
+select ifnull((select distinct salary from employee order by salary desc limit 1 offset 1),null)
+ as SecondHighestSalary;
+
+2nd way
+
+select ifnull(
+(select salary as SecondHighestSalary from
+(select salary, dense_rank() over(order by salary desc) as rnk from Employee)
+t1 where rnk=2 limit 1),null) as SecondHighestSalary;
+

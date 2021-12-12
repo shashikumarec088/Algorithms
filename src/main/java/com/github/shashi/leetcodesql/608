@@ -1,0 +1,15 @@
+select id, Type from
+(select id, 'Root' as Type from Tree where p_id is null
+union
+select t1.id, 'Inner' as Type from Tree t1 join Tree t2
+on t1.id=t2.p_id and t1.p_id is not null
+union
+ select t3.id, 'Leaf' as Type from tree t3 where t3.id
+ not in (select distinct p_id from tree where p_id is not null) and t3.p_id is not null
+) t order by id;
+
+2nd way using case statement
+select id,
+case when p_id is null then 'Root'
+when id in(select distinct p_id from tree where p_id is not null) then 'Inner'
+else 'Leaf' end as Type from tree order by id

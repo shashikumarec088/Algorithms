@@ -1,0 +1,13 @@
+# order by date asc
+# lag function to get the previous row details
+select id from
+(Select id, lag(recordDate,1) over(order by recordDate) as prevDate,
+ recordDate,temperature,
+lag(temperature,1) over(order by recordDate) as prevTemp
+from Weather) a where to_days(recordDate)-to_days(prevDate)=1 and
+temperature>prevTemp;
+
+# using self join and adding the conditions
+select w1.id from Weather w1 join Weather w2
+where to_days(w1.recordDate)-to_days(w2.recordDate)=1
+and w1.temperature>w2.temperature;

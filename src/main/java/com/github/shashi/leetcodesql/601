@@ -1,0 +1,15 @@
+# use the lead and lag function to get the prev and next row prices
+# order by visit_date
+
+select id, visit_date, people from
+(select id, visit_date, people,
+lag(people,2) over(order by visit_date) as prev2,
+lag(people,1) over(order by visit_date) as prev1,
+lead(people,1) over(order by visit_date) as next1,
+lead(people,2) over(order by visit_date) as next2
+from stadium) t1 where people>=100 and
+(
+(prev1>=100 and prev2>=100) or (prev1>=100 and next1>=100)
+    or (next1>=100 and next2>=100)
+)
+

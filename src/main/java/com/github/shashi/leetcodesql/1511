@@ -1,0 +1,20 @@
+select t3.customer_id, name from
+(select customer_id from
+(select order_dt,customer_id, sum(spent) as totalSpent from
+(select extract(year_month from order_date) as order_dt,
+customer_id, quantity*price as spent from orders o join
+product p on o.product_id=p.product_id where order_date
+between '2020-06-01' and '2020-07-31') t1 group by order_dt,customer_id
+having sum(spent)>=100) t2 group by customer_id having count(*)=2)
+t3 join Customers c on t3.customer_id=c.customer_id;
+
+
+2nd way
+# 2nd way is very easy first do joins then filter for given months and check
+# the condition
+
+select c.customer_id, c.name from customers c
+join orders o on c.customer_id=o.customer_id
+join product p on p.product_id=o.product_id
+group by customer_id having (sum(if(extract(year_month from order_date)='202006',quantity,0) * price)>=100
+       and sum(if(extract(year_month from order_date)='202007',quantity,0) * price)>=100

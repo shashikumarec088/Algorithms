@@ -1,0 +1,24 @@
+select distinct num as ConsecutiveNums from
+(select num, lead(num,1) over (order by id)as ld,
+lag(num,1) over(order by id) as lg from logs) as t1
+where ld=num and num=lg;
+
+2nd way
+select distinct l1.num as ConsecutiveNums from logs l1, logs l2, logs l3
+where l1.id=l2.id-1 and l2.id=l3.id-1 and l1.num=l2.num and l1.num=l3.num;
+
+3rd way
+# Write your MySQL query statement below
+select distinct num as ConsecutiveNums from (
+select num, sum(c) over(order by id) as flag from
+(select id,num, case when lag(num) over(order by id) - num = 0 then 0 else 1 end as c
+from logs l1) l2) l3 group by num,flag having count(*)>=3;
+
+
+#first calulate the difference between the current number and prev id number
+# if 0 then set 0 else 1
+# we are calculating the rolling sum over the id  upto that id
+# in this case it will be same util there is an change in sum
+# then last part is just grouping on sum
+# https://leetcode.com/problems/consecutive-numbers/discuss/237228/My-version-is-more-flexible.-We-can-change-3-to-4-or-5-or-10
+# has better explanation

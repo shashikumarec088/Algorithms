@@ -1,0 +1,24 @@
+select d.name as Department, e.name as Employee, salary from
+(select name, departmentId, salary, dense_rank() over
+(partition by departmentId order by salary desc) as dr from employee)e
+inner join department d on e.departmentId=d.id where dr<4;
+
+2nd way using distinct salaries in each department whose salary is greater
+than employee salary adn comparing with the number
+
+select d.name as Department, Employee,salary from
+(select e1.name as Employee, e1.salary, e1.departmentId from employee e1
+where 3 >(select count( distinct e2.salary) from employee e2 where e2.salary > e1.salary and e1.departmentid=e2.departmentId))
+e inner join department d on e.departmentId=d.id;
+
+# using joins
+# join 3 table 2 employee and 1 department then goupby employee
+# name and department id check how many salaries in e2 are there
+# whose values greater than e1
+# refer to https://leetcode.com/problems/department-top-three-salaries/discuss/797620/Three-solutions%3A-window-function-subquery-and-Join
+
+select d.name as department, e1.name as Employee, e1.salary from
+employee e1, employee e2, department d where d.id=e1.departmentId
+and e1.departmentId=e2.departmentId
+and e1.salary <= e2.salary
+group by d.id,e1.name having count(distinct e2.salary) <=3
