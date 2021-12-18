@@ -1,0 +1,20 @@
+select id, company, salary from
+(select id, company, salary, row_number() over(partition
+by company order by salary) as rn,
+count(*) over(partition by company) as cnt from Employee)
+t1 where (cnt%2 != 0 and round(cnt/2)=rn) or
+(cnt%2 = 0 and (round(cnt/2)=rn or ceil(cnt/2+1)=rn))
+
+2nd way
+
+select id,company, salary from
+(select id,company, salary, row_number() over(partition by company order by
+salary asc, id asc) as rn_asc,row_number() over(partition by company order by
+salary desc, id desc) as rn_desc from employee) t1 where rn_asc=rn_desc or
+(rn_asc = rn_desc+1 or rn_asc+1 = rn_desc) order by company,salary
+
+3rd way without window
+SELECT  min(a.id) as id,a.company,a.salary from employee a,employee b
+where a.company = b.company group by a.company,a.salary
+having (sum(case when b.salary >=a.salary then 1 else 0 end) >= count(*)/2)
+and (sum(case when b.salary <=a.salary then 1 else 0 end) >= count(*)/2)

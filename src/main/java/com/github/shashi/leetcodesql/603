@@ -1,0 +1,11 @@
+select seat_id from
+(select seat_id
+, lag(free,1) over(order by seat_id) as prev1,free,
+, lead(free,1) over(order by seat_id) as next1 from cinema) t1
+where free=1 and (
+(prev1=1) or (next1=1)
+)
+
+# using self joins
+select distinct a.seat_id from cinema a, cinema b where abs(a.seat_id-b.seat_id)=1
+and a.free=1 and b.free=1 order by a.seat_id;

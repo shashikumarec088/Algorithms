@@ -1,0 +1,21 @@
+select t4.id,a.name from
+(select distinct id from
+(select id, min(login_date) as mindate, max(login_date) as maxdate,
+rn,grp from
+(select id, login_date, date_add(login_date, interval -rn day) as grp,rn
+from
+(select id, login_date, dense_rank() over(partition by id order by login_date)
+as rn from logins) t1) t2 group by id,grp having datediff(max(login_date),
+ min(login_date)) >=4) t3) t4 inner join accounts a on t4.id=a.id order by t4.id
+
+ 2nd way
+ # missed the distinct keyword on the dates so was getting the wrong answer
+ # when there were more logins per day
+ select t5.id, a.name from
+ (select distinct id from
+ (select id, grp, count(distinct login_date) as cnt from
+ (select id, login_date, date_add(login_date, interval -rn day) as grp
+ from
+ (select id, login_date, dense_rank() over(partition by id order by login_date)
+ as rn from logins) t2)t3 group by id, grp having count(distinct login_date)>=5) t4
+  ) t5 inner join accounts a on t5.id=a.id order by t5.id
