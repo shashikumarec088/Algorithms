@@ -1,0 +1,14 @@
+
+select
+(case when id%2 != 0 and counts != id then id+1
+when id%2 != 0 and counts =id then id
+else id-1 end) as id, student
+from seat, (select count(*) as counts  from seat) as seat_counts
+order by id;
+
+#(select a.id, b.student from seat a, seat b
+#where (a.id+1 = b.id and a.id%2 != 0) or
+#(a.id-1 = b.id and a.id%2 = 0))
+#union
+#(select id, student from seat where id = (select count(*) from seat) and id%2!=0)
+#order by id
