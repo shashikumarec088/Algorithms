@@ -2,37 +2,94 @@ package com.github.shashi.leetcode;
 
 public class Problem240 {
 
-    public static void main(String[] args) {
-        Problem240 problem119 = new Problem240();
-        System.out.println(problem119.searchMatrix(null,0));
+    public boolean searchMatrix(int[][] matrix, int target) {
+        if(matrix == null || matrix.length==0) return false;
+        int rs = 0, cs =0,re = matrix.length-1,ce=matrix[0].length-1;
+        return searchSpaceRed(matrix,target);
     }
-    public boolean searchM(int[][] m, int target){
-        int r = m.length-1,c=0;
-        while(r >= 0 && c <m[0].length){
-            if(m[r][c]==target)return true;
-            if(m[r][c]>target)r--;
-            else c++;
+
+    public boolean findM(int[][] m, int t){
+        int rs=0,re=m.length-1,cs=0,ce=m[0].length-1;
+        return rec(m,rs,re,cs,ce,t);
+    }
+
+    public boolean rec(int[][] m, int rs, int re, int cs, int ce, int t){
+        if(rs>re|| cs>ce) return false;
+        int mc = cs+(ce-cs)/2;
+        int mr = rs;
+        while(mr <=re && m[mr][mc] <=t){
+            if(m[mr][mc]==t)return true;
+            mr++;
+        }
+        return rec(m,rs,mr-1,mc+1,ce,t) ||rec(m,mr,re,cs,mc-1,t);
+    }
+
+    public boolean bruteForce(int[][]m, int t){
+        if(m==null || m.length==0)return false;
+        for(int i=0; i<m.length;i++){
+            for(int j=0; j<m[0].length;j++){
+                if(m[i][j]==t)return true;
+            }
         }
         return false;
     }
 
-
-    public boolean searchMatrix(int[][] matrix, int target) {
-        if(matrix == null || matrix.length==0) return false;
-        int rs = 0, cs =0,re = matrix.length-1,ce=matrix[0].length-1;
-        return searchMatrics(matrix,cs,ce,rs,re,target);
+    public boolean binSearch2(int[][]m, int t){
+        int n = Math.min(m.length,m[0].length);
+        for(int i=0; i<n; i++){
+            if(search(m,i,t,true)||
+                    search(m,i,t,false))return true;
+        }
+        return false;
+    }
+    public boolean search(int[][]m, int start, int t, boolean vertical){
+        int low = start;
+        int high = vertical?m[0].length-1:m.length-1;
+        while(high>= low){
+            int mid = low+(high-low)/2;
+            if(vertical){
+                if(m[start][mid]<t)
+                    low = mid+1;
+                else if(m[start][mid]>t)
+                    high = mid-1;
+                else return true;
+            }else{
+                if(m[mid][start]<t)
+                    low = mid+1;
+                else if(m[mid][start]>t)
+                    high = mid-1;
+                else return true;
+            }
+        }
+        return false;
     }
 
-    public boolean searchMatrics(int[][] m, int cs, int ce,
-                                 int rs, int re, int target){
-        if(rs > re || cs >ce) return false;
-        int cm = cs +(ce-cs)/2;
-        int rm = rs;
-        while(rm <=re && m[rm][cm] <= target){
-            if(m[rm][cm]==target) return true;
+    public boolean devideSearch(int[][] m, int t){
+        int rs=0,re=m.length-1,cs=0,ce=m[0].length-1;
+        return devide(m,rs,re,cs,ce,t);
+    }
+
+    public boolean devide(int[][] m, int rs,int re, int cs, int ce, int t){
+        if(rs>re||cs>ce)return false;
+        int cm = cs+(ce-cs)/2;
+        int rm =rs;
+        while(rm <= re && m[rm][cm]<= t){
+            if(m[rm][cm]==t)return true;
             rm++;
         }
-        return searchMatrics(m,cs,cm-1,rm,re,target) ||
-                searchMatrics(m,cm+1,ce,rs,rm-1,target);
+        // return rec(m,rs,mr-1,mc+1,ce,t) ||rec(m,mr,re,cs,mc-1,t);
+        return devide(m,rs,rm-1,cm+1,ce,t)||
+                devide(m,rm,re,cs,cm-1,t);
+    }
+
+    public boolean searchSpaceRed(int[][] m, int t){
+        int r=m.length-1, c = m[0].length-1;
+        int i= r, j = 0;
+        while(i > -1 && j <= c){
+            if(m[i][j]<t)j++;
+            else if(m[i][j]>t)i--;
+            else return true;
+        }
+        return false;
     }
 }
