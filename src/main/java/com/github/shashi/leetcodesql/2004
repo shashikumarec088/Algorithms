@@ -1,0 +1,40 @@
+with senior as
+(select employee_id,experience,salary,sum(salary)
+    over(partition by experience order by salary) as cumSal from candidates where
+experience='Senior'),
+junior as
+(
+select employee_id,experience,salary,sum(salary)
+    over(partition by experience order by salary) as cumSal from candidates where
+experience='Junior'
+),
+counts as
+(
+select experience,count(*) as count1 from
+(select s.employee_id,s.experience,s.salary from senior s where cumSal <=70000
+union
+select j.employee_id,j.experience,j.salary from junior j where cumSal <= (70000
+- (select COALESCE(sum(salary),0) from senior where cumSal <=70000)))t1 group by experience)
+select t2.experience, if(count1 is null,0,count1) as accepted_candidates from
+(select distinct experience from candidates) t2 left join counts c
+on t2.experience=c.experience
+
+# 2nd approach
+with t1 as
+(
+select experience, salary,sum(salary) over(partition by experience
+order by salary rows between unbounded preceding and current row) as sum1
+from candidates
+),
+t2 as
+(
+select experience,salary,
+sum(salary) over(order by experience,salary asc rows between unbounded preceding and current row) as sum2
+from t1 where sum1 <=70000
+),
+t3 as
+(
+select experience, count(*) as count1 from t2 where sum2 <= 70000 group by experience
+)
+select distinct c.experience,ifnull(t3.count1,0) as accepted_candidates
+from candidates c left join t3 on c.experience=t3.experience
