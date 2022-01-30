@@ -1,6 +1,10 @@
 package com.github.shashi.leetcode;
 import java.util.*;
 public class Problem15 {
+
+    public static void main(String[] args) {
+        System.out.println("shashi");
+    }
     public List<List<Integer>> threeSum(int[] nums) {
         return threeSumSet(nums);
     }
