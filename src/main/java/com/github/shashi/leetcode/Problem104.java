@@ -3,6 +3,18 @@ package com.github.shashi.leetcode;
 import java.util.*;
 
 public class Problem104 {
+    class TreeNode {
+        int val;
+        TreeNode left;
+        TreeNode right;
+        TreeNode() {}
+        TreeNode(int val) { this.val = val; }
+        TreeNode(int val, TreeNode left, TreeNode right) {
+            this.val = val;
+            this.left = left;
+            this.right = right;
+        }
+    }
     public static void main(String[] args) {
         Problem104 problem119 = new Problem104();
         System.out.println(problem119.maxDepth(null));
