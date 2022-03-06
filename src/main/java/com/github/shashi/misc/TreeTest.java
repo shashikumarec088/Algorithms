@@ -1,12 +1,10 @@
 package com.github.shashi.misc;
 
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 public class TreeTest {
     public static void main(String[] args) {
+        PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> a[2] - b[2]);
         BTree.Node node = new BTree.Node(1);
         BTree.Node node2 = new BTree.Node(2);
         BTree.Node node3 = new BTree.Node(3);
