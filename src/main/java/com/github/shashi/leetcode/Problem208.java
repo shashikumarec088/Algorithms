@@ -2,6 +2,7 @@ package com.github.shashi.leetcode;
 import java.util.*;
 public class Problem208 {
     public static void main(String[] args) {
+
         Trie trie = new Trie();
         trie.insert("apple");
         trie.insert("app");
