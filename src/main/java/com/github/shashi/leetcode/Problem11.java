@@ -1,6 +1,9 @@
 package com.github.shashi.leetcode;
 
 public class Problem11 {
+    public static void main(String[] args) {
+        System.out.println(2|3);
+    }
     public int maxArea(int[] height) {
         return maxAreaSolPointer(height);
     }
