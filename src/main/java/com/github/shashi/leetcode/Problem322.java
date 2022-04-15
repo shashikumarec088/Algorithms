@@ -1,10 +1,12 @@
 package com.github.shashi.leetcode;
 
+import java.util.Arrays;
+
 public class Problem322 {
     private int[] coins;
     private Integer[] cache;
     public int coinChange(int[] coins, int amount) {
-        return dpTab(coins,amount);
+        return coinChangeA2(coins,amount);
     }
 
     public int coinRec(int[] coins, int amount){
@@ -14,16 +16,15 @@ public class Problem322 {
         return dp(amount);
     }
 
-    public int dpTab(int[] coins, int amount){
-        if(amount==0) return 0;
+    public int coinChangeA2(int[] coins, int amount){
         int[] dp = new int[amount+1];
-        for(int i=0; i< dp.length; i++)
-            dp[i] = amount+1;
         dp[0]=0;
-        for(int i=1; i<=amount; i++){
-            for(int coin : coins)
-                if(i-coin>-1)
-                    dp[i] = Math.min(dp[i],dp[i-coin]+1);
+        for(int i=1; i<= amount; i++){
+            int min = amount+1;
+            for(int coin: coins)
+                if(i-coin >=0)
+                    min = Math.min(min, dp[i-coin]+1);
+            dp[i] = min;
         }
         return dp[amount]==amount+1?-1:dp[amount];
     }

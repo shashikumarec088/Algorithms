@@ -9,6 +9,17 @@ public class Problem70 {
         System.out.println(problem119.climbDP(4));
     }
 
+    public int climbStairsA3(int n){
+        if(n<3)return n;
+        int first = 1, second = 2;
+        for(int i=3; i<=n; i++){
+            int cur = first+second;
+            first = second;
+            second = cur;
+        }
+        return second;
+    }
+
     public int climbStairs(int n) {
         return climbDP(n);
     }

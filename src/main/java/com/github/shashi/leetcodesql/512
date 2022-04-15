@@ -1,0 +1,25 @@
+# Write your MySQL query statement below
+#select sub.player_id as player_id,
+#main.device_id as device_id
+#from activity main
+#join
+#(
+#select player_id,
+#    min(event_date) as min_date
+#    from activity
+#    group by player_id
+#) sub
+#on sub.player_id = main.player_id
+#and sub.min_date = main.event_date
+
+select sub.player_id as player_id,
+sub.device_id as device_id
+from
+(
+select player_id,
+    device_id,
+    row_number() over(partition by player_id order by event_date) as rn
+    from activity
+)
+sub
+where sub.rn=1

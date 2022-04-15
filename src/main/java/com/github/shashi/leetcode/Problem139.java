@@ -1,8 +1,33 @@
 package com.github.shashi.leetcode;
 import java.util.*;
 public class Problem139 {
+
+    public static void main(String[] args) {
+        String s = "leetcode";
+        String[] arr = {};
+        Problem139 problem139 = new Problem139();
+        LinkedList<Integer> list = new LinkedList<>();
+        list.removeLast();
+        System.out.println(problem139.wordBreak(s,Arrays.asList("leet","code")));
+    }
     public boolean wordBreak(String s, List<String> wordDict) {
-        return wordBreakA4(s,wordDict);
+        return wordBreakA5(s,wordDict);
+    }
+
+
+    public boolean wordBreakA5(String s, List<String> words){
+        int n = s.length();
+        boolean[] dp = new boolean[n+1];
+        dp[n]=true;
+        for(int i=n-1; i>=0; i--){
+            for(String w : words){
+                if(i+w.length() <=n && w.equals(s.substring(i,i+w.length())))
+                    dp[i]=dp[i+w.length()];
+                if(dp[i])
+                    break;
+            }
+        }
+        return dp[0];
     }
 
     public boolean wordBreakA4(String s, List<String> wordDict){
