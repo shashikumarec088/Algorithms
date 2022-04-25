@@ -1,0 +1,42 @@
+# Write your MySQL query statement below
+
+
+select project_id
+from
+(select project_id,
+dense_rank() over(order by count(employee_id) desc) as rnk
+from project
+ group by project_id
+order by project_id
+ ) sub
+ where sub.rnk=1
+
+/*select project_id
+from
+(
+    select project_id,
+dense_rank() over(order by sub.cnt1 desc) as rnk
+from
+(
+    select project_id,
+    count(*) as cnt1
+    from project
+    group by project_id
+) sub
+) sub2
+where
+ rnk = 1
+ */
+/*
+select project_id
+from project
+group by project_id
+having count(*) =
+(
+        select count(*) as cnt
+        from project
+        group by project_id
+        order by cnt desc
+        limit 1
+)
+*/

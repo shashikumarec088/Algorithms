@@ -1,0 +1,45 @@
+# Write your MySQL query statement below
+/*
+select sub1.pay_month,
+sub1.department_id,
+case when sub1.avg1 = sub2.avg2 then 'same'
+when sub1.avg1 > sub2.avg2 then 'higher'
+else 'lower' end as comparison
+from
+(
+    select date_format(s.pay_date,'%Y-%m') as pay_month,
+    e.department_id,
+avg(s.amount) as avg1
+from salary s
+join employee e
+on e.employee_id=s.employee_id
+group by pay_month,
+    e.department_id
+)
+sub1
+join
+(
+ select date_format(s.pay_date,'%Y-%m') as pay_month,
+avg(s.amount) as avg2
+from salary s
+group by pay_month
+)
+sub2
+on sub1.pay_month=sub2.pay_month
+*/
+
+select distinct sub.pay_month,
+sub.department_id,
+case when sub.month_avg = sub.dept_avg then 'same'
+when sub.dept_avg > sub.month_avg then 'higher'
+else 'lower' end as comparison
+from
+(select s.employee_id,
+left(s.pay_date,7) as pay_month ,
+e.department_id,
+avg(s.amount) over(partition by s.pay_date) as month_avg,
+avg(s.amount) over(partition by e.department_id, s.pay_date) as dept_avg
+from salary s
+join employee e
+on s.employee_id = e.employee_id)
+sub

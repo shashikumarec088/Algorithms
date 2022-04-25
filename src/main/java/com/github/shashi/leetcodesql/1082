@@ -1,0 +1,24 @@
+# Write your MySQL query statement below
+
+select seller_id
+from sales
+group by
+seller_id
+having
+sum(price) =
+(select sum(price) as mx
+from sales
+group by seller_id order by mx desc limit 1)
+
+/*
+select seller_id
+from
+(
+select seller_id,
+dense_rank() over(order by sum(price) desc) as rnk
+from sales
+group by seller_id
+)
+sub
+where rnk=1
+*/

@@ -1,0 +1,43 @@
+
+
+select round(sum(case when t1.min_date+1=t2.event_date then 1 else 0 end)/
+            count(distinct t1.player_id),2) as fraction
+from
+(select player_id, min(event_date) as min_date from activity group by player_id) t1
+join activity t2
+on t1.player_id = t2.player_id
+
+
+select round(count(*)/
+   (select count(distinct player_id) from activity),2) as fraction
+from
+(select player_id,
+event_date,
+lead(event_date) over(partition by player_id order by event_date) as next_date
+from activity)
+sub1
+join
+(
+select player_id,
+    min(event_date) as event_date
+    from activity
+    group by player_id
+)
+sub2
+on sub1.player_id = sub2.player_id
+and sub1.event_date = sub2.event_date
+and sub1.next_date is not null
+and date_add(sub1.event_date, interval 1 day)=sub1.next_date
+
+#select round(count(*)/(select count(distinct player_id ) from activity),2)
+#as fraction
+#from
+#(select player_id,
+#       min(event_date) as event_date
+#from activity
+#group by player_id)
+#a1
+#join
+#activity a2
+#on a1.player_id=a2.player_id
+#and date_add(a1.event_date, interval 1 day)=a2.event_date

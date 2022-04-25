@@ -1,0 +1,47 @@
+# Write your MySQL query statement below
+/*
+select ROUND(sum(daily_avg)/count(date)*100,2) as average_daily_percent FROM
+(select
+    t.action_date as date,
+    (count(distinct case when remove_date is not null then post_id else null end)/count(distinct post_id)) as daily_avg
+FROM
+(SELECT a.post_id, a.action_date, r.remove_date
+from Actions a left join Removals r
+on a.post_id = r.post_id
+WHERE a.extra='spam') t
+GROUP BY t.action_date) t2;
+*/
+
+
+select round(sum(avg_p)/count(action_date)*100,2) as average_daily_percent
+from
+(
+select
+count(distinct case when remove_date is not null
+              then post_id else null end)/count(distinct post_id) as avg_p,
+    action_date
+from
+(
+select a.post_id,
+action_date,
+remove_date
+from actions a
+left join removals r
+on a.post_id = r.post_id
+where extra='spam'
+)
+sub
+group by action_date
+) sub2
+
+/*select *
+from
+(
+select post_id,
+sum(case when extra='spam' then 1 else 0 end) as spams
+from actions
+group by post_id
+) sub
+join removals r
+on r.post_id=sub.post_id
+*/

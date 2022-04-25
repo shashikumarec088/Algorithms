@@ -1,0 +1,39 @@
+# Write your MySQL query statement below
+
+
+select product_id, year as first_year, quantity, price
+from(
+select *,
+rank() over(partition by product_id order by year) as year_rnk
+from sales) as tbl
+where year_rnk = 1
+
+select s.product_id,
+s.year as first_year,
+s.quantity,
+s.price
+from sales s
+where (product_id,year) in
+(
+select product_id, min(year)
+from sales
+group by product_id
+)
+
+/*
+select product_id,
+year as first_year,
+quantity,
+price
+from(
+select s.product_id,
+    s.year,
+    s.quantity,
+    s.price,
+    row_number() over(partition by product_id
+                     order by year) as rn
+    from sales s
+)
+sub
+where rn=1
+*/

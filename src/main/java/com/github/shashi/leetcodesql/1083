@@ -1,0 +1,27 @@
+# Write your MySQL query statement below
+
+select buyer_id
+from sales s
+join product p
+on s.product_id = p.product_id
+group by buyer_id
+having sum(case when p.product_name='S8' then 1 else 0 end) > 0
+and sum(case when p.product_name='iPhone' then 1 else 0 end) = 0
+
+/*
+select distinct buyer_id
+from sales s
+join product p
+on s.product_id=p.product_id
+where
+s.buyer_id not
+in
+(
+select distinct buyer_id
+from sales s
+join product p
+on s.product_id = p.product_id
+and p.product_name='iPhone'
+)
+and p.product_name='S8'
+*/

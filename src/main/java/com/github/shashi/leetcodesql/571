@@ -1,0 +1,24 @@
+# Write your MySQL query statement below
+
+Select round(avg(sub.num),1) as median
+from
+(
+select num,
+frequency,
+sum(frequency) over(order by num asc) as ls,
+sum(frequency) over(order by num desc) as rs
+from numbers
+)
+sub
+where sub.frequency >= abs(ls - rs)
+
+
+/*
+select round(avg(n.num),1) as median
+from Numbers n
+where n.frequency >=
+abs((select sum(frequency) from Numbers where num<=n.num)
+    -
+    (select sum(frequency) from Numbers where num>=n.num))
+
+*/

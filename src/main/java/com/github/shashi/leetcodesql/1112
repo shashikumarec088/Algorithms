@@ -1,0 +1,47 @@
+# Write your MySQL query statement below
+
+select student_id,
+min(course_id) as course_id,
+grade
+from enrollments e1
+where e1.grade >= all(
+select e2.grade
+from enrollments e2
+where e2.student_id = e1.student_id
+)
+group by student_id
+order by student_id
+/*
+select e1.student_id,
+min(course_id) as course_id,
+e1.grade
+from Enrollments e1
+join
+(
+select student_id,
+max(grade) as grade
+from Enrollments
+group by student_id
+) e2
+on e1.student_id = e2.student_id
+and e1.grade = e2.grade
+group by e1.student_id
+order by e1.student_id
+*/
+
+/*
+
+select student_id,
+course_id,
+grade
+from
+(
+select student_id,
+course_id,
+grade,
+row_number() over(partition by student_id order by grade desc, course_id) as rn
+from enrollments
+)
+sub
+where rn=1
+*/

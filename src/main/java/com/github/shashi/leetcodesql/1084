@@ -1,0 +1,22 @@
+# Write your MySQL query statement below
+
+
+select p.product_id,
+product_name
+from sales s
+join product p
+on s.product_id = p.product_id
+group by p.product_id
+having min(sale_date) >='2019-01-01'
+and max(sale_date) <='2019-03-31'
+/*
+select p.product_id,
+p.product_name
+from sales s
+join product p
+on s.product_id = p.product_id
+group by p.product_id,
+p.product_name
+having sum(sale_date >= '2019-01-01' and  sale_date <='2019-03-31') >0
+and sum(sale_date < '2019-01-01' or  sale_date >'2019-03-31')=0
+*/
