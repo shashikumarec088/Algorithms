@@ -1,0 +1,43 @@
+# Write your MySQL query statement below
+
+select group_id,
+player_id
+from
+(select group_id,
+player_id,
+sum(score) as total
+from players
+join
+(select first_player as player, first_score as score
+from matches
+union all
+select second_player as player, second_score as score
+from matches) sub1
+on player_id=player
+group by player_id
+order by group_id,
+total desc, player_id)sub2
+group by group_id
+/*
+select group_id,
+player_id
+from
+(
+select *,
+row_number() over(partition by group_id
+                  order by total_score desc, player_id) as rn
+from
+(select group_id,
+player_id,
+sum(case when player_id=first_player then
+   first_score else second_score end) as total_score
+from players p
+join matches m
+on (p.player_id =m.first_player or p.player_id=m.second_player)
+group by group_id,
+player_id)
+sub1
+    )
+sub2
+where rn=1
+*/

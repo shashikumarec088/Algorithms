@@ -1,0 +1,24 @@
+# Write your MySQL query statement below
+
+with recursive cte as
+(
+select employee_id from employees
+    where manager_id=1 and employee_id!=1
+    union all
+    select e.employee_id
+    from cte c join employees e
+    on e.manager_id = c.employee_id
+)
+select /*+ set_var(cte_max_recursion_depth=3)*/employee_id from cte
+
+/*
+select e1.employee_id
+from employees e1
+join employees e2
+join employees e3
+on e1.manager_id=e2.employee_id
+and e2.manager_id=e3.employee_id
+where e3.manager_id=1
+and e1.employee_id !=1
+
+*/

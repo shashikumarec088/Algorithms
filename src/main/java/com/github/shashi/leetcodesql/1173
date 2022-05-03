@@ -1,0 +1,17 @@
+# Write your MySQL query statement below
+
+select round(100*avg(order_date=customer_pref_delivery_date),2)
+as immediate_percentage
+from delivery
+
+/*
+select round((select count(*) from delivery where order_date=customer_pref_delivery_date)/(select count(*) from delivery)*100,2)
+as immediate_percentage
+from dual
+*/
+
+/*
+select round(sum(case when order_date=customer_pref_delivery_date
+          then 1 else 0 end)/count(*)*100,2) as immediate_percentage
+          from delivery
+*/

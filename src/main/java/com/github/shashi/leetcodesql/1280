@@ -1,0 +1,69 @@
+# Write your MySQL query statement below
+
+
+select student_id,
+student_name,
+subject_name,
+ifnull(attended_exams,0) as attended_exams
+from students
+cross join subjects
+left join (
+select student_id,
+    subject_name,
+    count(*) as attended_exams
+    from examinations
+    group by student_id,
+    subject_name
+) sb
+using(student_id,subject_name)
+group by student_id,subject_name
+order by student_id,subject_name
+
+
+/*
+select s.student_id,
+s.student_name,
+sb.subject_name,
+sum(if(e.student_id is not null,1,0)) as attended_exams
+from students s
+join subjects sb
+left join examinations e
+on s.student_id = e.student_id
+and sb.subject_name = e.subject_name
+group by s.student_id,
+sb.subject_name
+order by s.student_id,
+sb.subject_name
+
+*/
+
+/*
+select student_id,
+student_name,
+subject_name,
+sum(if(eid is not null,1,0)) as attended_exams
+from(
+select sub1.student_id,
+sub1.student_name,
+sub1.subject_name,
+e.student_id as eid
+from
+(select student_id,
+student_name,
+subject_name
+from students s,
+subjects sb)
+sub1
+left join examinations e
+on sub1.student_id=e.student_id
+and sub1.subject_name=e.subject_name)
+sub2
+group by student_id,
+subject_name
+order by student_id,
+subject_name
+*/
+
+
+
+
