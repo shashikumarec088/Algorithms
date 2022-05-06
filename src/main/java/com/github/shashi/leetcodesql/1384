@@ -1,0 +1,70 @@
+select t2.product_id,
+product_name,
+report_year,
+total_amount
+from
+(select product_id,
+'2018' as report_year,
+average_daily_sales*(datediff(least(period_end,'2018-12-31'),
+                          greatest(period_start,'2018-01-01'))+1) as total_amount
+from sales
+where year(period_start)=2018 or year(period_end)=2018
+union all
+select product_id,
+'2020' as report_year,
+average_daily_sales*(datediff(least(period_end,'2020-12-31'),
+                          greatest(period_start,'2020-01-01'))+1) as total_amount
+from sales
+where year(period_start)=2020 or year(period_end)=2020
+union all
+select product_id,
+'2019' as report_year,
+average_daily_sales*(datediff(least(period_end,'2019-12-31'),
+                          greatest(period_start,'2019-01-01'))+1) as total_amount
+from sales
+where year(period_start)<=2019 and year(period_end)>=2019)
+t2
+join product p
+on t2.product_id=p.product_id
+order by
+product_id,
+report_year
+
+
+/*
+select
+product_id,
+product_name,
+concat(year,'') as report_year,
+(case when left(period_start,4)=left(period_end,4)
+then datediff(period_end,period_start)+1
+when year = extract(year from period_start) then
+datediff(str_to_date(concat(year+1,'-01-01'),'%Y-%m-%d'),period_start)
+when year = extract(year from period_end) then
+datediff(period_end,str_to_date(concat(year,'-01-01'),'%Y-%m-%d'))+1
+else datediff(str_to_date(concat(year+1,'-01-01'),'%Y-%m-%d'),
+              str_to_date(concat(year,'-01-01'),'%Y-%m-%d')) end)
+              *average_daily_sales as total_amount
+
+from
+(select s.product_id,
+p.product_name,
+period_start,
+period_end,
+average_daily_sales
+from sales s
+join product p
+on s.product_id=p.product_id)
+t1
+join
+(
+select * from
+    (values row(2018),
+    row(2019),
+    row(2020)) as v(year)
+) t2
+on t2.year >= extract(year from t1.period_start)
+and t2.year <=extract(year from t1.period_end)
+order by product_id,
+year
+*/
