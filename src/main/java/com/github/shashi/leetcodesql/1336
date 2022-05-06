@@ -1,0 +1,58 @@
+# Write your MySQL query statement below
+
+
+with cte1 as (select v.user_id as user_id,
+visit_date,
+count(transaction_date) as tx_count
+from visits v
+left join transactions t
+on v.user_id = t.user_id and
+v.visit_date = t.transaction_date
+group by v.user_id,
+visit_date),
+cte2 as
+(
+select row_number() over() as rn
+    from transactions t
+    union
+    select 0
+)
+select rn as transactions_count,
+coalesce(count(tx_count),0) as visits_count
+from cte2
+left join cte1
+on cte2.rn = cte1.tx_count
+where rn <=(select max(tx_count) from cte1)
+group by rn
+order by rn
+
+/*
+with recursive cte1 as (
+select tx_count,count(visit_date) as visit_count
+    from
+    (
+    select v.user_id,
+        v.visit_date,
+        count(transaction_date) as tx_count
+        from visits v
+        left join transactions tx
+        on v.user_id = tx.user_id
+        and v.visit_date=tx.transaction_date
+        group by v.user_id, visit_date
+    ) s1
+    group by tx_count
+),
+cte2 as (
+select 0 as tx_count
+union all
+select tx_count+1 from cte2 where tx_count<(
+select max(tx_count) from cte1
+)
+)
+select cte2.tx_count as transactions_count,
+coalesce(cte1.visit_count,0) as visits_count
+from cte2
+left join cte1
+on cte2.tx_count=cte1.tx_count
+order by cte2.tx_count
+*/

@@ -1,0 +1,50 @@
+# Write your MySQL query statement below
+
+select visited_on,
+amount,
+round(amount/7,2) as average_amount
+from
+(select visited_on,
+sum(amount) over(order by visited_on rows between 6 preceding and
+                current row) as amount,
+ row_number() over(order by visited_on) as rn
+from
+(select visited_on,
+sum(amount) as amount
+from customer
+group by visited_on)a)b
+where rn>6
+order by visited_on
+
+/*
+select a.visited_on,
+sum(b.amount) as amount,
+round(sum(b.amount)/7,2) as average_amount
+from
+(select distinct visited_on from customer) a
+join customer b
+on datediff(a.visited_on,b.visited_on) between 0 and 6
+group by a.visited_on
+having count(distinct b.visited_on)=7
+*/
+
+/*
+select c1.visited_on,
+sum(c2.amount) as amount,
+round(sum(c2.amount)/count(*),2) as average_amount
+from (
+select distinct visited_on
+    from customer
+) c1
+join (
+select visited_on,
+    sum(amount) as amount
+    from customer
+    group by visited_on
+) c2
+on c1.visited_on >= c2.visited_on
+and datediff(c1.visited_on,c2.visited_on)<=6
+group by visited_on
+having count(*)=7
+order by visited_on
+*/
