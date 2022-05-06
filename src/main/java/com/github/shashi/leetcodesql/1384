@@ -1,3 +1,20 @@
+with recursive cte as(
+select min(period_start) as date
+from sales
+union all
+select date_add(date, interval 1 day) as date
+    from cte where date<=(select max(period_end) from sales)
+)
+select s.product_id, p.product_name,
+left(e.date,4) as report_year,
+sum(s.average_daily_sales) as total_amount
+from sales s
+join product p on s.product_id=p.product_id
+join cte e on s.period_start<= e.date and s.period_end>=e.date
+group by s.product_id,p.product_name,report_year
+order by s.product_id,report_year
+
+/*
 select t2.product_id,
 product_name,
 report_year,
@@ -29,7 +46,7 @@ on t2.product_id=p.product_id
 order by
 product_id,
 report_year
-
+*/
 
 /*
 select
