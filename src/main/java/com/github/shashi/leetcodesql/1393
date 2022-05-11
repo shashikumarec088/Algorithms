@@ -1,0 +1,17 @@
+# Write your MySQL query statement below
+
+select stock_name,
+sum(if(operation='Buy',-price,price)) as capital_gain_loss
+from stocks
+group by stock_name
+/*
+select stock_name,
+sum(cap) as capital_gain_loss
+from
+(select stock_name,
+operation,
+price-lag(price,1,0) over(partition by stock_name order by operation_day) as cap
+from stocks) sub1
+where operation='Sell'
+group by stock_name
+*/

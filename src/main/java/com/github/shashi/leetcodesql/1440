@@ -1,0 +1,36 @@
+# Write your MySQL query statement below
+
+select e.left_operand,
+e.operator,
+e.right_operand,
+case when operator='<' and v1.value<v2.value then 'true'
+when operator='>' and v1.value>v2.value then 'true'
+when operator='=' and v1.value=v2.value then 'true'
+else 'false' end as value
+from expressions e
+join variables v1
+on e.left_operand=v1.name
+join variables v2
+on e.right_operand=v2.name
+
+/*
+select left_operand,
+operator,
+right_operand,
+case when operator='>' then if(left_value>right_value,"true","false")
+when operator='<' then if(left_value<right_value,"true","false")
+else if(left_value=right_value,"true","false") end as value
+from
+(select left_operand,
+operator,
+right_operand,
+sum(case when left_operand=name then value else null end) as left_value,
+sum(case when right_operand=name then value else null end) as right_value
+from expressions e
+join variables v
+on e.left_operand=name or e.right_operand=name
+group by
+left_operand,
+operator,
+right_operand)t1
+*/

@@ -1,0 +1,37 @@
+# Write your MySQL query statement below
+
+with cte as
+(select e.student_id,
+student_name,
+rank() over(partition by exam_id order by score) as r1,
+rank() over(partition by exam_id order by score desc) as r2
+from exam e
+join student s
+on e.student_id=s.student_id)
+select distinct student_id,
+student_name from cte
+where student_id not in
+(
+select student_id from cte where r1=1 or r2=1
+)
+order by student_id
+/*
+select distinct e.student_id ,
+student_name
+from exam e
+join
+student s
+on e.student_id=s.student_id
+where e.student_id not in
+((select student_id
+from exam e
+join
+(select exam_id,
+min(score) as minScore,
+max(score) as maxScore
+from exam
+group by exam_id) t2
+on e.exam_id=t2.exam_id
+and (e.score = t2.minScore or e.score=t2.maxScore)))
+order by e.student_id
+*/
