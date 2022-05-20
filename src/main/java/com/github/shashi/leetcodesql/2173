@@ -1,0 +1,27 @@
+# Write your MySQL query statement below
+with cte1 as(
+select *, row_number() over(partition by player_id order by match_day) as rn
+    from matches
+),
+cte2 as(
+select player_id,
+    rn - row_number() over(partition by player_id order by match_day) as grp
+    from cte1 where result='Win'
+),
+cte3 as(
+select player_id,
+    count(grp) as cnt
+    from cte2
+    group by player_id, grp
+),
+cte4 as(
+select player_id,
+    max(cnt) as cnt
+    from cte3
+    group by player_id
+)
+select distinct m.player_id,
+coalesce(cte4.cnt,0) as longest_streak
+from matches m
+left join cte4
+using(player_id)

@@ -1,0 +1,16 @@
+# Write your MySQL query statement below
+
+
+select count( account_id) as accounts_count from subscriptions
+where year(start_date)<=2021 and year(end_date)>=2021 and account_id not in
+(select account_id from Streams where year(stream_date)=2021)
+/*
+select count( account_id) as accounts_count from subscriptions
+where account_id not in
+(select distinct s.account_id
+from subscriptions s
+join streams st
+on (year(start_date)=2021 or year(end_date)=2021)
+and s.account_id=st.account_id and year(stream_date)=2021)
+and (year(start_date)=2021 or year(end_date)=2021)
+*/

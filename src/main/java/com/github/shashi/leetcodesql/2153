@@ -1,0 +1,39 @@
+with recursive cte1 as(
+select bus_id,
+    arrival_time,
+    capacity,
+    lag(arrival_time,1,0) over(order by arrival_time) as prev_arrival_time,
+    row_number() over(order by arrival_time) as rn
+    from buses
+),
+cte2 as(
+select bus_id,
+    rn,
+    capacity,
+    cte1.arrival_time,
+    count(passenger_id) as cnt
+    from cte1
+    left join passengers p
+    on p.arrival_time <= cte1.arrival_time and
+    p.arrival_time > prev_arrival_time
+    group by 1,2,3,4
+),
+cte3 as(
+select rn,
+    if(capacity>=cnt,cnt,capacity) as taken,
+    if(capacity>=cnt,0,cnt-capacity) as leftover
+    from cte2 where rn=1
+    union all
+    select cte2.rn,
+    if(capacity>=cnt+leftover,cnt+leftover,capacity) as taken,
+    if(capacity>=cnt+leftover,0,cnt+leftover-capacity) as leftover
+    from cte3
+    join cte2
+    on cte2.rn = cte3.rn+1
+)
+select cte2.bus_id,
+cte3.taken as passengers_cnt
+from cte2
+join cte3
+using(rn)
+order by cte2.bus_id

@@ -1,0 +1,20 @@
+# Write your MySQL query statement below
+
+
+select f1.followee as follower,
+count(distinct f1.follower) as num
+from follow f1
+join follow f2
+on f1.followee = f2.follower
+group by f1.followee
+order by f1.followee
+/*
+select fl1 as follower,
+num
+from
+(select f1.followee as fl1,
+count(f1.follower) as num
+from follow f1 group by followee)t1
+where fl1 in (select follower from follow)
+order by fl1
+*/
