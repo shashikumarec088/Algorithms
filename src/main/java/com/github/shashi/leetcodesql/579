@@ -1,0 +1,46 @@
+# Write your MySQL query statement below
+
+select e1.id,
+e1.month,
+(ifnull(e1.salary,0)+ifnull(e2.salary,0)+ifnull(e3.salary,0)) as salary
+from
+(select id,
+    max(month) as maxmonth
+    from employee
+    group by id
+    having count(*)>1) t1
+    left join
+    employee e1
+    on t1.id = e1.id
+    and t1.maxmonth > e1.month
+    left join
+    employee e2
+    on e1.id = e2.id
+    and e1.month-1 = e2.month
+    left join
+    employee e3
+    on e1.id = e3.id
+    and e1.month-2 = e3.month
+order by id, month desc
+
+
+/*
+select id,
+month,
+salary
+from
+(select id,
+month,
+salary as salary_old,
+sum(salary) over(
+partition by id
+    order by month
+    range between 2 preceding and
+    current row
+) as salary,
+row_number() over (partition by id order by month desc) as rn
+from employee) t1
+where rn !=1
+order by id,
+month desc
+*/
