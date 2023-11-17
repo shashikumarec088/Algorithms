@@ -1,8 +1,19 @@
 package com.github.shashi.misc;
 import java.io.*;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class TestClass {
-    public static void main(String[] args) throws IOException {
+
+    public static void main(String[] args) {
+        String name = "test23 4q";
+        String pattern = "^[A-Za-z]([A-Za-z0-9_]{2,})[A-Za-z0-9]$";
+        Pattern ptn = Pattern.compile(pattern);
+        Matcher matcher = ptn.matcher(name);
+        System.out.println(matcher.matches());
+    }
+    public static void main1(String[] args) throws IOException {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         PrintWriter wr = new PrintWriter(System.out);
