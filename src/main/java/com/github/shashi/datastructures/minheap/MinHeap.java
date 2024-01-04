@@ -1,4 +1,4 @@
-package com.github.shashi.datastructures;
+package com.github.shashi.datastructures.minheap;
 
 import java.util.Arrays;
 import java.util.List;
