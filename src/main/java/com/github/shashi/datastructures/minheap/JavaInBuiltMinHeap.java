@@ -8,6 +8,7 @@ public class JavaInBuiltMinHeap {
         pq.add(1);
         pq.add(2);
         pq.add(3);
+
         System.out.println("top element in the heap "+pq.peek());
         System.out.println("print complete heap : "+pq.toString());
         System.out.println("remove top element "+pq.poll());

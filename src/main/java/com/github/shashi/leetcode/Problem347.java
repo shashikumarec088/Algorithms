@@ -7,6 +7,36 @@ public class Problem347 {
         return topKFrequentA3(nums, k);
     }
 
+    public static void main(String[] args) {
+        topKFrequentA4(new int[]{1,1,1,2,2,3},2);
+    }
+
+    public static int[] topKFrequentA4(int[] nums, int k) {
+        Map<Integer,Integer> map = new HashMap<>();
+        for(int num : nums){
+            int count = 1;
+            if(map.containsKey(num)) count = map.get(num)+1;
+            map.put(num,count);
+        }
+
+        // max heap with custom comparator
+        PriorityQueue<int[]> pq = new PriorityQueue<int[]>(
+                (a,b)->{
+                    if(a[0]> b[0]) return -1;
+                    else if(a[0] == b[0]) return 0;
+                    else return 1;
+                });
+        for(int key: map.keySet()){
+            pq.add(new int[]{map.get(key),key});
+        }
+
+        int[] result = new int[k];
+        for(int i=0; i<k; i++)
+            result[i] = pq.poll()[1];
+        return result;
+
+    }
+
     public int[] topKFrequentA3(int[] nums, int k){
         for(int num: nums){
             int count = map.getOrDefault(num, 0);

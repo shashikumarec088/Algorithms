@@ -1,15 +1,61 @@
 package com.github.shashi.leetcode;
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
+
 public class Problem973 {
     public static void main(String[] args) {
         Problem973 problem973 = new Problem973();
-        int[][] points = {{3,3},{5,-1},{-2,4}};
-        problem973.kClosest(points,2);
+        int[][] points = {{1,3},{-2,2}};
+        problem973.kClosestA21(points,1);
     }
     private int[][] points;
     public int[][] kClosest(int[][] points, int k) {
         PriorityQueue<Integer> pq = new PriorityQueue<>();
          return kClosestA3(points,k);
+    }
+
+    public int[][] kClosestA21(int[][] points, int k){
+        int n = points.length;
+        int l = 0, r = n-1;
+        quickSelect(points, l, r, k);
+        return Arrays.copyOfRange(points,0,k);
+    }
+
+    public void quickSelect(int[][] points, int l, int r, int k){
+        if(l>=r) return;
+        int pi = new Random().nextInt(r-l);
+        pi = partition(points,l,r,pi);
+        int ll = pi-l+1;
+        if(k < ll){
+            quickSelect(points, l, pi-1,k);
+        }
+        else if(k > ll){
+            quickSelect(points,pi+1,r, k - ll);
+        }
+    }
+
+    public int partition(int[][] points, int l, int r, int pi){
+        int pivot = dist(points,pi);
+        int si = l;
+        swap(points,pi,r);
+        for(int i=l; i<r; i++){
+            if(dist(points,i) < dist(points,si)){
+                swap(points,i,si);
+                si++;
+            }
+        }
+        swap(points,r,si);
+        return si;
+    }
+
+    public int dist(int[][] points, int i){
+        return points[i][0]*points[i][0] + points[i][1]*points[i][1];
+    }
+
+    public void swap(int[][] points, int i, int j){
+        int[] temp = points[i];
+        points[i] = points[j];
+        points[j] = temp;
     }
 
     public int[][] kClosestA4(int[][] points, int k){
@@ -21,6 +67,7 @@ public class Problem973 {
     public int quickSelect(int start, int end, int k){
         if(start==end)return start;
         int pivot = start+ new Random().nextInt(end-start);
+
         pivot = partition(start, end, pivot);
         if(pivot==k)return k;
         else if(pivot<k)return quickSelect(pivot+1,end,k);

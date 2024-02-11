@@ -60,6 +60,7 @@ public class MinHeap {
             System.out.println("heap is full");
         }
         heap[size] = val;
+        size++;
         heapifyUp();
     }
 
@@ -88,7 +89,7 @@ public class MinHeap {
         int i = 0;
         while(hasLChild(i)){
             int sChild = getLChild(i);
-            if(hasRChild(i) && sChild > getRChild(i))
+            if(hasRChild(i) && heap[sChild] > heap[getRChild(i)])
                 sChild = getRChild(i);
             if(heap[i] > heap[sChild]){
                 swap(i,sChild);
@@ -134,6 +135,8 @@ public class MinHeap {
     private boolean hasRChild(int i){
         return getRChild(i) < size;
     }
-
+    public int size(){
+        return size;
+    }
 
 }

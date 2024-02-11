@@ -2,16 +2,54 @@ package com.github.shashi.leetcode;
 import java.util.*;
 public class Problem295 {
     public static void main(String[] args) {
-        Problem295 problem295 = new Problem295();
-        int[] nums = {-1,-2,-3,-4,-5};
-        LinkedList<Integer> l = new LinkedList<>();
-        for(int num : nums){
-            problem295.addNum(num);
-            System.out.println(problem295.findMedian());
-        }
+        MedianFinder medianFinder = new MedianFinder();
+        medianFinder.addNum(-1);
+        System.out.println(medianFinder.findMedian());
+        medianFinder.addNum(-2);
+        System.out.println(medianFinder.findMedian());
+        medianFinder.addNum(-3);
+        System.out.println(medianFinder.findMedian());
+        medianFinder.addNum(-4);
+        System.out.println(medianFinder.findMedian());
     }
     PriorityQueue<Integer> lq = new PriorityQueue<>((a,b)->b-a);
     PriorityQueue<Integer> rq = new PriorityQueue<>();
+
+    static class MedianFinder {
+        PriorityQueue<Integer> maxHeap = new PriorityQueue<>();
+        PriorityQueue<Integer> minHeap = new PriorityQueue<>();
+        int size=0;
+
+        public MedianFinder() {
+
+        }
+
+        public void addNum(int num) {
+            if(size==0) maxHeap.add(num);
+            else{
+                if(num > maxHeap.peek())
+                    minHeap.add(num);
+                else maxHeap.add(num);
+
+                while(minHeap.size() > maxHeap.size()){
+                    maxHeap.add(minHeap.poll());
+                }
+                while(maxHeap.size() - minHeap.size() > 1){
+                    minHeap.add(maxHeap.poll());
+                }
+            }
+            size++;
+        }
+
+        public double findMedian() {
+            if(size%2 !=0) return maxHeap.peek();
+            else{
+                int last = maxHeap.peek();
+                int last2 = minHeap.peek();
+                return (last + last2)/(double)2.0;
+            }
+        }
+    }
     public Problem295() {
 
     }
