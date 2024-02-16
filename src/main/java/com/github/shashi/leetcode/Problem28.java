@@ -6,6 +6,7 @@ public class Problem28 {
     }
 
     public int strStrA1(String haystack, String needle) {
+
         int i=0, m = haystack.length(), n = needle.length();
         while(i<=m-n){
             int j=i, k=0;
