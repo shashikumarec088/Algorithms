@@ -4,19 +4,16 @@ import java.util.*;
 
 public class ListTest {
     public static void main(String[] args) {
-        CircularLL dl = new CircularLL();
-        dl.add(1);
-        dl.add(2);
-        dl.add(3);
-        dl.add(4);
-        dl.print();
-        List<Integer> list = new ArrayList<>();
-        list.sort(Comparator.reverseOrder());
+       int[] x = {1,2,3};
+       for(int a : x){
+           System.out.println(a);
+       }
 
-        LinkedList<Integer> ll = new LinkedList<Integer>();
-        
+       for(int i=0; i<x.length; i++){
+           System.out.println(x[i]);
+       }
 
-
+       List<Integer> ll = new ArrayList<>();
 
     }
 

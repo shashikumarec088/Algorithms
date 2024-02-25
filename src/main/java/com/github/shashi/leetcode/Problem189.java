@@ -1,7 +1,11 @@
 package com.github.shashi.leetcode;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
 public class Problem189 {
     public void rotate(int[] nums, int k) {
+        ArrayList<Integer> list = new ArrayList<>();
         k = k%nums.length;
         rotateA3(nums,k);
     }

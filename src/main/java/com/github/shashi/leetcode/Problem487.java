@@ -1,5 +1,7 @@
 package com.github.shashi.leetcode;
 
+import java.util.TreeSet;
+
 public class Problem487 {
 
     public static void main(String[] args) {
@@ -8,8 +10,24 @@ public class Problem487 {
         System.out.println(p.findMaxConsecutiveOnesA1(input));
     }
 
+    public int findMaxConsecutiveOnesA2(int[] nums) {
+        int s=0,j=1,f=nums[0]==1?-1:0,n=nums.length,ans=0;
+        while(j<n){
+            if(nums[j]==0 && f==-1)f=j;
+            else if(nums[j]==0 && f!=-1){
+                ans = Math.max(ans,j-s);
+                s = f+1;
+                f=j;
+            }
+            j++;
+        }
+        ans = Math.max(ans,j-s);
+        return ans;
+    }
+
     public int findMaxConsecutiveOnesA1(int[] nums){
         int counter=0, zi=-1, max=0;
+        TreeSet<Integer> set = new TreeSet<>();
         for(int i=0; i<nums.length; i++){
             if(nums[i]==0){
                 if(zi!=-1){
