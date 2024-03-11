@@ -2,60 +2,68 @@ package com.github.shashi.leetcode;
 import java.util.*;
 public class Problem155 {
     class MinStack{
-        Stack<Integer> stack;
-        Stack<int[]> minStack;
+        Stack<int[]> stack = new Stack<>();
+        Stack<Integer> stackVal = new Stack<>();
+        Stack<Integer> stackMin = new Stack<>();
+        Stack<int[]> stackMinF = new Stack<>();
 
-        MinStack(){
-            stack = new Stack<>();
-            minStack = new Stack<>();
-        }
+        public MinStack() {
 
-        public void push(int val){
-            if(stack.isEmpty() || minStack.peek()[0]>val)
-                minStack.push(new int[]{val,1});
-            else minStack.peek()[1]++;
-            stack.push(val);
-        }
-
-        public void pop(){
-            if(minStack.peek()[1]==1)
-                minStack.pop();
-            else minStack.peek()[1]--;
-            stack.pop();
-        }
-
-        public int top(){
-            return stack.peek();
-        }
-
-        public int getMin(){
-            return minStack.peek()[0];
-        }
-    }
-
-
-    class MinStack2 {
-        Stack <int[]> stack;
-
-        public MinStack2() {
-            stack = new Stack<>();
         }
 
         public void push(int val) {
-            if(stack.isEmpty())
-                stack.push(new int[]{val,val});
-            else stack.push(new int[]{val,Math.min(stack.peek()[1],val)});
+            int min =!stackMinF.isEmpty()? Math.min(val, stackMinF.peek()[1]):val;
+            stackVal.push(val);
+            if(stackMinF.size() > 0 && min == stackMinF.peek()[1])stackMinF.peek()[0]++;
+            else stackMinF.push(new int[]{1,min});
+        }
+        public void push2(int val) {
+            int min =!stackMin.isEmpty()? Math.min(val, stackMin.peek()):val;
+            stackVal.push(val);
+            stackMin.push(min);
+        }
+
+        public void push1(int val) {
+            int min =!stack.isEmpty()? Math.min(val, stack.peek()[1]):val;
+            stack.push(new int[]{val,min});
         }
 
         public void pop() {
+            stackVal.pop();
+            stackMinF.peek()[0]--;
+            if(stackMinF.peek()[0]==0)stackMinF.pop();
+        }
+
+        public void pop2() {
+            stackVal.pop();
+            stackMin.pop();
+        }
+
+        public void pop1() {
             stack.pop();
         }
 
         public int top() {
+            return stackVal.peek();
+        }
+
+        public int top2() {
+            return stackVal.peek();
+        }
+
+        public int top1() {
             return stack.peek()[0];
         }
 
         public int getMin() {
+            return stackMinF.peek()[1];
+        }
+
+        public int getMin2() {
+            return stackMin.peek();
+        }
+
+        public int getMin1() {
             return stack.peek()[1];
         }
     }

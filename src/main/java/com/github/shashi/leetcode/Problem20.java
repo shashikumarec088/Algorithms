@@ -35,6 +35,29 @@ public class Problem20 {
                 rec(Arrays.copyOfRange(sr,i+1,n),n-i-1,map);
     }
 
+    public boolean isValidA3(String s) {
+        Map<Character,Character> open = new HashMap<>();
+        Map<Character,Character> close = new HashMap<>();
+        Stack<Character> stack = new Stack<>();
+        open.put('(',')');
+        open.put('[',']');
+        open.put('{','}');
+        close.put(')','(');
+        close.put(']','[');
+        close.put('}','{');
+        int n = s.length();
+        for(int i=0; i<n; i++){
+            Character c = s.charAt(i);
+            if(open.containsKey(c))stack.push(c);
+            else if(!stack.isEmpty() && stack.peek().equals(close.get(c))){
+                stack.pop();
+            } else return false;
+        }
+        if(stack.isEmpty())return true;
+        return false;
+
+    }
+
     public boolean isValidA1(String s){
         Map<Character,Character> map = new HashMap<>();
         map.put(')','(');

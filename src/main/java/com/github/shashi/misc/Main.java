@@ -6,10 +6,13 @@ package com.github.shashi.misc;/* IMPORTANT: Multiple classes and nested static 
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.Stack;
 // Warning: Printing unwanted or ill-formatted data to output will cause the test cases to fail
 
 class Main {
     public static void main(String args[] ) throws Exception {
+        Stack<Integer> stack = new Stack<>();
+
         /* Sample code to perform I/O:
          * Use either of these methods for input
 
