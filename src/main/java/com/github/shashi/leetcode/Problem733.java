@@ -6,6 +6,34 @@ public class Problem733  {
         return floodFillA1(image, sr, sc, newColor);
     }
 
+    public static void main(String[] args) {
+        Problem733 problem733 = new Problem733();
+        int[][] input = {{1,1,1},{1,1,0},{1,0,1}};
+        problem733.floodFillA3(input,1,1,2);
+    }
+
+    public int[][] floodFillA3(int[][] image, int sr, int sc, int color) {
+        int prev = image[sr][sc];
+        int[][] dirs = {{0,1},{0,-1},{1,0},{-1,0}};
+        Stack<int[]> stack = new Stack<>();
+        stack.push(new int[]{sr,sc});
+        while(!stack.isEmpty()){
+            int[] pos = stack.pop();
+            if(image[pos[0]][pos[0]]==prev){
+                image[pos[0]][pos[1]] = color;
+                for(int[] dir: dirs){
+                    int nr = pos[0]+dir[0], nc = pos[1]+dir[1];
+                    if(nr >= image.length || nr <0 ||
+                            nc >= image[0].length || nc<0 ||
+                            image[nr][nc] != prev || image[nr][nc] == color)
+                        continue;
+                    stack.push(new int[]{nr,nc});
+                }
+            }
+        }
+        return image;
+    }
+
     public int[][] floodFillA2(int[][] image, int sr, int sc, int nc){
         int color = image[sr][sc];
         if(color != nc)dfs(image,sr, sc, color,nc);

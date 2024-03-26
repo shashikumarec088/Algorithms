@@ -14,68 +14,74 @@ public class Problem236 {
         return lowestCommonAncestorA4(root,p,q);
     }
 
-    public TreeNode lowestCommonAncestorA5(TreeNode root, TreeNode p, TreeNode q) {
-        traverse(root,p,q,0);
-        return ans;
-    }
 
-    public int traverse(TreeNode root, TreeNode p, TreeNode q, int level){
-        if(root==null)return 0;
-        int lc = traverse(root.left,p,q,level+1);
-        int rc = traverse(root.right,p,q,level+1);
-        int count = lc+rc;
-        if(root==p||root==q)count++;
-        if(count==2 && lcLevel<level){
-            lcLevel=level;
-            ans=root;
-        }
-        return count;
-    }
 
-    public TreeNode lowestCommonAncestorA4(TreeNode root, TreeNode p, TreeNode q){
-        TreeNode lca=null,prev=null,cur=root;
-        Stack<TreeNode> stack = new Stack<>();
-        int count = 0;
-        while(cur!=null || !stack.isEmpty()){
-            if(cur != null){
-                stack.push(cur);
-                cur = cur.left;
-            }else{
-                cur = stack.pop();
-                if(cur.right==null || cur.right==prev){
-                    if(cur==p||cur==q){
-                        count++;
-                        if(count==1)lca=stack.peek();
-                        if(count==2)return lca;
-                    }
-                    if(lca==cur)lca=stack.peek();
-
-                    prev=cur;
-                    cur=null;
-                }else{
-                    stack.push(cur);
-                    cur=cur.right;
+    /*
+     * intuition behind the interative approach is to traverse the tree in bfs manner
+     * until both p and queue is found, capture the depth for each node, once both the nodes
+     * are found first move up the more depth node so that both are at the same height from
+     * the root, then traverse upwords both the nodes step by step snd compare if the parent
+     * is same
+     */
+    public TreeNode lowestCommonAncestorA4(TreeNode root, TreeNode p, TreeNode q) {
+        Map<TreeNode,TreeNode> map = new HashMap<>();
+        Queue<TreeNode> queue = new ArrayDeque<>();
+        queue.offer(root);
+        int pdist=0, qdist=0, dist=0;
+        boolean pf=false, qf=false;
+        map.put(root,null);
+        while(!queue.isEmpty()){
+            int size = queue.size();
+            for(int i=0; i<size; i++){
+                TreeNode node = queue.poll();
+                if(node==p){
+                    pf=true;
+                    pdist=dist;
+                }
+                if(node==q){
+                    qf=true;
+                    qdist=dist;
+                }
+                if(node.left !=null){
+                    queue.offer(node.left);
+                    map.put(node.left,node);
+                }
+                if(node.right !=null){
+                    queue.offer(node.right);
+                    map.put(node.right,node);
                 }
             }
+            if(pf && qf)break;
+            dist++;
         }
-        return null;
+        if(qdist>pdist){
+            TreeNode temp = q;
+            q = p;
+            p=temp;
+            int td = qdist;
+            qdist = pdist;
+            pdist = qdist;
+        }
+        while(pdist > qdist){
+            p = map.get(p);
+            pdist--;
+        }
+        if(p==q)return p;
+        while(pdist>=0){
+            p = map.get(p);
+            q = map.get(q);
+            if(p==q)return p;
+            pdist--;
+        }
+        return p;
     }
 
-    public TreeNode lowestCommonAncestorA3(TreeNode root, TreeNode p, TreeNode q){
-        rec(root,p,q);
-        return ans;
-    }
 
-    public boolean rec(TreeNode root, TreeNode p, TreeNode q){
-        if(root==null)return false;
-        int l=rec(root.left,p,q)?1:0;
-        int r=rec(root.right,p,q)?1:0;
-        int mid = (root==p||root==q)?1:0;
-        if(l+r+mid>1)
-            ans=root;
-        return (l+r+mid)>0;
-    }
-
+    /*
+     * intuition behind the recursive approach is to find the root node which matches
+     * p or queue, if ancestor likes in left part of the subtree then we find the
+     * ancestor in left subtree and traverse upwards
+     */
     public TreeNode lowestCommonAncestorA2(TreeNode root, TreeNode p, TreeNode q){
         if(root==null || root==p || root==q)
             return root;

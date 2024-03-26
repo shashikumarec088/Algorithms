@@ -30,19 +30,40 @@ public class Problem116 {
 
     public Node connect(Node root) {
         if(root == null) return root;
-        rec(root);
+        rec1(root);
         return root;
     }
 
-    public void rec(Node root){
+    /*
+    * intuition behind the approach is very similar to iterative solution
+    * finst check if the root is null which is the base case, else
+    * if the node has left then connect its next to right and if it has the right
+    * connect ot its next left to it
+    *
+     */
+    public void rec1(Node root){
         if(root == null) return;
         if(root.left != null){
             root.left.next = root.right;
             if(root.next != null)
                 root.right.next = root.next.left;
         }
-        rec(root.left);
-        rec(root.right);
+        rec1(root.left);
+        rec1(root.right);
+    }
+
+    /*
+     * intuition is take left and right subarray,
+     * connect the left and right, then traverse the left subarray and
+     * right subarray and also traverse right part of left subarray and
+     * left part of right subarray
+     */
+    public void rec2(Node left, Node right){
+        if(left==null)return;
+        left.next = right;
+        rec2(left.left,left.right);
+        rec2(left.right,right.left);
+        rec2(right.left,right.right);
     }
 
     public Node connectLeft(Node root){

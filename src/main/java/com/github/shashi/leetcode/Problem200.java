@@ -119,6 +119,55 @@ public class Problem200 {
         }
     }
 
+    public int numIslandsA4(char[][] grid) {
+        int n=0, r=grid.length, c = grid[0].length;
+        for(int i=0; i<r; i++){
+            for(int j=0; j<c; j++){
+                if(grid[i][j]=='1'){
+                    n++;
+                    dfs2(i,j,grid);
+                }
+
+            }
+        }
+        return n;
+    }
+
+    public void dfs2(int i, int j, char[][] grid){
+        int r = grid.length, c = grid[0].length;
+        int[][] dirs = {{0,1},{0,-1},{1,0},{-1,0}};
+        if(grid[i][j]=='0') return;
+        grid[i][j]='0';
+        for(int[] dir: dirs){
+            int nr = i + dir[0];
+            int nc = j + dir[1];
+            if(nr >= r || nr<0 || nc>= c || nc <0
+                    || grid[nr][nc]=='0')
+                continue;
+            dfs2(nr,nc,grid);
+        }
+    }
+
+    public void dfs(int i, int j, char[][] grid){
+        int r = grid.length, c = grid[0].length;
+        int[][] dirs = {{0,1},{0,-1},{1,0},{-1,0}};
+        Stack<int[]>  stack = new Stack<>();
+        stack.push(new int[]{i,j});
+        grid[i][j]='0';
+        while(!stack.isEmpty()){
+            int[] pos = stack.pop();
+            for(int[] dir: dirs){
+                int nr = pos[0] + dir[0];
+                int nc = pos[1] + dir[1];
+                if(nr >= r || nr<0 || nc>= c || nc <0
+                        || grid[nr][nc]=='0')
+                    continue;
+                grid[nr][nc]='0';
+                stack.push(new int[]{nr,nc});
+            }
+        }
+    }
+
     public void dfs(int i, int j){
         if(visited[i][j]) return;
         visited[i][j]=true;

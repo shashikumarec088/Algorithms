@@ -5,6 +5,25 @@ public class Problem167 {
         return towSumA3(numbers, target);
     }
 
+    /*
+    * same as A3 but just mentioned the conditions explicitly
+     */
+    public int[] twoSumA4(int[] numbers, int target) {
+        int i=0, j= numbers.length-1,n=numbers.length;
+        while(i<=j){
+            int mid = i+(j-i)/2;
+            if(mid!= i  && numbers[mid]+numbers[i]==target)return new int[]{i+1,mid+1};
+            else if (mid!= i && numbers[mid]+numbers[i]>target){
+                j=mid-1;
+                continue;
+            }
+            int sum = numbers[i]+numbers[j];
+            if(sum== target)return new int[]{i+1,j+1};
+            if(sum<target)i++;
+            else j--;
+        }
+        return new int[]{i,j};
+    }
     public int[] towSumA3(int[] nums, int target){
         int l=0, r=nums.length-1;
         while(l<r){

@@ -5,55 +5,55 @@ public class Problem33 {
         return searchA2(nums,target);
     }
 
-    public int searchA2(int[] nums, int target){
-        int n = nums.length;
-        if(n==1)return nums[0]==target?0:-1;
-        int s = 0, e = n-1;
-        while(s<=e){
-            int m = s+(e-s)/2;
-            if(nums[m]==target)return m;
-            else{
-                if(nums[m]>=nums[s]){
-                    if(target>=nums[s]&& target<nums[m])
-                        e=m-1;
-                    else s=m+1;
-                }else{
-                    if(target<=nums[e]&&target>nums[m])
-                        s=m+1;
-                    else e=m-1;
-                }
+    /*
+     *  intuition, hold true when array does not contains duplicates
+     * if mid is >= left then left part is sorted else right part
+     */
+    public int searchA2(int[] nums, int target) {
+        int l=0, n = nums.length, r=nums.length-1;
+        while(l<=r){
+            int mid = l+(r-l)/2;
+            if(nums[mid]==target)return mid;
+            else if(nums[mid]>=nums[l]){
+                if(target >= nums[l] && target < nums[mid])
+                    r=mid-1;
+                else l=mid+1;
+            }else{
+                if(target > nums[mid] && target <= nums[r])
+                    l=mid+1;
+                else r=mid-1;
             }
         }
         return -1;
     }
 
-    public int searchA1(int[] nums, int target){
-        int n = nums.length;
-        if(n==1)return nums[0]==target?0:-1;
-        int pivot = getStart(nums,0,n-1);
-        if(pivot==0)return searchBin(nums,0,n-1,target);
-        else if(target>=nums[0])return searchBin(nums, 0, pivot-1,target);
-        else return searchBin(nums,pivot,n-1,target);
+    /*
+     * find the min element using the binary search this bin
+     * works when array does not have the duplicates
+     * then find the element on both the parts using the binary search
+     */
+    public int searchA1(int[] nums, int target) {
+        int l=0, n = nums.length, h=nums.length-1;
+        while(l<=h){
+            int mid = l+(h-l)/2;
+            if(nums[mid]>nums[n-1])
+                l=mid+1;
+            else h=mid-1;
+        }
+        int ans = bin(nums,0,l-1,target);
+        if(ans!=-1)return ans;
+        return bin(nums, l,n-1,target);
     }
-    public int getStart(int[] nums, int start, int end){
-        if(nums[start]<nums[end])return 0;
-        while(start<=end){
-            int mid = start+(end-start)/2;
-            if(nums[mid]>nums[mid+1])return mid+1;
-            else if(nums[mid]>=nums[start])
-                start=mid+1;
-            else end=mid-1;
+
+    public int bin(int[] nums, int l, int h, int target){
+        while(l<=h){
+            int mid = l+(h-l)/2;
+            if(nums[mid]==target)return mid;
+            else if(nums[mid]<target)l=mid+1;
+            else h=mid-1;
         }
         return -1;
     }
 
-    public int searchBin(int[] nums, int start, int end, int target){
-        while(start<=end){
-            int mid=start+(end-start)/2;
-            if(nums[mid]==target)return mid;
-            if(target>nums[mid])start=mid+1;
-            else end = mid-1;
-        }
-        return -1;
-    }
+
 }

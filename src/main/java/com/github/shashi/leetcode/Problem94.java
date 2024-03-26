@@ -13,29 +13,33 @@ public class Problem94 {
             val = x;
         }
     }
+
+
     public List<Integer> inorderTraversal(TreeNode root) {
         return inOrderRec(root, new ArrayList<Integer>());
     }
 
-    public List<Integer> morisTrav(TreeNode root){
+    /*
+    * this moris traversal in pre order traversal we visit the node
+    * when creating the link, but in inorder we visit the node when removing link
+     */
+    public List<Integer> inorderTraversalA3(TreeNode root){
         List<Integer> list = new ArrayList<>();
-        if(root == null)return list;
-        TreeNode current = root;
-        while(current != null){
-            if(current.left == null){
-                list.add(current.val);
-                current = current.right;
+        while(root!=null){
+            if(root.left==null){
+                list.add(root.val);
+                root= root.right;
             }else{
-                TreeNode prev = current.left;
-                while(prev.right != null && prev.right != current)
-                    prev = prev.right;
-                if(prev.right == null){
-                    prev.right = current;
-                    current = current.left;
+                TreeNode left = root.left;
+                while(left.right !=null && left.right !=root)
+                    left = left.right;
+                if(left.right==null){
+                    left.right=root;
+                    root=root.left;
                 }else{
-                    prev.right= null;
-                    list.add(current.val);
-                    current = current.right;
+                    left.right=null;
+                    list.add(root.val);
+                    root=root.right;
                 }
             }
         }

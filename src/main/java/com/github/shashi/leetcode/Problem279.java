@@ -5,6 +5,7 @@ import java.util.Set;
 
 public class Problem279 {
     Set<Integer> set = new HashSet<>();
+
     public int numSquares(int n) {
         return numSquaresA1(n);
     }

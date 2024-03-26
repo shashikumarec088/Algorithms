@@ -7,11 +7,18 @@ public class Problem20 {
 
     public boolean isValidA2(String s){
         Map<Character,Character> map = new HashMap<>();
+        Stack<String> stack = new Stack<>();
         map.put('(',')');
         map.put('[',']');
         map.put('{','}');
         char[] sr = s.toCharArray();
         return rec(sr,sr.length,map);
+
+    }
+
+    @Override
+    public String toString() {
+        return super.toString();
     }
 
     public boolean rec(char[] sr, int n, Map<Character,Character> map){

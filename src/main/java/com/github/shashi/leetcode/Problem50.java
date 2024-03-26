@@ -11,6 +11,33 @@ public class Problem50 {
     public double myPow(double x, int n) {
         return myPowItr(x,n);
     }
+
+    public double myPowA1(double x, long n) {
+        if(n==0)return 1;
+        if(x==1.0 || x==-1.0){
+            if(n%2==0)return 1;
+            else return x;
+        }
+        if(n<0){x = 1/(double)x;
+            n = -1*n;
+        }
+        double res =x, piv=1, prev=x;
+        while(piv<n){
+            prev = res;
+            res *= res;
+            piv *= 2;
+        }
+        if(piv==n)return res;
+        res = prev;
+        piv = piv/2;
+        while(piv<n){
+            res *= x;
+            piv++;
+        }
+        return res;
+
+    }
+
     public double myPow2(double x, int n) {
         long N = n;
         if (N < 0) {
@@ -38,7 +65,7 @@ public class Problem50 {
         double ans = 1, current=a;
         for(long i=b; i>0; i/=2){
             if(i%2==1)ans = ans*current;
-            current*=current;
+                current*=current;
         }
         return ans;
     }

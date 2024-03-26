@@ -14,6 +14,13 @@ public class Problem1644 {
         return lowestCommonAncestorA3(root,p,q);
     }
 
+    /*
+     * intuition is that we can use the solution we use for LCA when both p & q
+     * are present, if ans is p we are not sure if q is part of tree to check that
+     * we can do dfs on subtree p to check q is present, similarly when ans is q
+     * else whatever ans we got is correct
+     *
+     */
     public TreeNode lowestCommonAncestorA4(TreeNode root, TreeNode p, TreeNode q){
         if(root==null || p==null || q==null)return root;
         TreeNode res = rec(root,p,q);
@@ -51,24 +58,27 @@ public class Problem1644 {
     }
 
     public TreeNode lowestCommonAncestorA2(TreeNode root, TreeNode p, TreeNode q){
-
-        traverse(root,p,q,0);
-        return ans;
+        TreeNode[] ans  =  new TreeNode[1];
+        rec33(root,p,q,ans);
+        return ans[0];
     }
 
-    public int traverse(TreeNode root, TreeNode p, TreeNode q, int level){
-        if(root==null)return 0;
-        int lc = traverse(root.left,p,q,level+1);
-        int rc = traverse(root.right,p,q,level+1);
-        int count = lc+rc;
-        if(root==p || root==q)count++;
-        if(count==2 && lcLevel <level){
-            lcLevel = level;
-            ans = root;
-        }
-        return count;
-    }
+    /*
+     * intuition is to  traverse untill the leaf nodes and propogate
+     * the matched count on left and right and mid, when count is > 1
+     * then we found the ans, when 1 propogate it upwords so we can
+     * find the other 1 if so that is the answer
+     */
 
+    public int rec33(TreeNode root, TreeNode p, TreeNode q, TreeNode[] ans){
+        if(root == null)return 0;
+        int l = rec33(root.left,p,q,ans);
+        int r = rec33(root.right,p,q,ans);
+        int m = p==root||q==root?1:0;
+        if(l+r+m > 1)
+            ans[0] = root;
+        return l+r+m > 0 ? 1:0;
+    }
 
     public TreeNode lowestCommonAncestorA1(TreeNode root, TreeNode p, TreeNode q){
         TreeNode lca = null, prev=null,cur=root;
