@@ -20,6 +20,10 @@ public class Problem21 {
         return  mergeItr(list1,list2);
     }
 
+    /*
+     * it is very straight forward, once one of the list is null
+     * just appent the remaining list to prev, no need of another while loop;
+     */
     public ListNode mergeItr(ListNode l1, ListNode l2){
         ListNode dummy = new ListNode(-1);
         ListNode prev = dummy;
@@ -38,6 +42,10 @@ public class Problem21 {
         return dummy.next;
     }
 
+    /*
+     * approach is if l1 < l2 then l1 will be the head and we need to
+     * merge the remaining part of l1 and complete l2
+     */
     public ListNode mergeRec(ListNode l1, ListNode l2){
         if(l1==null)return l2;
         if(l2==null)return l1;
