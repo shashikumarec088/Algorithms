@@ -22,16 +22,25 @@ public class Problem3 {
         return true;
     }
 
-    public int largest(String s){
-        Map<Character,Integer> map = new HashMap<>();
-        int i=0, max = 0, n = s.length();
-        for(int j=0; j<n; j++){
+    /*
+        intuition is to use the 2 pointers with hashmap
+        to hold the position of characters, when we see the
+        repeated charater within the bounds then we update
+        the length and the position, remember to update
+        the length at the end since when no duplicates
+        the ans will not get updated
+    */
+    public int lengthOfLongestSubstringA1(String s) {
+        int i=0, j=0, n = s.length(), l=0;
+        Map<Character, Integer> map = new HashMap<>();
+        while(i<=j && j<n){
             char c = s.charAt(j);
-            if(map.containsKey(c))
-                i = Math.max(map.get(c)+1,i);
-            map.put(c,j);
-            max = Math.max(max,j-i+1);
+            if(map.containsKey(c) && map.get(c) >= i){
+                l = Math.max(l,j-i);
+                i = map.get(c)+1;
+            }else map.put(c,j++);
         }
-        return max;
+        l =  Math.max(l,j-i);
+        return l;
     }
 }

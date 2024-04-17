@@ -9,6 +9,12 @@ public class Problem15 {
         return threeSumSet(nums);
     }
 
+    /*
+        intuition is to use the maps at outer level
+        so that we wont repeat the search for seen
+        items, so we can avoid sorting the array
+    */
+
     public List<List<Integer>> threeSumNoSort(int[] nums){
         Set<Integer> dup = new HashSet<>();
         int n= nums.length;
@@ -52,6 +58,13 @@ public class Problem15 {
         }
     }
 
+    /*
+            intuition is to use the 2 sum approach on each element
+            to do that we need to sort the array, since the constraint
+            is to not have duplicates, we need to skip finding the triplets
+            when current element is same as previous, we should avoid using
+            the same element again even in 2 sum
+        */
     public List<List<Integer>> threeSumSort(int[] nums){
         Arrays.sort(nums);
         List<List<Integer>> result = new ArrayList<>();

@@ -10,6 +10,15 @@ public class Problem189 {
         rotateA3(nums,k);
     }
 
+    /*
+    intuition is to start the swaping process form 0th index,
+    continue the process until you reach the same position,
+    keep the count of swaps once we reach the same position,
+    if count is n then we moved all the elements to right position
+    if count < n then we need to move few more elements increment
+    the position and repeat the process, rememer this is done
+    using the do while loop
+*/
     public void rotateA3(int[] nums, int k){
         int count =0, n = nums.length;
         for(int st=0; count<n; st++){
@@ -25,7 +34,10 @@ public class Problem189 {
             } while(st != cur);
         }
     }
-
+    /*
+        intuition is to reverse the left and right part then
+        reverse the complete array remember this
+    */
     public void rotateA2(int[] nums, int k){
         int n = nums.length;
         reverse(nums, 0, n-k-1);

@@ -20,6 +20,23 @@ public class Problem122 {
         return sum;
     }
 
+    /*
+    intuition is to buy the stock when
+    dip compared to previous value and sell when
+    greater compared to previous value
+*/
+    public int maxProfitA3(int[] prices) {
+        int prev=prices[0],profit=0;
+        for(int i=1; i<prices.length; i++){
+            if(prices[i]<prev)prev=prices[i];
+            else{
+                profit += prices[i]-prev;
+                prev=prices[i];
+            }
+        }
+        return profit;
+    }
+
     public int maxProfitA1(int[] nums){
         int min=nums[0], ans=0,n=nums.length;
         for(int i=1; i<n; i++){

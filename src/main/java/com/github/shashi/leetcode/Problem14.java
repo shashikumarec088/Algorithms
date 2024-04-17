@@ -5,6 +5,11 @@ public class Problem14 {
         return longestCommonPrefixA3(strs);
     }
 
+    /*
+    intuition is to do the binary search using the minlength
+    string, check for prefix match, at the end we use l+h/2
+    because l might be 1 length over the common prefix.
+     */
     public String longestCommonPrefixA3(String[] strs){
         if(strs.length==1)return strs[0];
         int n = strs[0].length();

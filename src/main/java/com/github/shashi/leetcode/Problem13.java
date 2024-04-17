@@ -1,47 +1,73 @@
 package com.github.shashi.leetcode;
 import java.util.*;
 public class Problem13 {
+
     public int romanToInt(String s) {
         return romanToIntA2(s);
     }
 
-    public int romanToIntA2(String s){
-        Map<String,Integer> map = new HashMap<>();
-        map.put("M",1000);
-        map.put("D",500);
-        map.put("C",100);
-        map.put("L",50);
-        map.put("X",10);
-        map.put("V",5);
-        map.put("I",1);
-        int i=0, sum=0,n=s.length();
-        while(i<n){
-            int curVal = map.get(s.substring(i,i+1));
-            int nextVal=0;
-            if(i+1<n)
-                nextVal = map.get(s.substring(i+1,i+2));
-            if(nextVal>curVal){
-                sum+= nextVal-curVal;
-                i+=2;
-            }else{
-                sum+= curVal;
-                i+=1;
-            }
+    /*
+        basic intuition is to traverse along the string and
+        check if current element is smaller than the next element
+        if so we consider 2 characters else 1 character for getting
+        the integer value for that element
+    */
+    public int romanToIntA3(String s) {
+        int ans=0, n= s.length();
+        Map<Character,Integer> map = new HashMap<>();
+        map.put('I',1);
+        map.put('V',5);
+        map.put('X',10);
+        map.put('L',50);
+        map.put('C',100);
+        map.put('D',500);
+        map.put('M',1000);
+        int i=n-1;
+        while(i>=0){
+            if(i-1>=0 && map.get(s.charAt(i))> map.get(s.charAt(i-1))){
+                ans = ans+ map.get(s.charAt(i)) - map.get(s.charAt(i-1));
+                i=i-2;
+            }else ans+= map.get(s.charAt(i--));
         }
-        return sum;
+        return ans;
     }
 
-    public int romanToIntA1(String s){
-        String[] symbols = new String[]{"M","CM","D","CD","C","XC","L","XL","X","IX",
-                "V","IV","I"};
-        int[] values = new int[]{1000,900,500,400,100,90,50,40,10,9,5,4,1};
-        int index=0,result=0;
-        for(int i=0; i<symbols.length;i++){
-            while(index < s.length() && s.startsWith(symbols[i],index)){
-                result += values[i];
-                index += symbols[i].length();
-            }
+    public int romanToIntA2(String s) {
+        int ans=0, n= s.length();
+        Map<Character,Integer> map = new HashMap<>();
+        map.put('I',1);
+        map.put('V',5);
+        map.put('X',10);
+        map.put('L',50);
+        map.put('C',100);
+        map.put('D',500);
+        map.put('M',1000);
+        int i=0;
+        while(i<n){
+            if(i+1<n && map.get(s.charAt(i))< map.get(s.charAt(i+1))){
+                ans = ans+ map.get(s.charAt(i+1)) - map.get(s.charAt(i));
+                i=i+2;
+            }else ans+= map.get(s.charAt(i++));
         }
-        return result;
+        return ans;
+    }
+
+    public int romanToIntA1(String s) {
+        int ans=0, prev=0, n= s.length();
+        Map<Character,Integer> map = new HashMap<>();
+        map.put('I',1);
+        map.put('V',5);
+        map.put('X',10);
+        map.put('L',50);
+        map.put('C',100);
+        map.put('D',500);
+        map.put('M',1000);
+        for(int i=n-1; i>=0; i--){
+            int c = map.get(s.charAt(i));
+            if(c < prev)ans -=c;
+            else ans+=c;
+            prev=c;
+        }
+        return ans;
     }
 }

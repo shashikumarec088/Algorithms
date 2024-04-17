@@ -18,6 +18,11 @@ public class Problem98 {
         return isValidBSTA4(root);
     }
 
+    /*
+    intuition is if we do inorder traversal of the tree, if the cur
+    visiting element is > prev element then it is still bst else it is not,
+    so use inorder traversal and compare with previous value
+*/
     public boolean isValidBSTA4(TreeNode root){
         if(root == null)return true;
         Stack<TreeNode> stack = new Stack<>();
@@ -78,6 +83,13 @@ public class Problem98 {
         }
         return true;
     }
+
+    /*
+    make sure we check the bounds thing to remember in bst is all
+    nodes in lst should have lesser value, along with comparing
+    the left and right child we need to compare the bounds.
+
+    */
 
     public boolean isValidBSTA1(TreeNode root){
         return rec(null,root,null);

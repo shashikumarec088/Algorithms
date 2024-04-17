@@ -5,43 +5,45 @@ public class Problem238 {
         return productExceptSelfA2(nums);
     }
 
-    public int[] productExceptSelfA2(int[] nums){
-        int n = nums.length, cur=1;
+    /*
+       intuition is to calculate the left product and
+       right product in an sperate arrays and
+       compute the product using these 2 arrays
+   */
+    public int[] productExceptSelfA2(int[] nums) {
+        int n = nums.length;
+        int[] L = new int[n], R = new int[n];
+        L[0]=1;
+        for(int i=1; i<n;i++)
+            L[i] = L[i-1]*nums[i-1];
+        R[n-1] = 1;
+        for(int i=n-2; i>=0; i--)
+            R[i] = R[i+1]*nums[i+1];
         int[] ans = new int[n];
-        for(int i=0;i<n; i++){
-            cur = nums[i]*cur;
-            ans[i]=cur;
-        }
-        cur=1;
-        for(int i=n-1; i>=0; i--){
-            if(i!=0)ans[i]=ans[i-1]*cur;
-            else ans[i]=cur;
-            cur *=nums[i];
+        for(int i=0; i<n; i++){
+            ans[i] = L[i]*R[i];
         }
         return ans;
     }
 
-    public int[] productExceptSelfA1(int[] nums){
-        int n = nums.length;
-        int[] forward = new int[n];
-        int[] backward = new int[n];
-        int[] ans = new int[n];
-        int cur= 1;
-        for(int i=0; i<n; i++){
-            cur *= nums[i];
-            forward[i]=cur;
-        }
-        cur=1;
+    /*
+        intuition is to first build the product
+        from the end in the new array, then
+        build the product from start and multiply
+        with the end
+    */
+    public int[] productExceptSelfA1(int[] nums) {
+        int n=nums.length, p=1;
+        int[] nums1 = new int[n];
         for(int i=n-1; i>=0; i--){
-            cur *= nums[i];
-            backward[i]=cur;
+            nums1[i]=p;
+            p = p*nums[i];
         }
-
+        p=1;
         for(int i=0; i<n; i++){
-            if(i==0)ans[i]=backward[i+1];
-            else if(i==n-1)ans[i] = forward[n-2];
-            else ans[i] = forward[i-1]*backward[i+1];
+            nums1[i]=nums1[i]*p;
+            p = p*nums[i];
         }
-        return ans;
+        return nums1;
     }
 }

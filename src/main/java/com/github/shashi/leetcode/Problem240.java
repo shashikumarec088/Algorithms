@@ -34,6 +34,10 @@ public class Problem240 {
         return false;
     }
 
+    /*
+    intuition is since the mat is sorted we can do binary search diagonally downwards
+
+     */
     public boolean binSearch2(int[][]m, int t){
         int n = Math.min(m.length,m[0].length);
         for(int i=0; i<n; i++){
@@ -69,8 +73,15 @@ public class Problem240 {
         return devide(m,rs,re,cs,ce,t);
     }
 
+    /*
+    intuition is that since the matrix is sorted if we find the mid element
+    such that the elements below mid are lower and above are grater than target
+    then we can ignore the top left and bottom right part. one more optimization
+    is if the target is < start and end of matrix then it is not in that matrix
+     */
     public boolean devide(int[][] m, int rs,int re, int cs, int ce, int t){
         if(rs>re||cs>ce)return false;
+        if(t> m[re][ce] || t < m[rs][cs])return false;
         int cm = cs+(ce-cs)/2;
         int rm =rs;
         while(rm <= re && m[rm][cm]<= t){
