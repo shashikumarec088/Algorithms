@@ -2,20 +2,60 @@ package com.github.shashi.leetcode;
 import java.util.*;
 public class Problem15 {
 
+    /*
+        15. 3Sum
+        Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k]] such that i != j, i != k, and j != k, and nums[i] + nums[j] + nums[k] == 0.
+        Notice that the solution set must not contain duplicate triplets.
+
+        Example 1:
+
+        Input: nums = [-1,0,1,2,-1,-4]
+        Output: [[-1,-1,2],[-1,0,1]]
+        Explanation:
+        nums[0] + nums[1] + nums[2] = (-1) + 0 + 1 = 0.
+        nums[1] + nums[2] + nums[4] = 0 + 1 + (-1) = 0.
+        nums[0] + nums[3] + nums[4] = (-1) + 2 + (-1) = 0.
+        The distinct triplets are [-1,0,1] and [-1,-1,2].
+        Notice that the order of the output and the order of the triplets does not matter.
+        Example 2:
+
+        Input: nums = [0,1,1]
+        Output: []
+        Explanation: The only possible triplet does not sum up to 0.
+
+        Constraints:
+
+            3 <= nums.length <= 3000
+            -105 <= nums[i] <= 105
+
+       Approach 1:
+            * intuition is to sort the array and use the two sum approach to get the remaining elements
+            * we need to remember that the triplets should not be same, since the array is sorted, same
+            elements will appear one after the another so we should skip if element is same as previous
+            * we can use the window technique to find the other two elements since the array is sorted
+            * when we found the other two elements  add those elements since duplicates are not allowed
+             update the bounds and check if the next element is same as current if so skip that element
+
+       Approach 2:
+            * intuition is that we can solve this problem without sorting the array
+            * to avoid the duplication at the first level we can use the set to track the duplicates and
+            ignore if they are already seen.
+            * then while finding the remaining 2 elements we can solve using the another set, here
+            we need to find i,j,k such that there sum is 0, hence we need to check if -sum is
+            present in the set where sum = nums[i] + nums[j]
+            * to avoid the duplicate triplets we can use the hashSet to store the results and add the
+            triplets after sorting so that duplicates are removed
+            * then create the list at the end since the expectation is to return the list
+     */
+
     public static void main(String[] args) {
         System.out.println("shashi");
     }
     public List<List<Integer>> threeSum(int[] nums) {
-        return threeSumSet(nums);
+        return threeSumA1(nums);
     }
 
-    /*
-        intuition is to use the maps at outer level
-        so that we wont repeat the search for seen
-        items, so we can avoid sorting the array
-    */
-
-    public List<List<Integer>> threeSumNoSort(int[] nums){
+    public List<List<Integer>> threeSumA2(int[] nums){
         Set<Integer> dup = new HashSet<>();
         int n= nums.length;
         Set<List<Integer>> result = new HashSet<>();
@@ -36,36 +76,8 @@ public class Problem15 {
         return new ArrayList<>(result);
     }
 
-    public List<List<Integer>> threeSumSet(int[] nums){
-        Arrays.sort(nums);
-        List<List<Integer>> result = new ArrayList<>();
-        for(int i=0; i<nums.length&& nums[i]<=0; i++){
-            if(i>0 && nums[i-1]==nums[i]) continue;
-            twoSumSet(i,nums,result);
-        }
-        return result;
-    }
 
-    public void twoSumSet(int i, int[] nums, List<List<Integer>> result){
-        Set<Integer> set = new HashSet<>();
-        for(int j=i+1; j<nums.length; j++){
-            int sum = nums[i]+nums[j];
-            if(set.contains(-sum)){
-                result.add(Arrays.asList(nums[i],nums[j],-sum));
-                while(j+1<nums.length && nums[j] == nums[j+1])j++;
-            }
-            set.add(nums[j]);
-        }
-    }
-
-    /*
-            intuition is to use the 2 sum approach on each element
-            to do that we need to sort the array, since the constraint
-            is to not have duplicates, we need to skip finding the triplets
-            when current element is same as previous, we should avoid using
-            the same element again even in 2 sum
-        */
-    public List<List<Integer>> threeSumSort(int[] nums){
+    public List<List<Integer>> threeSumA1(int[] nums){
         Arrays.sort(nums);
         List<List<Integer>> result = new ArrayList<>();
         for(int i=0; i<nums.length && nums[i]<=0; i++){

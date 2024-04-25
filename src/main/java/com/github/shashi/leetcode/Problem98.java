@@ -19,10 +19,12 @@ public class Problem98 {
     }
 
     /*
-    intuition is if we do inorder traversal of the tree, if the cur
-    visiting element is > prev element then it is still bst else it is not,
-    so use inorder traversal and compare with previous value
-*/
+        intuition is to use the inorder traversal, for each node
+        in inorder traversal we visit left node, then current then right
+        we can use the iterative inorder traversal to traverse the tree
+        and keep updating the previous value and compare current element
+        value with the previous element value
+    */
     public boolean isValidBSTA4(TreeNode root){
         if(root == null)return true;
         Stack<TreeNode> stack = new Stack<>();
@@ -41,6 +43,13 @@ public class Problem98 {
         return true;
     }
 
+    /*
+       intuition is to use the recursive in order traversal
+       the main thing is to update the prev value and
+       when current value is less then prev return false,
+       if left subtree is not valid then return false,
+       do the same for right subtree
+   */
     public boolean isValidBSTA3(TreeNode root){
         if(root == null) return true;
         if(!isValidBSTA3(root.left))return false;
@@ -61,36 +70,16 @@ public class Problem98 {
         }
     }
 
-    public boolean isValidBSTA2(TreeNode root){
-        if(root==null) return true;
-        Stack<Record> stack = new Stack<>();
-
-        stack.push(new Record(null,root,null));
-        while(!stack.isEmpty()){
-            Record rec = stack.pop();
-            Integer left = rec.left;
-            Integer right = rec.right;
-            TreeNode node = rec.root;
-            boolean lc = left == null?true: node.val>left;
-            boolean rc = right == null?true: node.val<right;
-            if(lc&&rc){
-                if(node.left != null)
-                    stack.push(new Record(left,node.left,node.val));
-                if(node.right != null)
-                    stack.push(new Record(node.val,node.right,right));
-            }
-            else return false;
-        }
-        return true;
-    }
 
     /*
-    make sure we check the bounds thing to remember in bst is all
-    nodes in lst should have lesser value, along with comparing
-    the left and right child we need to compare the bounds.
-
-    */
-
+         intuition is to check if left and right sub tree are bst
+         and if value at current element > left bound and < right bound;
+         at each element when traversing left subtree we update the right
+         bound to current element value since all the elements in left subtree
+         should be less than root values, similarly when traversing the right
+         sub tree we update the left bound value since all the elements in the
+         right subtree should be greater than the root element value
+     */
     public boolean isValidBSTA1(TreeNode root){
         return rec(null,root,null);
     }

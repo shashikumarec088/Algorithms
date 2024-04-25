@@ -4,6 +4,56 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Problem36 {
+    /*
+       36. Valid Sudoku
+       Determine if a 9 x 9 Sudoku board is valid. Only the filled cells need to be
+       validated according to the following rules:
+
+        Each row must contain the digits 1-9 without repetition.
+        Each column must contain the digits 1-9 without repetition.
+        Each of the nine 3 x 3 sub-boxes of the grid must contain the digits 1-9 without repetition.
+        Note:
+
+        A Sudoku board (partially filled) could be valid but is not necessarily solvable.
+        Only the filled cells need to be validated according to the mentioned rules.
+
+        Input: board =
+            [["5","3",".",".","7",".",".",".","."]
+            ,["6",".",".","1","9","5",".",".","."]
+            ,[".","9","8",".",".",".",".","6","."]
+            ,["8",".",".",".","6",".",".",".","3"]
+            ,["4",".",".","8",".","3",".",".","1"]
+            ,["7",".",".",".","2",".",".",".","6"]
+            ,[".","6",".",".",".",".","2","8","."]
+            ,[".",".",".","4","1","9",".",".","5"]
+            ,[".",".",".",".","8",".",".","7","9"]]
+            Output: true
+
+        Approach 1:
+         * intuition is to validate the rows and columns first then validate the boxes
+         * we can iterate over each row, within each row we can create 2 sets
+         one for row and one for column since rows and columns are same we can validate
+         both within each iteration, if we find repeating element then we return false
+         * then we iterate over each boxes, when iterating over boxes we increment by 3
+         since box size is 3 both row and col, within each iteration of r and c we
+         then iterate from that position r and c by 3 values
+
+         Approach 2:
+
+         * intuition is to validate row, cols and boxes in n2 time complexity, by
+         creating array of hashmaps for each row, column and boxes,
+         * for getting the index for boxes we use logic for (r/3)*3 + c/3 here
+         we multiply rows by 3 because we need index as 3 for 3rd box
+
+         Approach 3:
+         * intuition is to validate row, coles and boxes, we can reduce the space to 3 n
+         by using the bit manipulations
+         * since values ranges from 1 to 9, we can have the integer whose bits represents the
+         presence of value or not for example 2 & 2 represents presence of 2 to add we can
+         use the or operator
+         * rest is similar to approach 2
+
+     */
     public boolean isValidSudoku(char[][] board) {
         return isValidSudokuA4(board);
     }
@@ -16,7 +66,7 @@ public class Problem36 {
         and to set we use | (or). this reduces the space usage
         to 3N and time complexity is N2
     */
-    public boolean isValidSudokuA4(char[][] board) {
+    public boolean isValidSudokuA3(char[][] board) {
         int n = 9;
         int[] rows = new int [n];
         int[] cols = new int [n];
@@ -47,7 +97,7 @@ public class Problem36 {
         char 1 to subtract since the numbers int input
         are in the form of characters
     */
-    public boolean isValidSudokuA3(char[][] board) {
+    public boolean isValidSudokuA4(char[][] board) {
         int n = 9;
         char[][] rows = new char[n][n];
         char[][] cols = new char[n][n];

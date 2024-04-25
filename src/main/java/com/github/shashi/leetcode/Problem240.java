@@ -88,7 +88,10 @@ public class Problem240 {
             if(m[rm][cm]==t)return true;
             rm++;
         }
-        // return rec(m,rs,mr-1,mc+1,ce,t) ||rec(m,mr,re,cs,mc-1,t);
+        // while searching in top right we no need to consider the mid row
+        // since all the elements in the that row after cm will be > target
+        // similar in bottom left we no need to consider the mid column since
+        // all the elements in the column will be greater than target
         return devide(m,rs,rm-1,cm+1,ce,t)||
                 devide(m,rm,re,cs,cm-1,t);
     }
