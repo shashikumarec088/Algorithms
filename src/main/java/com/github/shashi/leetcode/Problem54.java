@@ -18,6 +18,7 @@ public class Problem54 {
 
     approach 1:
         * intuition is to travel along the metrics and adjust the bounds accordingly
+        algo:
         * initially bounds are rs, re, cs and ce
         * iterate until rs <= re and cs <=ce
             * first process 1st row from cs to ce

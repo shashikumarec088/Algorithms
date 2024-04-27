@@ -41,13 +41,15 @@ public class Problem392 {
 
     Approach 2:
     * intuition is to enhance the approach 1 to handle the multiple source strings,
-    this can be handled by having the map to hold the char and its frequency for the target string
-
+    this can be handled by having the map to hold the char and its indexes for the target string
+    algo:
+    * create a map of char,list of integers which holds indices for each char.
+    * iterate over all chars in t and store the indices for each char
+    * have the prev index holding default value of -1, iterate over s string
     * then for each char at the source check if present in target and get the index which is greater
     than the previous index, we need to store the prev index as we should ignore the indexes below that
-
     * if index is not found greater than prev then we did not find the char hence we should return false
-
+    time & space:
     * time complexity for this approach is o(n) + m * n (if we use linear search) or m log n if
     we use binary search to find the index for the given char
 

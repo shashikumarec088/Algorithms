@@ -46,10 +46,44 @@ public class Problem290 {
     for the above example initially dog is mapped to a but for the 2nd dog we see the pattern
     is b which is different
 
+    Approach 2:
+    * intuition is very similar to the problem of isomorphic strings where we map both the strings to
+    different string which will be equal if they are patterned strings
+    algo:
+    * create the 2 maps to hold the string to start index for both pattern and strings
+    * create 2 stringBuilders to have the new encoded strings
+    * for each char check if in map else map with current index, then append the mapped index to sb with
+    delimiter space this is to handle the case like 1, 11  and 11, 1
+    * do the same for strings
+    * compare the sbs at the end return
+    space & time:
+    * space is n and time is also n
+
      */
 
     public boolean wordPattern(String pattern, String s) {
         return wordPatternA1(pattern,s);
+    }
+
+    public boolean wordPatternA2(String pattern, String s) {
+        StringBuilder sb1 = new StringBuilder();
+        StringBuilder sb2 = new StringBuilder();
+        Map<String,Integer> map1 = new HashMap<>();
+        Map<Character,Integer> map2 = new HashMap<>();
+        String[] strs = s.split(" ");
+        if(pattern.length()!=strs.length)return false;
+        for(int i=0; i<strs.length;i++){
+            char c = pattern.charAt(i);
+            if(!map1.containsKey(strs[i])) map1.put(strs[i],i);;
+            if(!map2.containsKey(c))map2.put(c,i);
+            sb1.append(map1.get(strs[i]));
+            sb1.append(' ');
+            sb2.append(map2.get(c));
+            sb2.append(' ');
+
+
+        }
+        return sb1.toString().equals(sb2.toString());
     }
 
     public boolean wordPatternA1(String pattern, String s) {

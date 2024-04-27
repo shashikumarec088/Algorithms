@@ -55,17 +55,10 @@ public class Problem36 {
 
      */
     public boolean isValidSudoku(char[][] board) {
-        return isValidSudokuA4(board);
+        return isValidSudokuA3(board);
     }
 
-    /*
-        intuition is to use the binary represents of bits
-        to represent numbers 1 to 9, which reduces the memory
-        by half, we shift the 1 to left by number positions -1
-        to represent the set bit and to check if set we use &
-        and to set we use | (or). this reduces the space usage
-        to 3N and time complexity is N2
-    */
+
     public boolean isValidSudokuA3(char[][] board) {
         int n = 9;
         int[] rows = new int [n];
@@ -90,41 +83,7 @@ public class Problem36 {
         return true;
     }
 
-    /*
-        intuition is to use the arrays instead of sets,
-        here we need to remember that the positions are
-        offset by 1 to match the indexes and also we use
-        char 1 to subtract since the numbers int input
-        are in the form of characters
-    */
-    public boolean isValidSudokuA4(char[][] board) {
-        int n = 9;
-        char[][] rows = new char[n][n];
-        char[][] cols = new char[n][n];
-        char[][] boxes = new char[n][n];
 
-        for(int r=0; r<n; r++){
-            for(int c=0; c<n; c++){
-                char ch = board[r][c];
-                if(ch=='.')continue;
-                int pos = ch-'1';
-                if(rows[r][pos]==1)return false;
-                rows[r][pos]=1;
-                if(cols[c][pos]==1)return false;
-                cols[c][pos]=1;
-                int id = (r/3)*3 + c/3;
-                if(boxes[id][pos]==1)return false;
-                boxes[id][pos]=1;
-            }
-        }
-        return true;
-    }
-
-    /*
-        intuition is to maintain maps for all the
-        rows, cols and boxes, time complexity is
-        o(n2) and space 3 n2
-    */
     public boolean isValidSudokuA2(char[][] board) {
         int n = 9;
         Set<Character>[] rows = new HashSet[n];
@@ -152,13 +111,7 @@ public class Problem36 {
         return true;
     }
 
-    /*
-        intuition is to validate rows and cols first
-        then validate boxes, time complexity is o(2 n2)
-        and space complexity is 2n since we hold only
-        one row and column in memory once and also one box
-        at once
-    */
+
     public boolean isValidSudokuA1(char[][] board) {
         int m = board.length, n = board[0].length,b=3;
         for(int i=0; i<m; i++){

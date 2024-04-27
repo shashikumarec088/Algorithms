@@ -22,23 +22,41 @@ public class Problem209 {
     Approach 1:
       * intuition is to use the 2 pointers 1 slow and 1 fast pointer, keep adding the
       elements to sum and keep incrementing the fast pointer
-      * when sum is >= target then update the length and keep incrementing the slow pointer
-      until the sum >= target and keep updating the length
+      algo:
+      * initialize i=0,j=0,minLen=infi sum=0, start iterating from j=0
+      * add element to sum iterate inner loop until sum >= target and keep updating the minLen by inc i
+      * when sum below target inc j and repeat
+      * at the end check if minLen is infi if so return 0 else minLen
+      time & space:
+      time is n and we use const space
 
     Approach 2:
       * intuition is to try all the sub array combinations and keep updating the lengths
       whenever you find the small length which satifies the condition
+      algo:
       * to find the sum of sub arrays we can have the extra array which holds the sum till
       that position and use this array to find the sub array sum on o(1)
       time sum(i,j) = sum[j]-sum[i]+nums[i]
-      * this involved iterating outer loop for all starting array positions and inner loop
-      starting with that position till the end ex: 0,0 0,1 till 0,n then 1,1 1,2 till 1,n
+      * start iterating from i=0 for each value of i start iterating from j=i to to n
+      until the sum is greater than target then update the length and break the inner loop
+      time & space:
+      time is n2 and space is n
 
       Approach 3:
 
       * intuition is to use the binary search on top of the sum array from approch 2 instead of
       iterating from position i to end so that the overall time complexity can be reduced from
       n2 to nlogn
+      algo:
+      * initialize the extra sum array and calculate sum till that point of i for all values of i
+      *iterate from i=0 to n, for each value of i do the binary search to find the end position
+      * in binary search we calculate the mid=(e-s)/2+s and sum till mid from i
+      which is sum = sums[mid]-sums[i]+nums[i]
+      * check if sum is < target if so make s=mid+1 else e=mid and repeat till we find the boundaries
+      * at the end of binary search remember to check if sum >= target is so update minLen and
+      repeat the search for other values of i
+      time & space:
+      time is nlogn and space is n
 
 
      */
@@ -52,13 +70,7 @@ public class Problem209 {
         return minSubArrayLenA2(target, nums);
     }
 
-
-    /*
-      bf optimized further by keeping the sum in the extra array and
-      using binary search for finding the end index so o(nlog n )
-      is achieved
-       */
-    public int minSubArrayLenA4(int target, int[] nums) {
+    public int minSubArrayLenA3(int target, int[] nums) {
         int n = nums.length;
         int sum =0, minLen = Integer.MAX_VALUE;
         int[] sumAll = new int[n];
@@ -83,7 +95,7 @@ public class Problem209 {
    bf optimized by keeping the sum in the extra array so o(n2)
    is achieved
     */
-    public int minSubArrayLenA3(int target, int[] nums) {
+    public int minSubArrayLenA2(int target, int[] nums) {
         int n = nums.length;
         int sum =0, minLen = Integer.MAX_VALUE;
         int[] sumAll = new int[n];
@@ -101,43 +113,17 @@ public class Problem209 {
         return minLen==Integer.MAX_VALUE?0:minLen ;
     }
 
-    /*
-    bf approach start from 0 and calculate sub array lengths
-    for all lengths till end and update once the target is reached
-    repeat it for all values of i
-     */
-    public int minSubArrayLenA2(int target, int[] nums) {
-        int n = nums.length;
-        int sum =0, minLen = Integer.MAX_VALUE;
-        for(int i=0; i<n; i++){
-            for(int j=i; j<n; j++){
-                sum = 0;
-                for(int k=i; k<= j; k++)
-                    sum += nums[k];
-                if(sum >= target){
-                    minLen = Math.min(minLen, j-i+1);
-                    break;
-                }
-            }
-        }
-        return minLen==Integer.MAX_VALUE?0:minLen ;
-    }
 
-    /*
-    intuition is to start from 0 keep incresing j until target is reached,
-    then update the ans and inc i until the target is satisfied
-     */
     public int minSubArrayLenA1(int target, int[] nums) {
-        int i=0, j=0, sum=0,l=0;
-        while(i<=j && j< nums.length){
-            sum += nums[j];
-            while( sum >= target){
-                l = l==0?j-i+1:Math.min(l, j-i+1);
-                sum -= nums[i];
-                i++;
+        int i=0,j=0,sum=0,minLen=Integer.MAX_VALUE,n=nums.length;
+        while(j<n){
+            sum+=nums[j];
+            while(sum>=target){
+                minLen = Math.min(j-i+1,minLen);
+                sum -= nums[i++];
             }
             j++;
         }
-        return l;
+        return minLen==Integer.MAX_VALUE?0:minLen;
     }
 }

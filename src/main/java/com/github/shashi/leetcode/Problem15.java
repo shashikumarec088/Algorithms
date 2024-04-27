@@ -32,20 +32,38 @@ public class Problem15 {
             * intuition is to sort the array and use the two sum approach to get the remaining elements
             * we need to remember that the triplets should not be same, since the array is sorted, same
             elements will appear one after the another so we should skip if element is same as previous
+            and also when element > 0 since sum can not be 0 after that
             * we can use the window technique to find the other two elements since the array is sorted
             * when we found the other two elements  add those elements since duplicates are not allowed
              update the bounds and check if the next element is same as current if so skip that element
+            algo:
+             * sort the input array, create empty list to hold the result
+             * iterate from i=0 to n until nums[i]<=0 since when nums[i]>0 then total sum can not become 0
+             as the array is sorted
+             * call the 2 sum method which takes i, nums and result list
+             * in 2 sum method we have j=i+1 and k=n-1
+             * iterate until j<k , get the sum for i,j,k
+             * if sum is zero then add the triplet nums[i] nums[j] nums[k] to list, inc j and dec k
+             * after adding check if j-1 and jth elements are same if so keep inc j
+             * if sum > 0 then dec k else inc j
+            time & space:
+            time is n log n for sort amd we use two sum for all values of n hence it is n2 overall,
+            space is n or nlogn based on sorting
 
        Approach 2:
             * intuition is that we can solve this problem without sorting the array
             * to avoid the duplication at the first level we can use the set to track the duplicates and
             ignore if they are already seen.
-            * then while finding the remaining 2 elements we can solve using the another set, here
-            we need to find i,j,k such that there sum is 0, hence we need to check if -sum is
-            present in the set where sum = nums[i] + nums[j]
-            * to avoid the duplicate triplets we can use the hashSet to store the results and add the
-            triplets after sorting so that duplicates are removed
-            * then create the list at the end since the expectation is to return the list
+            * then while finding the remaining 2 elements we can solve using the twosum with hashset
+            algo:
+            * have a set to hold the result we are using set to avoid duplicates, seen set to capture
+            processed elements
+            * iterate from i=0 to n , when nums[i] not in seen call two sum with result set, i and nums
+            * in two sum have set to track the visited elements,
+            * iterate from j=i+1 to end and if we find  -(nums[i]+nums[j]) in set that means these
+            are the triplets and create a list with these and sort it(to avoid duplicates) and add to result.
+            * add the visited element to set and repeat for all values
+            * at the end we need to return the list as answer
      */
 
     public static void main(String[] args) {
@@ -55,25 +73,27 @@ public class Problem15 {
         return threeSumA1(nums);
     }
 
-    public List<List<Integer>> threeSumA2(int[] nums){
-        Set<Integer> dup = new HashSet<>();
-        int n= nums.length;
-        Set<List<Integer>> result = new HashSet<>();
+    public List<List<Integer>> threeSumA2(int[] nums) {
+        int n = nums.length;
+        Set<List<Integer>> list = new HashSet<>();
+        Set<Integer> set = new HashSet<>();
         for(int i=0; i<n; i++){
-            if(dup.add(nums[i])){
-                Set<Integer> seen = new HashSet<>();
-                for(int j=i+1; j<n; j++){
-                    int sum = nums[i]+nums[j];
-                    if(seen.contains(-sum)){
-                        List<Integer> list = Arrays.asList(nums[i],nums[j],-sum);
-                        Collections.sort(list);
-                        result.add(list);
-                    }
-                    seen.add(nums[j]);
-                }
-            }
+            if(!set.contains(nums[i]))twoSumA2(list,nums,i);
         }
-        return new ArrayList<>(result);
+        return new ArrayList<>(list);
+    }
+
+    public void twoSumA2(Set<List<Integer>> list,int[] nums,int i){
+        Set<Integer> set = new HashSet<>();
+        for(int j=i+1; j<nums.length;j++){
+            int sum = nums[i]+nums[j];
+            if(set.contains(-sum)){
+                List<Integer> res = Arrays.asList(nums[i],nums[j],-sum);
+                Collections.sort(res);
+                list.add(res);
+            }
+            set.add(nums[j]);
+        }
     }
 
 

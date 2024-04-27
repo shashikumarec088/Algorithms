@@ -30,7 +30,7 @@ public class Problem49 {
      add the actual string to list. collect all the lists at the end
     algo :
     * create the hash map of string, list. iterate over all the strings in array, get the char array
-    for each string and create the new string using the char array.
+    for each string, reverse using inbuilt Arrays.sort method and create the new string using the char array.
     * check if sorted string is present in map if not add new list to that string and add the actual
     element to the list
     * at the end collect all the values in map and return

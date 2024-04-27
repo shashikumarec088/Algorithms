@@ -28,8 +28,10 @@ public class Problem11 {
         Approach 1:
          * intuition is to consider all the possible containers and calculate the amount of water
          in each container and update the most water whenever we see more water
+         algo:
          * iterate the outer loop from 0 to n and inner loop from i+1 to n and calculate water
-         as j-i * min(nums[i],nums[j])
+         as j-i * min(nums[i],nums[j]) update the maxArea
+         time & space:
          * this is n2 solution but this is the bf approach
 
 
@@ -37,9 +39,11 @@ public class Problem11 {
        * intuition is to use the sliding window technique where u have big window covering entire
        length and reduce the side where the height is lesser since with less height u wont be able
        to capture more volume than you already captured
+       algo:
        * have pointers i=0 and i=n-1, iterate untill i<j and keep updating the volume
          which is area = max(area, (j-i)*min(nums[i],nums[j]))
-
+      time & space:
+      * time if n and space is constant
 
         */
     public int maxArea(int[] height) {
