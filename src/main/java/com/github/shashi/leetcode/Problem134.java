@@ -48,7 +48,7 @@ public class Problem134 {
     time & space:
     * n2 time complexity as we have 2 loops and no extra space is needed
 
-    Approacg 1:
+    Approach 2:
     * intuition is that if their exists a path then sum of all the gains will be >= 0 else there will not
     be circular path. if path exists, then starting from 0 at any point gain drops to 0 then any point
     between these is not a valid start point, then start over from the next station as start point

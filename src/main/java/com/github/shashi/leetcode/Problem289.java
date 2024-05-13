@@ -90,7 +90,7 @@ public class Problem289 {
                 }
                 else if (live==3){
                     if(board[i][j]==0)board[i][j]=-2;
-                };
+                }
             }
         }
         for(int i=0; i<rows;i++)

@@ -5,6 +5,43 @@ import java.util.Queue;
 import java.util.Stack;
 
 public class Problem101 {
+    /*
+    Symmetric Tree
+    Given the root of a binary tree, check whether it is a mirror of itself (i.e., symmetric around its center).
+
+    Example 1:
+    Input: root = [1,2,2,3,4,4,3]
+    Output: true
+    Example 2:
+    Input: root = [1,2,2,null,3,null,3]
+    Output: false
+    Constraints:
+    The number of nodes in the tree is in the range [1, 1000].
+    -100 <= Node.val <= 100
+
+    Follow up: Could you solve it both recursively and iteratively?
+
+    Approach 1: Recursion
+    * intuition is to check the left and right subtree, if both are null or same then proceed to checking the
+    remaining part else return false;
+    algo:
+    * call rec function with p=root.left q=root.right
+    * in rec base case is to check if p & queue both are null if so return true, if either is null then return false
+    * values are not same then return false
+    * then rec call on p.left,q.right and p.right,q.left
+    time & space:
+    takes n time and n space
+
+    Approach 2: iterative
+    * intuition is to use the queue to immetate the same approach as in recursion.
+    algo:
+    * create a queue of TreeNode of type linkedList since it can hold nulls
+    * add the root.left and root.right to queue then iterate until queue is empty
+    * poll p and q, check if they are null if so continue, if either is null or different then return false
+    * else add p.left,q.right,p.right,q.left to queue and repeat until queue is empty
+    time & space:
+    * takes n time and n space
+     */
     class TreeNode {
         int val;
         TreeNode left;
@@ -16,92 +53,35 @@ public class Problem101 {
     }
     public boolean isSymmetric(TreeNode root) {
 
-        return isSymmetricA4(root);
+        return isSymmetricA1(root);
     }
 
-    public boolean isSymmetricA3(TreeNode root) {
+    public boolean isSymmetricA1(TreeNode root) {
         return rec(root,root);
     }
 
-    public boolean rec(TreeNode left, TreeNode right){
-        if(left==null && right==null)return true;
-        else if(left == null || right ==null || left.val!= right.val)return false;
-        else return rec(left.right,right.left) && rec(left.left,right.right);
-    }
-
-    /*
-     * for queue implementation use the LinkedList, if we
-     * use array dequeue we will get NP when adding null
-     * but Linkedlist lets to add null
-     */
-    public boolean isSymmetricA4(TreeNode root) {
-        if(root.left==null && root.right==null)return true;
-        if(root.left==null || root.right==null)return false;
-        Queue<TreeNode> q1 = new LinkedList<>();
-        q1.offer(root);
-        q1.offer(root);
-        while(!q1.isEmpty()){
-            TreeNode c1 = q1.poll();
-            TreeNode c2 = q1.poll();
-            if(c1==null && c2==null)continue;
-            if(c1==null || c2==null || c1.val != c2.val)return false;
-            q1.offer(c1.right);
-            q1.offer(c2.left);
-            q1.offer(c1.left);
-            q1.offer(c2.right);
+    public boolean isSymmetricA2(TreeNode root){
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root.left);
+        queue.offer(root.right);
+        while(!queue.isEmpty()){
+            TreeNode p = queue.poll();
+            TreeNode q = queue.poll();
+            if(p==null && q==null) continue;
+            if(p==null || q==null)return false;
+            if(p.val != q.val)return false;
+            queue.offer(p.left);
+            queue.offer(q.right);
+            queue.offer(p.right);
+            queue.offer(q.left);
         }
         return true;
-
     }
 
-    public boolean isSymmetricA2(TreeNode root) {
-        if(root.left==null && root.right==null)return true;
-        if(root.left==null || root.right==null)return false;
-        Stack<TreeNode> s1 = new Stack<>();
-        Stack<TreeNode> s2 = new Stack<>();
-        s1.push(root);
-        s2.push(root);
-        while(!s1.isEmpty()){
-            TreeNode c1 = s1.pop();
-            TreeNode c2 = s2.pop();
-            if(c1==null && c2==null)continue;
-            if(c1==null || c2==null || c1.val != c2.val)return false;
-            if(c1 != null){
-                s1.push(c1.left);
-                s1.push(c1.right);
-            }
-            if(c2 != null){
-                s2.push(c2.right);
-                s2.push(c2.left);
-            }
-        }
-        return true;
-
-    }
-
-
-    public boolean isSymmetricA1(TreeNode root) {
-        if(root.left==null && root.right==null)return true;
-        if(root.left==null || root.right==null)return false;
-        Stack<TreeNode> s1 = new Stack<>();
-        Stack<TreeNode> s2 = new Stack<>();
-        s1.push(root.left);
-        s2.push(root.right);
-        while(!s1.isEmpty()){
-            TreeNode c1 = s1.pop();
-            TreeNode c2 = s2.pop();
-            if(c1==null && c2==null)continue;
-            if(c1==null || c2==null || c1.val != c2.val)return false;
-            if(c1 != null){
-                s1.push(c1.left);
-                s1.push(c1.right);
-            }
-            if(c2 != null){
-                s2.push(c2.right);
-                s2.push(c2.left);
-            }
-        }
-        return true;
-
+    public boolean rec(TreeNode p, TreeNode q){
+        if(p==null && q==null)return true;
+        if(p==null || q==null)return false;
+        if(p.val != q.val)return false;
+        return rec(p.left,q.right) && rec(p.right,q.left);
     }
 }

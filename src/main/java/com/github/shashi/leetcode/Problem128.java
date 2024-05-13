@@ -98,26 +98,9 @@ public class Problem128 {
         }
     }
     public int longestConsecutive(int[] nums) {
-        return longestConsecutiveA6(nums);
+        return longestConsecutiveA1(nums);
     }
 
-
-    public int longestConsecutiveA6(int[] nums){
-        Map<Integer,Integer> map = new HashMap<>();
-        int n=nums.length;
-        UnionFind uf = new UnionFind(n);
-        for(int i=0; i<n; i++){
-            if(map.containsKey(nums[i]))
-                continue;
-            if(map.containsKey(nums[i]-1))
-                uf.union(i,map.get(nums[i]-1));
-            if(map.containsKey(nums[i]+1))
-                uf.union(i,map.get(nums[i]+1));
-            map.put(nums[i],i);
-
-        }
-        return uf.getLongestSequence();
-    }
 
     public int longestConsecutiveA3(int[] nums) {
         if(nums.length<2)return nums.length;

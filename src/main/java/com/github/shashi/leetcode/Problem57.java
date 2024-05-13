@@ -28,19 +28,15 @@ public class Problem57 {
     0 <= start <= end <= 105
 
     Approach 1:
-    intuition is to check if interval is before or after any interval if so add as new interval else
-    merge it with overlapping interval
+    intuition is to add all the intervals before new interval to list, then merge all the overlapping
+    intervals with new interval and then add new interval to list and then add the remaining intervals to list
     algo:
-    * create a empty list to capture the updated intervals, flag to check if new interval is merged or not.
-    * iterate over all intervals check if new interval is before current interval and it is still not merged,
-    if so add it to the list.
-    * if new interval overlaps with current interval and still not merged then merge with current interval and update
-    both the start and end bounds ex new interval 0,3 and first interval is 1,2 in this case both the bounds should be
-    updated.
-    * if the list is empty then add the current interval else take the last interval from the list and check if current
-    interval overlaps with the last interval, if so merge it else add the current interval.
-    * at the end if the new interval is still not merged then add to the list
-    * return the list as an array at the end
+    * create a empty list to capture the updated intervals
+    * iterate from i=0 and check for each interval if before new interval ie intervals[i][1] < new[0] then add to list
+    * iterate over the remaining interval until the new[1] >= intervals[i][0] keep updating the
+    new[0] = min(new[0],intervals[i][0]) new[1] = max(new[1],intervals[i][1])
+    * after merging add the merged new interval to list;
+    * add the remaining intervals to list and return the list at the end
      */
     public static void main(String[] args) {
         int[] input2 = {2,5};
@@ -53,29 +49,22 @@ public class Problem57 {
     }
 
     public int[][] insertA1(int[][] intervals, int[] newInterval) {
-        int n = intervals.length;
-        boolean merged = false;
         List<int[]> list = new ArrayList<>();
-        for(int i=0; i<n; i++){
-            if(!merged && newInterval[1]<intervals[i][0]){
-                list.add(newInterval);
-                merged=true;
-            }
-            else if(!merged && intervals[i][1]>=newInterval[0]){
-                intervals[i][1] = Math.max(intervals[i][1],newInterval[1]);
-                intervals[i][0] = Math.min(intervals[i][0],newInterval[0]);
-                merged=true;
-            }
-            if(list.size()==0)
-                list.add(intervals[i]);
-            else{
-                int[] last = list.get(list.size()-1);
-                if(last[1]>=intervals[i][0])
-                    last[1] = Math.max(intervals[i][1],last[1]);
-                else list.add(intervals[i]);
-            }
+        int n = intervals.length,i=0;
+        // add intervals before new interval
+        while(i<n && intervals[i][1] < newInterval[0])
+            list.add(intervals[i++]);
+        // merge overlapping intervals with new interval
+        while(i<n && newInterval[1] >=intervals[i][0]){
+            newInterval[0] = Math.min(newInterval[0],intervals[i][0]);
+            newInterval[1] = Math.max(newInterval[1],intervals[i][1]);
+            i++;
         }
-        if(!merged)list.add(newInterval);
+        // add merged new interval
+        list.add(newInterval);
+        // add non overlapping intervals to list
+        while(i<n)
+            list.add(intervals[i++]);
         return list.toArray(new int[list.size()][]);
     }
 }

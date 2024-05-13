@@ -1,85 +1,59 @@
 package com.github.shashi.leetcode;
 import java.util.*;
 public class Problem20 {
+    /*
+    Valid Parentheses
+    Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
+
+    An input string is valid if:
+    Open brackets must be closed by the same type of brackets.
+    Open brackets must be closed in the correct order.
+    Every close bracket has a corresponding open bracket of the same type.
+
+    Example 1:
+    Input: s = "()"
+    Output: true
+    Example 2:
+    Input: s = "()[]{}"
+    Output: true
+    Example 3:
+    Input: s = "(]"
+    Output: false
+    Constraints:
+    1 <= s.length <= 104
+    s consists of parentheses only '()[]{}'.
+
+    Approach 1:
+    * intuition is to keep pushing the open brackets to stack and when we encounter the closing bracket,
+    check if top element of stack is corresponding open bracket if not return false, else pop the element
+    and proceed with next element, if stack is empty at the end then expression is valid
+    algo:
+    * create a stack of characters map with mapping between close to open brackets
+    * iterate over the input string check if current element in map if so check if top of stack is
+    corresponding open bracket
+    * is so then pop the top element else return false
+    * if not in map then keep adding to stack
+    * at the end if stack is empty then return true else false
+     */
     public boolean isValid(String s) {
-        return isValidA2(s);
+        return isValidA1(s);
     }
 
-    public boolean isValidA2(String s){
-        Map<Character,Character> map = new HashMap<>();
-        Stack<String> stack = new Stack<>();
-        map.put('(',')');
-        map.put('[',']');
-        map.put('{','}');
-        char[] sr = s.toCharArray();
-        return rec(sr,sr.length,map);
-
-    }
-
-    @Override
-    public String toString() {
-        return super.toString();
-    }
-
-    public boolean rec(char[] sr, int n, Map<Character,Character> map){
-        if(n==0) return true;
-        if(n%2 != 0) return false;
-        if(sr[0]==')'||sr[0]==']'||sr[0]=='}') return false;
-        char closing = map.get(sr[0]);
-        int i, count = 0;
-        for(i = 1; i<n; i++){
-            if(sr[i] == sr[0])
-                count++;
-            else if(sr[i] == closing){
-                if(count == 0)
-                    break;
-                count--;
-            }
-        }
-        if(i==n) return false;
-        if(i==1) return rec(Arrays.copyOfRange(sr,2,n),n-2,map);
-        return rec(Arrays.copyOfRange(sr,1,i),i-1,map) &&
-                rec(Arrays.copyOfRange(sr,i+1,n),n-i-1,map);
-    }
-
-    public boolean isValidA3(String s) {
-        Map<Character,Character> open = new HashMap<>();
-        Map<Character,Character> close = new HashMap<>();
-        Stack<Character> stack = new Stack<>();
-        open.put('(',')');
-        open.put('[',']');
-        open.put('{','}');
-        close.put(')','(');
-        close.put(']','[');
-        close.put('}','{');
+    public boolean isValidA1(String s) {
         int n = s.length();
-        for(int i=0; i<n; i++){
-            Character c = s.charAt(i);
-            if(open.containsKey(c))stack.push(c);
-            else if(!stack.isEmpty() && stack.peek().equals(close.get(c))){
-                stack.pop();
-            } else return false;
-        }
-        if(stack.isEmpty())return true;
-        return false;
-
-    }
-
-    public boolean isValidA1(String s){
+        Stack<Character> stack = new Stack<>();
         Map<Character,Character> map = new HashMap<>();
         map.put(')','(');
-        map.put(']','[');
         map.put('}','{');
-        Stack<Character> stack = new Stack<>();
-        for(int i=0; i<s.length(); i++){
+        map.put(']','[');
+        for(int i=0; i<n; i++){
             char c = s.charAt(i);
             if(map.containsKey(c)){
-                if(!stack.isEmpty() && stack.peek().equals(map.get(c)))
+                if(!stack.isEmpty() && stack.peek()==map.get(c))
                     stack.pop();
                 else return false;
-            }
-            else stack.push(c);
+            }else stack.push(c);
         }
-        return stack.isEmpty()?true:false;
+        return stack.isEmpty();
     }
 }

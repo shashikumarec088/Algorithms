@@ -2,6 +2,64 @@ package com.github.shashi.leetcode;
 import com.github.pedrovgs.pair.Pair;
 import java.util.*;
 public class Problem236 {
+    /*
+        Lowest Common Ancestor of a Binary Tree
+
+        Given a binary tree, find the lowest common ancestor (LCA) of two given nodes in the tree.
+
+        According to the definition of LCA on Wikipedia: “The lowest common ancestor is defined between two nodes p and q
+        as the lowest node in T that has both p and q as descendants (where we allow a node to be a descendant of itself).”
+
+        Example 1:
+        Input: root = [3,5,1,6,2,0,8,null,null,7,4], p = 5, q = 1
+        Output: 3
+        Explanation: The LCA of nodes 5 and 1 is 3.
+        Example 2:
+        Input: root = [3,5,1,6,2,0,8,null,null,7,4], p = 5, q = 4
+        Output: 5
+        Explanation: The LCA of nodes 5 and 4 is 5, since a node can be a descendant of itself according to the LCA definition.
+        Example 3:
+        Input: root = [1,2], p = 1, q = 2
+        Output: 1
+        Constraints:
+        The number of nodes in the tree is in the range [2, 105].
+        -109 <= Node.val <= 109
+        All Node.val are unique.
+        p != q
+        p and q will exist in the tree.
+
+        Approach 1: iterative approach using map
+        * intuition is to store the parents of p & q in map and traverse both p and q upwords to find the
+        parent which is common.
+        Algo:
+        * create a HashMap with key and value of type TreeNode and queue(LinkedList) of type TreeNode
+        * add root to queue and add root to map with null as parent value
+        * iterate until either p or q not in map
+        * poll the node from queue, if it has left then add left, node to map and left to queue
+        * if it has right add right,node to map and right to queue
+        * create a set of type TreeNode and add p and all its parents to set by initializing cur=p
+        * iterate until cur != null, add cur to set and make cur = map.get(cur)
+        * then make cur = q and iterate until cur not in set at each iteration make cur = map.get(cur)
+        * return cur at the end which is the common among p & q
+        time & space:
+        * n time and n space
+
+        Approach 2: recursion dfs
+        * intuition is to traverse the tree with normal dfs and when we encounter either p or q then return
+        node. if we found nodes from both left and right subtree then current node is LCA else whichever is
+        the node we found then that will be our LCA
+        algo:
+        * in recursion base case is to check if root is null or equal to p or q then return it
+        * find a node by calling recursion on left subtree
+        * find a node by calling recursion on right subtree
+        * if both are present then root is the LCA return it
+        * if either is found then return the found node that is the LCA
+        * here we traverse tree from top to bottom so if we find p first the tree then q will be somewhere
+        in its subtree only so we can be sure that p is LCA similarly if we find q first then q will be
+        our lca, if we find both then root will be ur lca
+        time & space:
+        * n time and n space for recursion
+     */
      class TreeNode {
         int val;
         TreeNode left;
@@ -11,77 +69,10 @@ public class Problem236 {
     private TreeNode ans=null;
     private int lcLevel=-1;
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-        return lowestCommonAncestorA4(root,p,q);
+        return lowestCommonAncestorA2(root,p,q);
     }
 
 
-
-    /*
-     * intuition behind the interative approach is to traverse the tree in bfs manner
-     * until both p and queue is found, capture the depth for each node, once both the nodes
-     * are found first move up the more depth node so that both are at the same height from
-     * the root, then traverse upwords both the nodes step by step snd compare if the parent
-     * is same
-     */
-    public TreeNode lowestCommonAncestorA4(TreeNode root, TreeNode p, TreeNode q) {
-        Map<TreeNode,TreeNode> map = new HashMap<>();
-        Queue<TreeNode> queue = new ArrayDeque<>();
-        queue.offer(root);
-        int pdist=0, qdist=0, dist=0;
-        boolean pf=false, qf=false;
-        map.put(root,null);
-        while(!queue.isEmpty()){
-            int size = queue.size();
-            for(int i=0; i<size; i++){
-                TreeNode node = queue.poll();
-                if(node==p){
-                    pf=true;
-                    pdist=dist;
-                }
-                if(node==q){
-                    qf=true;
-                    qdist=dist;
-                }
-                if(node.left !=null){
-                    queue.offer(node.left);
-                    map.put(node.left,node);
-                }
-                if(node.right !=null){
-                    queue.offer(node.right);
-                    map.put(node.right,node);
-                }
-            }
-            if(pf && qf)break;
-            dist++;
-        }
-        if(qdist>pdist){
-            TreeNode temp = q;
-            q = p;
-            p=temp;
-            int td = qdist;
-            qdist = pdist;
-            pdist = qdist;
-        }
-        while(pdist > qdist){
-            p = map.get(p);
-            pdist--;
-        }
-        if(p==q)return p;
-        while(pdist>=0){
-            p = map.get(p);
-            q = map.get(q);
-            if(p==q)return p;
-            pdist--;
-        }
-        return p;
-    }
-
-
-    /*
-     * intuition behind the recursive approach is to find the root node which matches
-     * p or queue, if ancestor likes in left part of the subtree then we find the
-     * ancestor in left subtree and traverse upwards
-     */
     public TreeNode lowestCommonAncestorA2(TreeNode root, TreeNode p, TreeNode q){
         if(root==null || root==p || root==q)
             return root;
