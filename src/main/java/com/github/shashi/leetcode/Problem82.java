@@ -29,6 +29,15 @@ public class Problem82 {
     * return dummy.next
     time & space:
     * n time and const space
+
+    Approach 2:
+    * slight modification of approach 1 came up with my own
+    algo:
+    * same as approach one
+    * at each iteration we check if cur and next are same if so make cur=cur.next until next are not same
+    * else make prev.next = cur, prev=prev.next
+    * make  cur=cur.next repeat the loop
+    * at the end make prev.next=null tp handle duplicates at the end
      */
     public class ListNode {
         int val;
@@ -53,5 +62,24 @@ public class Problem82 {
             head = head.next;
         }
         return dummy.next;
+    }
+
+    public ListNode deleteDuplicatesA2(ListNode head) {
+        ListNode dummy = new ListNode();
+        ListNode prev = dummy, cur = head;
+        while(cur != null){
+            if(cur.next != null && cur.val == cur.next.val){
+                while(cur.next != null && cur.val == cur.next.val)
+                    cur = cur.next;
+            }else{
+                prev.next = cur;
+                prev = prev.next;
+            }
+            cur = cur.next;
+        }
+        // next nodes might be duplicates so we need to reset it
+        prev.next=null;
+        return dummy.next;
+
     }
 }

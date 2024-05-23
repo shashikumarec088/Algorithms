@@ -62,6 +62,7 @@ public class Problem101 {
 
     public boolean isSymmetricA2(TreeNode root){
         Queue<TreeNode> queue = new LinkedList<>();
+        LinkedList<Integer> ll = new LinkedList<>();
         queue.offer(root.left);
         queue.offer(root.right);
         while(!queue.isEmpty()){

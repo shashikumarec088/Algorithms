@@ -1,6 +1,54 @@
 package com.github.shashi.leetcode;
 import java.util.*;
 public class Problem98 {
+    /*
+    Validate Binary Search Tree
+    Given the root of a binary tree, determine if it is a valid binary search tree (BST).
+    A valid BST is defined as follows:
+     of a node contains only nodes with keys less than the node's key.
+    The right subtree of a node contains only nodes with keys greater than the node's key.
+    Both the left and right subtrees must also be binary search trees.
+
+    Example 1:
+    Input: root = [2,1,3]
+    Output: true
+    Example 2:
+    Input: root = [5,1,4,null,null,3,6]
+    Output: false
+    Explanation: The root node's value is 5 but its right child's value is 4.
+    Constraints:
+    The number of nodes in the tree is in the range [1, 104].
+    -231 <= Node.val <= 231 - 1
+
+    Approach 1: recursion
+    * intuition is to compare the current node value with left and right bound if it is within the limit then
+    we recursively call the same method on root.left by updating the right bound and we call on root.right by
+    updating the left bound
+    algo:
+    * call the recursive function validate with left and right bounds as null
+    * if root is null then return true
+    * check if left bound is not null and root.val <= left bound then return false since it does not meet the constraints
+    * check if right bound is not null and root.val >= right bound then return false
+    * call validate with right bound = root.val and call validate with left bound=root.val
+    time & space:
+    * takes n time & n space for recursion stack
+
+    Approach 2: iterative inorder traversal
+    * intuition is to use the iterative inorder traversal and compare the each visiting node with the orevious visited
+    node value if it is <= prev value then it is not the bst since in bst inorder traversal should be in sorted order
+    algo:
+    * initialize prev=null, cur=root, empty stack of type treeNode
+    * iterate until cur is not null or stack is not empty
+    * if cur is not null add to stack and make cur = cur.left
+    * if cur is null then pop the top element from stack, if prev is not null then check if cur.val <= prev.val
+    if so return false
+    * make prev = cur and cur=cur.right
+    * repeat until stak is empty and cur is null
+    * return true at the end
+    time & space:
+    * n time and n space
+
+     */
     public class TreeNode {
         int val;
         TreeNode left;
@@ -15,80 +63,59 @@ public class Problem98 {
     }
     TreeNode prev;
     public boolean isValidBST(TreeNode root) {
-        return isValidBSTA4(root);
+        return isValidBSTA1(root);
     }
 
-    /*
-        intuition is to use the inorder traversal, for each node
-        in inorder traversal we visit left node, then current then right
-        we can use the iterative inorder traversal to traverse the tree
-        and keep updating the previous value and compare current element
-        value with the previous element value
-    */
-    public boolean isValidBSTA4(TreeNode root){
-        if(root == null)return true;
+    public boolean isValidBSTA1(TreeNode root) {
+        return rec(null,root,null);
+    }
+
+    public boolean isValidBSTA2(TreeNode root) {
+        TreeNode cur=root,prev=null;
         Stack<TreeNode> stack = new Stack<>();
-        TreeNode cur = root,prev1=null;
-        while(!stack.isEmpty() || cur != null){
-            while(cur != null){
+        while(cur!=null|| !stack.isEmpty()){
+            if(cur != null){
                 stack.push(cur);
-                cur = cur.left;
+                cur= cur.left;
+            }else{
+                cur = stack.pop();
+                if(prev!=null && cur.val<=prev.val)return false;
+                prev = cur;
+                cur=cur.right;
             }
-            cur = stack.pop();
-            if(prev1!=null && cur.val<=prev1.val)
-                return false;
-            prev1 = cur;
-            cur = cur.right;
         }
         return true;
     }
 
-    /*
-       intuition is to use the recursive in order traversal
-       the main thing is to update the prev value and
-       when current value is less then prev return false,
-       if left subtree is not valid then return false,
-       do the same for right subtree
-   */
-    public boolean isValidBSTA3(TreeNode root){
-        if(root == null) return true;
-        if(!isValidBSTA3(root.left))return false;
-        if(prev!= null && root.val<=prev.val) return false;
-        prev = root;
-        return isValidBSTA3(root.right);
-    }
-
-
-    class Record{
-        Integer left;
-        Integer right;
-        TreeNode root;
-        Record(Integer left,TreeNode root, Integer right){
-            this.left = left;
-            this.right = right;
-            this.root = root;
+    public boolean isValidBSTA3(TreeNode root) {
+        Integer prev=null;
+        while(root!=null){
+            if(root.left==null){
+                if(prev!=null && root.val <= prev)return false;
+                prev = root.val;
+                root=root.right;
+            }else{
+                TreeNode left = root.left;
+                while(left.right!=null && left.right!=root)
+                    left=left.right;
+                if(left.right==null){
+                    left.right=root;
+                    root=root.left;
+                }else{
+                    left.right=null;
+                    if(prev!=null && root.val <= prev)return false;
+                    prev = root.val;
+                    root=root.right;
+                }
+            }
         }
+        return true;
     }
 
-
-    /*
-         intuition is to check if left and right sub tree are bst
-         and if value at current element > left bound and < right bound;
-         at each element when traversing left subtree we update the right
-         bound to current element value since all the elements in left subtree
-         should be less than root values, similarly when traversing the right
-         sub tree we update the left bound value since all the elements in the
-         right subtree should be greater than the root element value
-     */
-    public boolean isValidBSTA1(TreeNode root){
-        return rec(null,root,null);
-    }
-
-    public boolean rec(Integer left, TreeNode root, Integer right){
-        if(root == null) return true;
-        boolean lc = left == null?true: root.val>left;
-        boolean rc = right == null?true: root.val<right;
-        return lc && rc && rec(left,root.left,root.val)
-                && rec(root.val, root.right, right);
+    public boolean rec(Integer l, TreeNode root,Integer r){
+        if(root==null)return true;
+        if(l!=null && root.val <= l)return false;
+        if(r != null && root.val >= r)return false;
+        return rec(l,root.left,root.val) && rec(root.val,root.right,r);
     }
 }

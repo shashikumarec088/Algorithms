@@ -40,7 +40,7 @@ public class Problem199 {
     * create a empty list res of integers, call recursion with res, root and level 0
     * if root is null then return
     * if size of res and level are same then add root.val to res
-    * call rec with root.left,level+1,res and then call rec with root.right,level+1,res
+    * call rec with root.right,level+1,res and then call rec with root.left,level+1,res
     * once recursion completes return the res
     time & space:
     * n time & n space
