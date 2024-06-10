@@ -62,7 +62,10 @@ public class Problem207 {
     * set both path and visit
     * iterate over neighbors if i and call dfs, if dfs returns true then return true else keep iterating
     over all neighbors, once all neighbors visiting is completed  reset the path[i] to false so we can
-    use it for next path
+    use it for next path(this is imp consider case when 1,2 depends on 0 and 3 depends on 1,2 in that case
+     we add 0,1,3 to path before we consider the path 0,2,3 if we do not remove the node 3 before we traverse
+     next path we end up thinking that cycle exists which is not the case, this happens when more than 1
+     branch from same node reaches the same destination node)
     * return false indicating that no cycle is detected
     time & space:
     * time is m+n where m is prereqs and n is nodes and space is also m+n
@@ -97,58 +100,30 @@ public class Problem207 {
         return visit==nc;
     }
 
-    public boolean canFinishA2(int numCourses, int[][] prerequisites){
-        Map<Integer,List<Integer>> adjList = new HashMap<>();
-        visitedOuter = new boolean[numCourses];
-        for(int[] edge : prerequisites){
-            List<Integer> list = adjList.getOrDefault(edge[1],new ArrayList<>());
-            list.add(edge[0]);
-            adjList.put(edge[1],list);
-        }
-        boolean[] visited = new boolean[numCourses];
+    public boolean canFinishA2(int numCourses, int[][] prerequisites) {
+        Map<Integer,List<Integer>> map = new HashMap<>();
         for(int i=0; i<numCourses; i++)
-            if(backTrack(i,adjList,visited))return false;
+            map.put(i,new ArrayList<>());
+        for(int[] pre : prerequisites){
+            map.get(pre[1]).add(pre[0]);
+        }
+        Set<Integer> visited = new HashSet<>();
+        for(int i=0; i<numCourses;i++)
+            if(dfs(map,visited,new HashSet<>(),i))return false;
         return true;
     }
 
-    public boolean backTrack(int i, Map<Integer,List<Integer>> adjList, boolean[] visited){
-        if(visitedOuter[i])return false;
-        if(visited[i])return true;
-        if(!adjList.containsKey(i))return false;
-        visited[i]=true;
-
-        boolean ret=false;
-        for(Integer nei : adjList.get(i)){
-            ret = backTrack(nei,adjList,visited);
-            if(ret)break;
-        }
-        visited[i]=false;
-        visitedOuter[i]=true;
-        return ret;
-    }
-
-    public boolean canFinishA3(int n, int[][] prereq){
-        List<Integer>[] adj = new ArrayList[n];
-        visitedOuter = new boolean[n];
-        for(int i=0; i<n; i++) adj[i] = new ArrayList<>();
-        for(int[] edj : prereq)
-            adj[edj[0]].add(edj[1]);
-        for(int i=0; i<n; i++){
-            boolean[] visited = new boolean[n];
-            if(dfs(i,adj,visited)) return false;
-        }
-        return true;
-    }
-
-    public boolean dfs(int i, List<Integer>[] adj, boolean[] visited){
-        if(visitedOuter[i])return false;
-        if(visited[i]) return true;
-        visited[i]=true;
-        for(int nei : adj[i]){
-            if(dfs(nei,adj,visited)) return true;
-        }
-        visited[i]=false;
-        visitedOuter[i]=true;
+    public boolean dfs(Map<Integer,List<Integer>> map,Set<Integer> visited,
+                       Set<Integer> path,int course){
+        if(path.contains(course))return true;
+        if(visited.contains(course))return false;
+        visited.add(course);
+        path.add(course);
+        for(int nei : map.get(course))
+            if(dfs(map,visited,path,nei))return true;
+        path.remove(course);
         return false;
     }
+
+
 }

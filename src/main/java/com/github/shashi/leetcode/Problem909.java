@@ -45,7 +45,7 @@ public class Problem909 {
     The squares labeled 1 and n2 do not have any ladders or snakes.
 
     Approach 1: bfs algo
-    * intuition is by looking the board we can think of it as a graph where each cell can be represented as a board
+    * intuition is by looking the board we can think of it as a graph where each cell can be represented as a node
     and there are edges between cells within 6 and snake and ladder as new edges, since problem asks us to find
     minimum number of moves, which indicates that it is a shortest path problem, for unweighted graphs the shorted
     path can be found using bfs algo. where we can push the first cell to queue and keep finding its neighbors and
@@ -88,7 +88,10 @@ public class Problem909 {
     * most of the algo is same, instead of queue of ints we use priorityQueue of type int array which will have 2
     elements 0th will be distance and 1st will the actual cell, we add the custom coparator which compares on
     distances
-    * while adding to the queue we use moves[dest] along with the destination
+    * we poll the element from the queue untill queue is empty and if dist at moves[cur] < cur dist then skip
+    as the dist at moves[cur] is updated with lesser value we do not need to consider the higher distance possibilities
+    * while checking the the moves at destination we update the moves if moves at destination is -1 or > moves[cur]+1
+    and also we add the destination to the queue
      */
 
     public int snakesAndLadders(int[][] board) {

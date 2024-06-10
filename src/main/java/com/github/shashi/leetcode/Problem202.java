@@ -33,7 +33,7 @@ public class Problem202 {
     approach 1:
     * intuition is in the process of computation if the number repeats then this is not a happy number
     else if it reduces to 1 then it is. How we can be sure that the number end up repeating instead
-    of increasing infinitely is consider max 1 git 9 -> 81 similarly
+    of increasing infinitely is consider max 1 digit 9 -> 81 similarly
     99 -> 162 999 -> 243 9999 -> 324 so for 3 digits it will max reach 243 and then starts to reduce
     either to 1 or keeps repeating.
     algo:

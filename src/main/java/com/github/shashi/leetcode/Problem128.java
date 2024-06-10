@@ -26,7 +26,7 @@ public class Problem128 {
     * for each element iterate until cur+1 is present in set and keep updating the length
     * return the length at the end
     time & space:
-    * n space and n2 time
+    * n space and n time
 
     Approach 2:
     * intuition is to sort the array and checking the longest sequence and updating the length
@@ -50,53 +50,7 @@ public class Problem128 {
     time & space:
     * time is n and space is n
      */
-    class UnionFind{
-        int[] root, rank,size;
-        int n;
-        UnionFind(int n){
-            this.n = n;
-            root = new int[n];
-            rank = new int[n];
-            size = new int[n];
-            for(int i=0; i<n; i++){
-                root[i]=i;
-                rank[i]=1;
-                size[i]=1;
-            }
-        }
 
-        public int find(int x){
-            if(x==root[x])return x;
-            return root[x]=find(root[x]);
-        }
-
-        public void union(int x, int y){
-            int rx = find(x);
-            int ry = find(y);
-            if(rx!=ry){
-                if(rank[ry]>rank[rx]){
-                    root[rx]=ry;
-                    size[ry]+=size[rx];
-                }
-                else if(rank[rx]>rank[ry]){
-                    root[ry]=rx;
-                    size[rx]+= size[ry];
-                }else{
-                    root[rx]=ry;
-                    size[ry]+=size[rx];
-                    rank[ry]++;
-                }
-            }
-        }
-
-        public int getLongestSequence(){
-            int max=0;
-            for(int i=0; i<n; i++)
-                if(root[i]==i && size[i]>max)
-                    max=size[i];
-            return max;
-        }
-    }
     public int longestConsecutive(int[] nums) {
         return longestConsecutiveA1(nums);
     }

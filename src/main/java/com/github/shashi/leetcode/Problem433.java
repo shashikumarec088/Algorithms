@@ -42,8 +42,8 @@ public class Problem433 {
     * return -1 at the end
     time & space:
     * it takes m*n time to get all states where m=possible chars and n is sequence length for each sequence
-    we form the string which takes n time and this process we do for queue size which in worst case can be
-    bank size, and for each gene we could have max b next sequences which we process, total time will be m * n * n * b^2.
+    there will be total m^n states and for each word we use loops m*n and we create new string n total
+    m^n * n^2 * m time
      space is b for holding the visited nodes and also for queue
 
     Approach 2: dfs with backtracking
@@ -98,6 +98,44 @@ public class Problem433 {
             }
         }
 
+    }
+
+    public void dfs(String s, String e, Set<String> set, Set<String> visited, int d){
+        if(s.equals(e)){
+            distance = Math.min(d,distance);
+            return;
+        }
+        if(visited.contains(s))return;
+        visited.add(s);
+        for(int i=0; i<s.length();i++){
+            for(char c : "ACGT".toCharArray()){
+                char[] arr = s.toCharArray();
+                arr[i]=c;
+                String s2 = new String(arr);
+                if(set.contains(s2) && !visited.contains(s2)){
+                    dfs(s2,e,set,visited,d+1);
+                }
+            }
+        }
+    }
+
+    int distance = Integer.MAX_VALUE;
+    public void dfs2(String s, String e, Set<String> set, Set<String> visited, int d){
+        if(s.equals(e)){
+            distance = Math.min(d,distance);
+            return;
+        }
+        if(visited.contains(s))return;
+        visited.add(s);
+        for(String word : set){
+            int dist=0;
+            for(int i=0; i<word.length();i++){
+                if(word.charAt(i)!=s.charAt(i))
+                    dist++;
+                if(dist>1)break;
+            }
+            if(dist==1)dfs2(word,e,set,visited,d+1);
+        }
     }
 
     public int minMutationA1(String s, String e, String[] bank) {

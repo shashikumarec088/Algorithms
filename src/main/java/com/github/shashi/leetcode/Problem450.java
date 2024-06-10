@@ -31,9 +31,8 @@ public class Problem450 {
     Follow up: Could you solve it with time complexity O(height of tree)?
 
     Approach 1: recursive solution
-    * intuition is if the node to be deleted has left then we find the predecessor and copy its value to
-    node and then we delete the predecessor else if node has right then we find successor and copy value
-    to the node and deleter the successor
+    * intuition is if the node to be deleted only left or right then return consider the one child as
+    element to replace else  find successor and copy value to the node and deleter the successor
     algo:
     * in delete check if root is null  then return
     * if root val is < target then root.right = rec(root.right,target)
@@ -42,7 +41,7 @@ public class Problem450 {
     * we check if it has no children then we make root as null
     * check if it has one child then return that child
     * if it has both child then find the successor by considering the right child and finding the
-    leftmost child, we make its value as successor value and assign root.right = rec(successor,target)
+    leftmost child, we make its value as successor value and assign root.right = rec(root.right,target)
     * return root at the end
 
     time & space:
@@ -68,32 +67,22 @@ public class Problem450 {
     }
 
     public TreeNode deleteNodeA1(TreeNode root, int key) {
-        if(root==null)return null;
-        if(root.val < key){
-            root.right = deleteNodeA1(root.right,key);
-        }else if(root.val > key)
-            root.left = deleteNodeA1(root.left,key);
+        if(root==null)return root;
+        if(root.val<key)root.right=deleteNodeA1(root.right,key);
+        else if(root.val>key)root.left=deleteNodeA1(root.left,key);
         else{
-            if(root.left==null && root.right==null)root=null;
-            else if(root.left !=null){
-                root.val = predecessor(root);
-                root.left = deleteNodeA1(root.left,root.val);
-            }else{
-                root.val = successor(root);
-                root.right = deleteNodeA1(root.right,root.val);
+            if(root.left==null && root.right==null)return null;
+            if(root.left==null)return root.right;
+            else if(root.right==null)return root.left;
+            else{
+                TreeNode cur=root.right;
+                while(cur.left!=null)
+                    cur=cur.left;
+                root.val = cur.val;
+                root.right = deleteNodeA1(root.right,cur.val);
             }
         }
         return root;
     }
 
-    private int predecessor(TreeNode root){
-        root=root.left;
-        while(root.right !=null)root=root.right;
-        return root.val;
-    }
-    private int successor(TreeNode root){
-        root=root.right;
-        while(root.left !=null)root=root.left;
-        return root.val;
-    }
 }

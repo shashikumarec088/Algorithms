@@ -34,7 +34,7 @@ public class Problem219 {
 
     Approach 2:
     * intuition is to keep the last k elements in the hashset and check if the current element is present in the set
-    if so return true else add the current element is length exceeds k then remove the i-kth element from set since
+    if so return true else add the current element if length exceeds k then remove the i-kth element from set since
     in the next iteration this element is not eligible as the will be outside the bound
     algo:
     * have hashset to store the elements iterate from i=0 to n check if current element in set if so return true

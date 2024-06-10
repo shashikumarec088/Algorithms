@@ -1,5 +1,8 @@
 package com.github.shashi.leetcode;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Problem14 {
     /*
     Longest Common Prefix
@@ -53,9 +56,59 @@ public class Problem14 {
     * in the end return substring of length l;
     time & space:
     * time is mn where m is each string length and n is number of strings and we do not use any space
+
+    Approach 4: Trie ds
+    * intuition is to create trie node with int freq, bool isWord and map of char,TrieNode children and
+    insert all the words to trie and search for the first word with additional condition of freq equal
+    to strs length when length is not equal to freq then return matched prefix return the first word at
+    the end.
+    algo:
+    * create TrieNode with boolean isWord, int freq and map of char,TrieNode to store children
+    * create the trieNode object root
+    * iterate over each word in strs, initialize cur=root, insert all chars for each word, when we insert
+    each char we also inc freq for that char
+    * mark isWord true at the end of each word.
+    * to search for word consider first word, init cur =root
+    * iterate from i=0 to word length consider char c at index i for word
+    * check if cur contains c child and its freq is n if so then make cur=cur.children.get(c)
+    else return substring till i as common prefix
+    * at the end return word as ans
+    time & space:
+    * takes mn time to insert words where m is word length and there are n words and takes m time
+    to search so total mn time and mn space in worst case
      */
+    class TrieNode{
+        boolean isWord;
+        int freq=0;
+        Map<Character,TrieNode> children = new HashMap<>();
+        TrieNode(){}
+    }
     public String longestCommonPrefix(String[] strs) {
-        return longestCommonPrefixA3(strs);
+        return longestCommonPrefixA4(strs);
+    }
+
+    public String longestCommonPrefixA4(String[] strs) {
+        TrieNode root = new TrieNode();
+        int n =strs.length;
+        for(String s:strs){
+            TrieNode cur = root;
+            for(char c: s.toCharArray()){
+                cur.children.putIfAbsent(c,new TrieNode());
+                cur = cur.children.get(c);
+                cur.freq++;
+            }
+            cur.isWord=true;
+        }
+
+        String word = strs[0];
+        TrieNode cur=root;
+        for(int i=0; i<word.length();i++){
+            char c = word.charAt(i);
+            if(cur.children.containsKey(c) && cur.children.get(c).freq==n)
+                cur=cur.children.get(c);
+            else return word.substring(0,i);
+        }
+        return word;
     }
 
     public static void main(String[] args) {

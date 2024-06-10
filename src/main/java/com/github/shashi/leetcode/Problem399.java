@@ -61,7 +61,9 @@ public class Problem399 {
     * we check if trg is neighbor of src if so we compute the result as prod* graph.get(src).get(trg)
     * else we iterate over the neighbors and check if neighbor is not visited if not we do dfs with neighbor
     *after each dfs we check if we found the path if so then val will not be -1 we can break and return the value
-    else we continue for next neighbor
+    else we continue for next neighbor.
+    * point to remember we no need to remove the visited node at the end intuition is if we visited the node before
+    then we no need to visit again even from other branches because it will not lead to target any way
     time & space:
      m*n where  n is the nodes in graph and m is the queries(in worst case we will travel each node in graph for each
      query), takes n space to build the graph,(which has n nodes and 2n edges total 3n approx n)
@@ -107,17 +109,14 @@ public class Problem399 {
 
     public double dfs(Map<String,Map<String,Double>> graph, String src, String trg,
                       double prod, Set<String> visit){
+        if(src.equals(trg))return prod;
         visit.add(src);
         double val = -1.0;
-        if(graph.get(src).containsKey(trg))
-            val = prod * graph.get(src).get(trg);
-        else{
             for(Map.Entry<String,Double> pair : graph.get(src).entrySet()){
                 if(!visit.contains(pair.getKey()))
                     val = dfs(graph,pair.getKey(),trg,prod*pair.getValue(),visit);
                 if(val !=1.0)break;
             }
-        }
         return val;
     }
 }
