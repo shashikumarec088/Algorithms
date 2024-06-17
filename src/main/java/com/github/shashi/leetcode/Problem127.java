@@ -96,6 +96,9 @@ public class Problem127 {
 
     public static void main(String[] args) {
         Problem127 problem127 = new Problem127();
+        Pair<Integer,Integer> pair = new Pair<>(1,2);
+        Pair<Integer,Integer> pair2 = new Pair<>(1,2);
+        System.out.println(pair.equals(pair2));
         problem127.ladderLengthA2("hit","cog",Arrays.asList("hot","dot","dog","lot","log","cog"));
     }
 

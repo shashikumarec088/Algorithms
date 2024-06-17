@@ -87,7 +87,8 @@ public class Problem4 {
     and bleft<=bright if so we found the right boundaries else we check if aleft > bright then we consider
     the left part of array a ie we make r=partA-1 else we consider right part of array ie l=partA+1
     algo:
-    * init m=nums1.length and n = nums2.length, l=0, r=m (remember this r=m not m-1)
+    * init m=nums1.length and n = nums2.length, l=0, r=m (remember this r=m not m-1) this is because on the
+    left part all the elements from A can be there when all elements in A < B this will hold true.
     * if m>then we call the same method with nums2,nums1 this is to make sure that we always consider the
     smallest array for binary search so time complexity is reduced
     * iterate loop until l<=r
@@ -106,55 +107,15 @@ public class Problem4 {
     * it take log(min(m,n)) time and constant space
      */
     public double findMedianSortedArrays(int[] nums1, int[] nums2) {
-        return findMedianSortedArraysA5(nums1,nums2);
+        return findMedianSortedArraysA1(nums1,nums2);
     }
 
     public static void main(String[] args) {
         int[] nums1= {1,3};
         int[] nums2 = {2};
         Problem4 problem4 = new Problem4();
-        problem4.findMedianSortedArraysA5(nums1,nums2);
+        problem4.findMedianSortedArraysA1(nums1,nums2);
     }
-
-
-
-    public double findMedianSortedArraysA5(int[] nums1, int[] nums2) {
-        int na=nums1.length,nb=nums2.length;
-        if(na>nb)return findMedianSortedArraysA5(nums2,nums1);
-        int n=na+nb;
-        int l=0,r=na-1;
-        while(l<=r){
-            int midA = (l+r)/2;
-            int midB = (n+1)/2-midA;
-            int aleft = midA==0?Integer.MIN_VALUE:nums1[midA-1];
-            int aright = midA==na?Integer.MAX_VALUE:nums1[midA];
-            int bleft = midB==0?Integer.MIN_VALUE:nums2[midB-1];
-            int bright = midB==nb?Integer.MAX_VALUE:nums2[midB];
-            if(aleft>bright)r=midA-1;
-            else if(bleft>aright)l=midA+1;
-            else{
-                if(n%2==0)
-                    return(double)(Math.max(aleft,bleft)+Math.min(aright,bright))/2.0;
-                else return (double)Math.max(aleft,bleft);
-            }
-        }
-        return 0.0;
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     public double findMedianSortedArraysA2(int[] nums1, int[] nums2) {
         if(nums1.length>nums2.length)return findMedianSortedArraysA2(nums2,nums1);

@@ -1,5 +1,7 @@
 package com.github.shashi.leetcode;
 
+import java.util.PriorityQueue;
+
 public class Problem79 {
     /*
     Word Search
