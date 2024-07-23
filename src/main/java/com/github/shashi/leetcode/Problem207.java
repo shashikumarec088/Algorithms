@@ -40,7 +40,7 @@ public class Problem207 {
     * dec indegree for all neighbors and if indegree for any neighbor becomes 0 then add to queue
     * at the end return true if visit==courses else false.
     time & space:
-    * it take m+n space if there are n nodes and m prereqs and also takes m+n space for storing the neighbors
+    * it take m+n time if there are n nodes and m prereqs and also takes m+n space for storing the neighbors
     of all the nodes
 
     Approach 2: dfs
@@ -60,7 +60,7 @@ public class Problem207 {
     * next check if visit[i] is set if so return false indicating that this node if already visited and
     no cycle exists
     * set both path and visit
-    * iterate over neighbors if i and call dfs, if dfs returns true then return true else keep iterating
+    * iterate over neighbors of i and call dfs, if dfs returns true then return true else keep iterating
     over all neighbors, once all neighbors visiting is completed  reset the path[i] to false so we can
     use it for next path(this is imp consider case when 1,2 depends on 0 and 3 depends on 1,2 in that case
      we add 0,1,3 to path before we consider the path 0,2,3 if we do not remove the node 3 before we traverse

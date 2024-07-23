@@ -56,8 +56,7 @@ public class Problem918 {
     it as sum of all elements in array minus the subarray in the middle of array, aim is to find the minimum sum
     subarray in the middle. this can be done using kadenes algorithm. we find the total sum, sumMin and sumMax then
     we can subtract sumMin from total to get the maxSum in rotated array. we need to consider case when all the elements
-    negative in which case we have total and sumMin will be same during which maximum sum will be sumMax which will be
-    largest element in array.
+    negative in which case we have total and sumMin will be same during which maximum sum will be sumMax.
     algo:
     * init curMax,sumMax,curMin,sumMin,total to nums[0]
     * iterate i from 1 to n for each iteration

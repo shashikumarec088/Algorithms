@@ -63,6 +63,8 @@ public class Problem102 {
         List<List<Integer>> list = new ArrayList<>();
         if(root== null) return list;
         Queue<TreeNode> queue = new LinkedList<>();
+        List l = new LinkedList();
+        l.add(0,1);
         queue.add(root);
         while(!queue.isEmpty()){
             int size = queue.size();

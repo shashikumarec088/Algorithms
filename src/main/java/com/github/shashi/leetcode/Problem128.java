@@ -26,7 +26,7 @@ public class Problem128 {
     * for each element iterate until cur+1 is present in set and keep updating the length
     * return the length at the end
     time & space:
-    * n space and n time
+    * n space and n^2 time
 
     Approach 2:
     * intuition is to sort the array and checking the longest sequence and updating the length

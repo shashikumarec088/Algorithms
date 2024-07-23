@@ -56,6 +56,9 @@ public class Problem373 {
     * it takes min(klogk,mnlog(mn)) time since we iterate minimum either k times or if k>mn then mn times
     so for each iteration it takes log time for getting the element from pq. space is min(k,m*n) at max
     pq holds m*n or k elements.
+
+    Approach 2:
+    * same as approach 1 instead of using pair class we can use the arraylist
      */
     public List<List<Integer>> kSmallestPairs(int[] nums1, int[] nums2, int k) {
         return kSmallestPairsA1(nums1,nums2,k);
@@ -109,6 +112,35 @@ public class Problem373 {
                 visited.add(p2);
                 pq.offer(new int[]{nums1[pos[1]]+nums2[pos[2]+1],pos[1],pos[2]+1});
             }
+        }
+        return res;
+    }
+
+    public List<List<Integer>> kSmallestPairsA2(int[] n1, int[] n2, int k) {
+        int m = n1.length, n = n2.length;
+        PriorityQueue<List<Integer>> pq = new PriorityQueue<>((a,b)
+                ->a.get(0)-b.get(0));
+        List<List<Integer>> res = new ArrayList<>();
+        Set<List<Integer>> visited = new HashSet<>();
+        visited.add(Arrays.asList(0,0));
+        pq.offer(Arrays.asList(n1[0]+n2[0],0,0));
+        while(k>0 && !pq.isEmpty()){
+            List<Integer> pos = pq.poll();
+            int a = pos.get(1),b=pos.get(2);
+            res.add(Arrays.asList(n1[a],n2[b]));
+            List<Integer> p1 = Arrays.asList(a+1,b);
+            List<Integer> p2 = Arrays.asList(a,b+1);
+            if((a+1)<m && !visited.contains(p1)){
+                visited.add(p1);
+                pq.offer(Arrays.asList(n1[a+1]+n2[b],a+1,b));
+
+            }
+            if((b+1)<n && !visited.contains(p2)){
+                visited.add(p2);
+                pq.offer(Arrays.asList(n1[a]+n2[b+1],a,b+1));
+
+            }
+            k--;
         }
         return res;
     }

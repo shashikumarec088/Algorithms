@@ -1,7 +1,6 @@
 package com.github.shashi.leetcode;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Problem39 {
     /*
@@ -31,7 +30,7 @@ public class Problem39 {
     All elements of candidates are distinct.
     1 <= target <= 40
 
-    Approach 1: backtracking
+    Approach 1: backtracking with start index
     * intuition is to start from first element in nums and iterating over all the elements and check if the sum is
     reaching target if so then add it to result. it is kind of tree traversal and backtracking and exploring the
     remaining parts
@@ -44,6 +43,11 @@ public class Problem39 {
     time & space:
     * takes N^(trg/m) where m is the smallest number in nums of size N, max depth will be trg/m. space is N for
     recursion tree.
+
+    Approach 2: backtracking with set to avoid duplicates
+    * it does what is asked in the question, to avoid duplicates we use the set of lists and before adding the
+    ans list to res we sort it and add. this is bf approach
+
      */
 
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
@@ -69,5 +73,26 @@ public class Problem39 {
             list.remove(list.size()-1);
         }
 
+    }
+
+    public List<List<Integer>> combinationSumA2(int[] nums, int target) {
+        Set<List<Integer>> res = new HashSet<>();
+        rec2(nums,target,res,new ArrayList<>());
+        return new ArrayList<>(res);
+    }
+
+    public void rec2(int[] nums, int target,Set<List<Integer>> res,List<Integer> list){
+        if(target<0)return;
+        if(target==0){
+            List<Integer> l1 = new ArrayList<>(list);
+            Collections.sort(l1);
+            res.add(l1);
+            return;
+        }
+        for(int num: nums){
+            list.add(num);
+            rec2(nums,target-num,res,list);
+            list.remove(list.size()-1);
+        }
     }
 }

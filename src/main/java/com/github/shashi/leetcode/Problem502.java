@@ -43,7 +43,7 @@ public class Problem502 {
     whose capital need is <= working captial w are considered to choose the best project at each iteration. to
     consider all the eligible projects to choose we need to sort the projects based on capital and we need
     to iterate k times since we can take k projects to get the maximum profit, we need to have projects
-    sorted in asc order of capital so that we choose all elgibal projects in order. at each step we can push all
+    sorted in asc order of capital so that we choose all eligible projects in order. at each step we can push all
     the profits from available projects to pq and take the top one, if pq is empty then no eligible projects
     return the profit made till now.
     algo:

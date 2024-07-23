@@ -59,7 +59,7 @@ public class Problem224 {
     public int calculateA1(String s) {
         int cur=0,n=0,m=s.length();
         Stack<Object> stack = new Stack<>();
-        for(int i=m-1; i>=0; i--){
+        for(int i=m-1; i>=0; i--){  
             char c = s.charAt(i);
             if(Character.isDigit(c)){
                 cur = (int)Math.pow(10,n)*(int)(c-'0')+cur;

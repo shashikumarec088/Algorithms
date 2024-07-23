@@ -60,7 +60,7 @@ public class Problem212 {
     found the word, in the outer board loop we check if found is true, if so we add word and break.
     * return res at the end
     * in backtrack we check if index is word length if so we return true
-    * if i, j are out of bound or char at i,j is not same as char at index then we return true
+    * if i, j are out of bound or char at i,j is not same as char at index then we return false
     * we mark board at i,j as visited and then we init found to false, iterate over all dirs
     * we call backtrack with new values of i, j then if found we set found to true and break
     * we revert the board with right char then we return found

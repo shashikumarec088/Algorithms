@@ -2,7 +2,7 @@ package com.github.shashi.leetcode;
 
 public class Problem201 {
     /*
-    Bitwise AND of Numbers Range
+        Bitwise AND of Numbers Range
     Given two integers left and right that represent the range [left, right], return the bitwise AND of all numbers in this range, inclusive.
 
     Example 1:

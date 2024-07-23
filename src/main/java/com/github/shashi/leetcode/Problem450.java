@@ -32,7 +32,7 @@ public class Problem450 {
 
     Approach 1: recursive solution
     * intuition is if the node to be deleted only left or right then return consider the one child as
-    element to replace else  find successor and copy value to the node and deleter the successor
+    element to replace else  find successor and copy value to the node and delete the successor
     algo:
     * in delete check if root is null  then return
     * if root val is < target then root.right = rec(root.right,target)

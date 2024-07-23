@@ -50,7 +50,7 @@ public class Problem4 {
     * takes m+n time and constanct space
 
     Approach 3: binary search with rec
-    * intuition is since both the arrays are sorted, we need to find and mid element of the merged list or mid and
+    * intuition is since both the arrays are sorted, we need to find the mid element of the merged list or mid and
     previous element if total elements are even. to do that we can consider the mid of both the arrays and check
     if number of elements on the left side of both the mids are < target position if so we can discard the left
     part of A or B else right part of A or B
@@ -61,7 +61,7 @@ public class Problem4 {
     algo:
     * create global variables n1, n2 of type integer array, assing nums1, nums2 to those, let total=m+n
     where m = n1.length and n=n2.length
-    * if total is add then return rec of 0,m-1,0,n-1,total/2
+    * if total is odd then return rec of 0,m-1,0,n-1,total/2
     * else return avg of rec of 0,m-1,0,n-1,total/2-1 and rec of 0,m-1,0,n-1,total/2
     * in rec we take start index of n1, n2 and end index of n1,n2 if as,ae,bs,be, kth element
     * base case is if either of the array is empty then we return if as>ae then we return n2[k-as]
@@ -69,7 +69,7 @@ public class Problem4 {
     * compute mid of A, B am=(as+ae)/2, bm=(bs+be)/2, and av=n1[am] and bv=n2[bm]
     * check if am+bm < k  if so
         * check if av<bv if so return rec(am+1,ae,bs,be,k) else rec(as,ae,bm+1,be)
-    * else ie am +bm <=k
+    * else ie am +bm >=k
         * check if av>bv if so return rec(as,am-1,bs,be) else rec(as,ae,bs,bm-1)
     time & space:
     * it takes log m + log n time and log m + log n space as we need to cut both arrays in worst case.

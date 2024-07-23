@@ -46,7 +46,7 @@ public class Problem130 {
     * intuition is same as approach 1 instead of dfs we use bfs to visit the neighbors
     algo:
     * initialize m,n to rows and cols respectively, list of int arrays to capture the border elements
-    * do dfs on border elements
+    * do bfs on border elements
     * iterate over all the elements and mark first O to X and E to O (remember if we mark E to O first then
     it will be overwritten by next if condition or use else if)
     * int bfs check if element is not O then return

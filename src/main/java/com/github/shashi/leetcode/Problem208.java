@@ -47,6 +47,21 @@ public class Problem208 {
     * in search initialize the cur as root, iterate over all elements in word, if c is not present in cur.children
     then return false else make cur = cur.children.get(c). at the end retunr cur.isWord
     * in startsWith do the same as search, at the end return true.
+
+    Delete word:
+    * intuition is to recursively find the tail of the trie and reset the word and if no children then keep
+    removing the child from the end.
+    algo:
+    * call the rec with root, word and pos 0
+    * if root is null then return null
+    * if pos is word length then we reached the trie tail reset the isWord to false and if no children then
+    return null else return root
+    * c is the char at pos, init node = call rec with pos+1 and root.children.get(c)
+    * if node is null then remove c from root children
+    * if root is not word and has no children then return null
+    * return root at the end
+    time & space:
+    * it takes n time and n space for recursion stack
      */
     public static void main(String[] args) {
 

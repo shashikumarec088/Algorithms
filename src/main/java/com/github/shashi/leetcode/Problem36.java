@@ -58,6 +58,30 @@ public class Problem36 {
         return isValidSudokuA3(board);
     }
 
+    public static void main(String[] args) {
+        Problem36 pp36 = new Problem36();
+        char[][] board = {{'5','3','.','.','7','.','.','.','.'},{'6','.','.','1','9','5','.','.','.'},{'.','9','8','.','.','.','.','6','.'},{'8','.','.','.','6','.','.','.','3'},{'4','.','.','8','.','3','.','.','1'},{'7','.','.','.','2','.','.','.','6'},{'.','6','.','.','.','.','2','8','.'},{'.','.','.','4','1','9','.','.','5'},{'.','.','.','.','8','.','.','7','9'}};
+        System.out.println(pp36.isValidSudokuA4(board));
+    }
+
+    public boolean isValidSudokuA4(char[][] board) {
+        int[] rows = new int[board.length];
+        int[] cols = new int[board.length];
+        int[] boxes = new int[board.length];
+        for(int i=0; i<board.length; i++){
+            for(int j=0; j<board.length;j++){
+                int id = 3*(i/3)+(j/3);
+                if(board[i][j]=='.')continue;
+                int num=board[i][j] - '0';
+                if((rows[i] & (1<<num))>0||(cols[j] & (1<<num))>0
+                        || (boxes[i] & (1<<num))>0)return false;
+                rows[i]|=(1<<num);
+                cols[j]|=(1<<num);
+                boxes[id]|=(1<<num);
+            }
+        }
+        return true;
+    }
 
     public boolean isValidSudokuA3(char[][] board) {
         int n = 9;

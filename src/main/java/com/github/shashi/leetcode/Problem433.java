@@ -27,7 +27,7 @@ public class Problem433 {
     startGene, endGene, and bank[i] consist of only the characters ['A', 'C', 'G', 'T'].
 
     Approach 1: bfs
-    * intuition is that problem asks fot the minimum number of mutations needed to get to end sequence with
+    * intuition is that problem asks for the minimum number of mutations needed to get to end sequence with
     only one change at a time, which resembles a graph structure where each state is a node and transition is
     represented by edge, since we are asked to get the minimum moves, it is a shorted path problem, to get the
     shortest path bfs is the better approach to solve.

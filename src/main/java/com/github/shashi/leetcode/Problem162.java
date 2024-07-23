@@ -53,7 +53,7 @@ public class Problem162 {
     the middle element and check if it is > than mid+1 if so then our target should be on left side including mid
     else on the right side excluding mid, below explaination tells how it covers 3 cases.
     * if we consider the 3 cases as mentioned in approach 1, case 1, when the seq is increasing then last element
-    in the list is the answer, we we do binary search since always mid+1 > mid we end with n-1th position and we
+    in the list is the answer, we do binary search since always mid+1 > mid we end with n-1th position and we
     come out of the loop since condition l<h becomes false.
     * in case 2 when sequence is decreasing, then mid condition is always satisfied and h becomes 0 so we come out
     of loop with l=h=0

@@ -23,6 +23,7 @@ public class Problem1644 {
      */
     public TreeNode lowestCommonAncestorA4(TreeNode root, TreeNode p, TreeNode q){
         if(root==null || p==null || q==null)return root;
+        LinkedList ll = new LinkedList();
         TreeNode res = rec(root,p,q);
         if(res==p)
             return rec2(p,q,q)!=null?res:null;
