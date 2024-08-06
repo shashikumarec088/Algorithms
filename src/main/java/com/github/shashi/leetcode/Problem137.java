@@ -32,8 +32,8 @@ public class Problem137 {
 
     Approach 2: equation by bitmask
     * intuition is to capture the set bit at each bit level which is repeating and remaining with 1 times after
-    taking mod 3. for this we can have seenOnce which for reach number stores the bits that are not seen before
-    and seenOnce will store the bits which are seen twice.
+    taking mod 3. for this we can have seenOnce which for each number stores the bits that are not seen before
+    and seenTwice will store the bits which are seen twice.
     * to capture the seenOnce bits we xor the seenOnce with the current number which makes sure that the once
     appearing bits are retained and we reset the bits which appeared twice before by anding with the not of seenTwice
     * to capture the seenTwice at each bit level we xor the seenTwice with current number and are not set in seenOnce

@@ -133,6 +133,16 @@ public class Problem5 {
         return "";
     }
 
+    public String longestPalindromeA4(String st) {
+        int s=0,e=0,n=st.length();
+        for(int i=n-1; i>0;i--){
+            for(int j=0;j<n-i;j++){
+                if(isPalindrome(st,j,j+i))return st.substring(j,j+i+1);
+            }
+        }
+        return st.substring(s,e+1);
+    }
+
     public boolean isPalindrome(String str, int s, int e) {
         while(s<e){
             if(str.charAt(s)!=str.charAt(e))return false;

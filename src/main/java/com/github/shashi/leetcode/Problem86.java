@@ -30,6 +30,8 @@ public class Problem86 {
     * return the dummy1.next
     time & space:
     * take n time and constant space as we are using the nodes in the input
+
+    read recursive solution later https://leetcode.com/problems/partition-list/solutions/349660/simple-recursive-solution-runtime-and-memory-both-100-with-detailed-explanations/?envType=study-plan-v2&envId=top-interview-150
      */
 
     public ListNode partition(ListNode head, int x) {

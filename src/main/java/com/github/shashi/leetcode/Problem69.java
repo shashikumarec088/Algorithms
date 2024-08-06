@@ -42,7 +42,7 @@ public class Problem69 {
     * call rec with x, check base case if x<2 then return x
     * init left = 2 * rec(x/4)
     * right = left+1
-    * return if right * right is <= x then x else left
+    * return if right * right is <= x then right else left
     time & space:
     * log n time and log n space for rec stack
      */

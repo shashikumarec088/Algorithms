@@ -50,7 +50,7 @@ public class Problem134 {
 
     Approach 2:
     * intuition is that if their exists a path then sum of all the gains will be >= 0 else there will not
-    be circular path. if path exists, then starting from 0 at any point gain drops to 0 then any point
+    be circular path. if path exists, then starting from 0 at any point gain drops below 0 then any point
     between these is not a valid start point, then start over from the next station as start point
     algo:
     * first check if path exists by summing all the gains and checking if >=0 if so then continue else return -1

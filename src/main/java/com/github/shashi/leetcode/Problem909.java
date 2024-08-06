@@ -1,5 +1,6 @@
 package com.github.shashi.leetcode;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.PriorityQueue;
 import java.util.Queue;
@@ -150,37 +151,36 @@ public class Problem909 {
         return moves[n*n];
     }
 
-    public int snakesAndLaddersA2(int[][] board) {
-        int n = board.length;
-        Pair[] cells = new Pair[n*n+1];
-        int cell=1;
-        boolean flag=true;
-        for(int r=n-1; r>=0;r--){
-            if(flag){
-                for(int c=0;c<n;c++)
-                    cells[cell++]=new Pair(r,c);
+    public int snakesAndLaddersA2(int[][] grid) {
+        int n = grid.length;
+        int[][] cell = new int[n*n+1][2];
+        boolean dir=true;
+        int pos=1;
+        for(int i=n-1; i>=0;i--){
+            if(dir){
+                for(int j=0; j<n;j++)
+                    cell[pos++]=new int[]{i,j};
             }else{
-                for(int c=n-1; c>=0;c--)
-                    cells[cell++]=new Pair(r,c);
+                for(int j=n-1; j>=0;j--)
+                    cell[pos++]=new int[]{i,j};
             }
-            flag=!flag;
+            dir=!dir;
         }
-        PriorityQueue<int[]> queue = new PriorityQueue<>((a, b)
-                -> a[0]-b[0]);
-        queue.add(new int[]{0,1});
         int[] moves = new int[n*n+1];
-        for(int i=0; i<moves.length;i++)
-            moves[i]=-1;
+        Arrays.fill(moves,-1);
         moves[1]=0;
+        PriorityQueue<int[]> queue = new PriorityQueue<>((a,b)->a[0]-b[0]);
+        queue.offer(new int[]{0,1});
         while(!queue.isEmpty()){
-            int[] distCell = queue.remove();
-            int cur = distCell[1];
-            for(int next=cur+1; next<=Math.min(cur+6,n*n);next++){
-                int r=cells[next].getKey(),c=cells[next].getValue();
-                int dest = board[r][c]!=-1?board[r][c]:next;
-                if(moves[dest]==-1){
-                    moves[dest]=moves[cur]+1;
-                    queue.add(new int[]{moves[dest],dest});
+            int[] elem = queue.poll();
+            int cur = elem[1];
+            if(elem[0]!=moves[cur])continue;
+            for(int i=cur+1; i<=Math.min(cur+6,n*n);i++){
+                int r = cell[i][0],c=cell[i][1];
+                int next = grid[r][c]==-1?i:grid[r][c];
+                if(moves[next]==-1 || moves[next] > (moves[cur]+1)){
+                    moves[next]=moves[cur]+1;
+                    queue.offer(new int[]{moves[cur]+1,next});
                 }
             }
         }
