@@ -84,7 +84,7 @@ public class Problem4 {
     parts are same  partA = (l+r)/2 then partb = (m+n+1)/2-partA , we added 1 to handle the odd elements
     cas and also partA and partB position belongs to right part of the array
     * then we get the elements at 4 boundaries and check if they are satisfying the condition aleft<=bright
-    and bleft<=bright if so we found the right boundaries else we check if aleft > bright then we consider
+    and bleft<=aright if so we found the right boundaries else we check if aleft > bright then we consider
     the left part of array a ie we make r=partA-1 else we consider right part of array ie l=partA+1
     algo:
     * init m=nums1.length and n = nums2.length, l=0, r=m (remember this r=m not m-1) this is because on the

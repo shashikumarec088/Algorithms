@@ -35,7 +35,7 @@ public class Problem14 {
     * time complexity is mn and space is o(1)
 
     Approach 2: (recursion)
-    * intuition is to keep spitting the array into 2 parts until we have 1 element
+    * intuition is to keep splitting the array into 2 parts until we have 1 element
     when we have 1 element each then we find the common prefix and we do this upwords untill
     all elements is covered;
     algo:

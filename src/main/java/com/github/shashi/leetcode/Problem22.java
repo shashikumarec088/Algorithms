@@ -61,6 +61,11 @@ public class Problem22 {
         return res;
     }
 
+    public static void main(String[] args) {
+        Problem22 problem22 = new Problem22();
+        List<String> res = problem22.generateParenthesis(3);
+    }
+
     public void backtrack(List<String> res, int open, int close,
                           StringBuilder sb, int n){
         if(sb.length()==2*n){

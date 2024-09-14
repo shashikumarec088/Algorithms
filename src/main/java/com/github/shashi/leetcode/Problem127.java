@@ -40,7 +40,7 @@ public class Problem127 {
     * create since the strings can contain the alphabetic characters, with each change generating the intermediate
     state will lead to many words which will not scale, instead we can create the map of all intermediate words to
     list of actual words mapping by making one character generic in the word.
-    * iterate over the each word in the wordlist, for each word iterate over the length of the word
+    * iterate over each word in the wordlist, for each word iterate over the length of the word
     * for each position, change words value at position to generic character '*' and put with empty list to map
     if the generic word is not in map, add the actual word to list of worlds whose generic word is same as current
     generic word
@@ -61,7 +61,7 @@ public class Problem127 {
     seperate map.
 
     Approach 2: bidirectional bfs
-    * intuition is same as approach 1, the search space consdiered by bfs depends on the branching factor of nodes
+    * intuition is same as approach 1, the search space considered by bfs depends on the branching factor of nodes
     at each level, if branching factor remains same for all nodes, then search space increased exponentially, for
     example in complete binary tree search space at each level increase at powers of 2. we can cut down the
     search space if we traverse the graph from both the ends and stop at point when we find common node in both
@@ -72,7 +72,7 @@ public class Problem127 {
     * create the combinations map same as approach1,
     * have 2 queues and 2 visited sets add start and end respectively to all nodes
     * have 2 variables to capture levels for each queue, d1, d2
-    * iterate until q1 and q2 are not null
+    * iterate until q1 and q2 are not empty
     * at each level check if q1 size is <= q2 size if so inc d1 and call bfs, if bfs returns true then we
     found the common node between both searches then return d1+d2 as the result
     * else inc d2 do bfs on q2  if returns true then return d1+d2 as result

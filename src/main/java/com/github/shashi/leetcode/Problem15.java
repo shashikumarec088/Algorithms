@@ -78,7 +78,10 @@ public class Problem15 {
         Set<List<Integer>> list = new HashSet<>();
         Set<Integer> set = new HashSet<>();
         for(int i=0; i<n; i++){
-            if(!set.contains(nums[i]))twoSumA2(list,nums,i);
+            if(!set.contains(nums[i])){
+                twoSumA2(list,nums,i);
+                set.add(nums[i]);
+            }
         }
         return new ArrayList<>(list);
     }

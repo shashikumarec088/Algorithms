@@ -38,6 +38,10 @@ public class Problem82 {
     * else make prev.next = cur, prev=prev.next
     * make  cur=cur.next repeat the loop
     * at the end make prev.next=null tp handle duplicates at the end
+
+    Approach 3: recursion approach
+    * intuition and code is same as approach 1 but using recursion
+
      */
     public class ListNode {
         int val;
@@ -48,6 +52,31 @@ public class Problem82 {
     }
     public ListNode deleteDuplicates(ListNode head) {
         return deleteDuplicatesA1(head);
+    }
+
+    public ListNode deleteDuplicatesA3(ListNode head) {
+        ListNode dummy = new ListNode(1);
+        ListNode prev=dummy;
+        rec(prev,head);
+        return dummy.next;
+    }
+
+    public void rec(ListNode prev,ListNode head){
+        if(head==null){
+            prev.next=null;
+            return;
+        }
+        if(head.next==null || head.val!=head.next.val){
+            prev.next=head;
+            prev=prev.next;
+            head=head.next;
+            rec(prev,head);
+        }else{
+            while(head.next!=null && head.next.val==head.val)
+                head=head.next;
+            head=head.next;
+            rec(prev,head);
+        }
     }
 
     public ListNode deleteDuplicatesA1(ListNode head) {

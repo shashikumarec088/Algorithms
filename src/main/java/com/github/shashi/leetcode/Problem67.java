@@ -20,7 +20,7 @@ public class Problem67 {
     Approach 1:
     * intuition is to do what is said to do using bit manipulation, consider from the end, make sure first string
     we are processing has length >= 2nd string, at each index inc sum if it is 1 and also add the carry, if
-    sum if add append 1 else 0 and make carry as sum/2
+    sum if odd append 1 else 0 and make carry as sum/2
     algo:
     * init n= a.length and m=b.length check if n<m then call same method by swapping strings
     * init stringBuilder sb and j=m-1, carry=0

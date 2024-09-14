@@ -57,6 +57,7 @@ public class Problem224 {
         return calculateA1(s);
     }
     public int calculateA1(String s) {
+        boolean a = "" instanceof String;
         int cur=0,n=0,m=s.length();
         Stack<Object> stack = new Stack<>();
         for(int i=m-1; i>=0; i--){  

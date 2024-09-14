@@ -63,14 +63,44 @@ public class Problem433 {
     count and call rec with present sequence as start, updated count. after calling rec remove seq
     from the set so we backtrack and explore the other sequences
     time & space:
-    * we iterate over all elements in bank which is b time and we check for reach char in the sequence
+    * we iterate over all elements in bank which is b time and we check for each char in the sequence
     which is n time this implies b*n time and we call recursion with possibility of all valid sequences
     from the start sequence in worst case it will be b times, then b-1 time then b-2 time which is b!
     total time complexity is b! * n
+
+    Approach 3: dfs by using all valid combinations similar to approach 1
      */
 
     public int minMutation(String startGene, String endGene, String[] bank) {
         return minMutationA2(startGene, endGene, bank);
+    }
+
+    public int minMutationA3(String s, String e, String[] bank) {
+        Set<String> words = new HashSet<>();
+        for(String word:bank)words.add(word);
+        if(!words.contains(e))return -1;
+        return dfs2(s,e,words,new HashSet<>());
+    }
+
+    public int dfs2(String s, String e,Set<String> words,
+                    Set<String> visited){
+        if(s.equals(e)) return 0;
+        if(visited.contains(s))return -1;
+        int ans = Integer.MAX_VALUE;
+        visited.add(s);
+        for(int j=0;j<s.length();j++){
+            for(char c: "ACGT".toCharArray()){
+                char[] arr = s.toCharArray();
+                arr[j]=c;
+                String s2 = new String(arr);
+                if(words.contains(s2)){
+                    int res = dfs2(s2,e,words,visited);
+                    if(res!=-1)ans=Math.min(ans,1+res);
+                }
+            }
+        }
+        visited.remove(s);
+        return ans==Integer.MAX_VALUE?-1:ans;
     }
 
     int minCount = Integer.MAX_VALUE;

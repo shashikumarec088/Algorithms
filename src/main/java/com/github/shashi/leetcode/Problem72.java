@@ -33,14 +33,14 @@ public class Problem72 {
     replace, delete and insert. this is used in spelling corrections and in NLP
     * if 2 strings are same then the distance is 0, consider example w1=abc and w2=abe, in these 2 strings the
     last char is different. in this case we need to perform some operation on w1 to make it equal to w2
-    * option1 -> delete delete c from w1, 2 -> instert e in w1 3 -> replace c with e in w1
+    * option1 -> delete c from w1, 2 -> insert e in w1 3 -> replace c with e in w1
     * the goal is to choose the option that leads to minimal number of operations
     * consider option 1-> from abc if we delete c then w1=ab and w2=abe in this case once again we need to
     insert e to w1 which makes w1=abe and w2 = abe so the number of operations performed 2
     * consider option 2-> insert e to w1 now w1=abce and w2=abe then we need to delete c from w1 then
     w1=abe and w2=abe number of operations are 2
-    * consider option 3 -> replace c with e in w1 w1=abe and w2=abe number of operations are 1
-    * hence min abong these 3 options in 1 so the edit distance in this case is 1
+    * consider option 3 -> replace c with e in w1=abe and w2=abe number of operations are 1
+    * hence min among these 3 options in 1 so the edit distance in this case is 1
     * this leads us to the conclusion that Edit distance to transform w1 to w2 = 1 + min(Number of operations
     after deleting e from w1, Number of operations after inserting e in w1, Number of operations after replacing
     c with e in w1) + 1. Here the 1 is needed to count the current operation which also a modification.

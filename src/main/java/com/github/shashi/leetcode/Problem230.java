@@ -47,6 +47,8 @@ public class Problem230 {
     follow up: without optimization the time for inset and getting the kth smallest is 2h+k if we need
     to optimize then we need have datastructure consisting of BST plus the DLL, dll will store the elements
     in the ascending order so that we can insert and get the element in h+k time
+
+    Approach 3: moris inorder traversal
      */
 
     public class TreeNode {
@@ -64,6 +66,30 @@ public class Problem230 {
 
     public int kthSmallest(TreeNode root, int k) {
         return kthSmallestA2(root,k);
+    }
+
+    public int kthSmallestA3(TreeNode root, int k) {
+        while(root!=null){
+            if(root.left==null){
+                k--;
+                if(k==0)return root.val;
+                root=root.right;
+            }else{
+                TreeNode left=root.left;
+                while(left.right!=null && left.right!=root)
+                    left=left.right;
+                if(left.right==null){
+                    left.right=root;
+                    root=root.left;
+                }else{
+                    k--;
+                    if(k==0)return root.val;
+                    root=root.right;
+                    left.right=null;
+                }
+            }
+        }
+        return 0;
     }
 
     public int kthSmallestA2(TreeNode root, int k) {

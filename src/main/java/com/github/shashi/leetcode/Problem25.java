@@ -40,8 +40,8 @@ public class Problem25 {
     algo:
     * init revHead,newHead and kTail as null
     * iterate until head is not null
-    * make cur=head, int it 0 and iterate until cur is not null i<k
-    * if i<k then make revHead = hehad else revHead as reversefirstN head,k
+    * make cur=head, int i= 0 and iterate until cur is not null i<k
+    * if i<k then make revHead = head else revHead as reversefirstN head,k
     * if newHead is null then set revHead as new head this is the answer
     * if kTail is not null then asetkTail.next as revHead
     * make kTail = head and head=cur
