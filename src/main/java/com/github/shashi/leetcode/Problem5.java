@@ -30,7 +30,7 @@ public class Problem5 {
     * inc i, dec j
     * return true at the end.
     time & space:
-    * takes n^3 space and const time
+    * takes n^3 time and const space
 
     Approach 2: dp
     * intuition is to avoid the duplicate effort spent on checking if palindrome or not for each substring
@@ -38,7 +38,7 @@ public class Problem5 {
     check for bigger string
     * for any substring between (i,j) the palindrome check will be to check if char at i,j are same and (i+1,j-1)
     is palindrome
-    * if process the string from end to start position and from that position till end of string if we compute
+    * we process the string from end to start position and from that position till end of string if we compute
     the result and store in dp array then it can be reused, for example if we know 4,4 then 3,5 is dependent
     on 4,4 but when difference is 1 then we no need to depend at there will be 1 or 2 chars
     * this give the relation dp[i][j] = char at i== char at j and difference j-i < 2 or dp[i+1][j-1]

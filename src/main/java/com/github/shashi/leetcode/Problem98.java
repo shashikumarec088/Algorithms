@@ -48,6 +48,20 @@ public class Problem98 {
     time & space:
     * n time and n space
 
+    Approach 3: Moris inorder traversal
+    * intuition is to use the moris inorder traversal to do the inorder traversal without using the stack
+    algo:
+    * initialize prev=null, cur=root
+    * iterate until cur is not null
+    * if cur.left is not null then find the inorder predecessor of cur by finding the rightmost node in the left subtree
+    * if rightmost node is not null and rightmost.right is null then make rightmost.right=cur and cur=cur.left
+    * else if rightmost.right is cur then make rightmost.right=null, if prev is not null and cur.val <= prev.val return false
+    * make prev=cur and cur=cur.right
+    * repeat until cur is null
+    * return true at the end
+    time & space:
+    * n time and const space
+
      */
     public class TreeNode {
         int val;

@@ -28,7 +28,7 @@ public class Problem637 {
     * intuition is to do the level order traversal using bfs and at each level get the size sum values and get the
     average and add it to result
     algo:
-    * create list od doubles to store the result, queue of type treeNode add root to queue
+    * create list of doubles to store the result, queue of type treeNode add root to queue
     * iterate until queue is empty, at each iteration get the queue size n
     * create sum=0 of type double else we end up having overflow for big values, iterate for n nodes
     over queue and get the node from queue add its value to sum

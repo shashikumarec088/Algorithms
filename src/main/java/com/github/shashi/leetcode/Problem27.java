@@ -1,6 +1,6 @@
 package com.github.shashi.leetcode;
 
-public class Problem27 {
+public class    Problem27 {
     /*
     Remove Element
     Given an integer array nums and an integer val, remove all occurrences of val in nums in-place.

@@ -37,7 +37,7 @@ public class Problem153 {
     * init l=0, r=n-1 where n is number of elements
     * iterate until l<r calculate mid=l+(r-l)/2, if nums[mid]>nums[n-1] then make l=mid+1 else r=mid
     * return nums[l] at the end
-    * here we use condition l<r not l<=rr because we consider the mid element on left part of the binary search
+    * here we use condition l<r not l<=r because we consider the mid-element on left part of the binary search
     and we will be left with 1 element to process that will  the desired element.
     time & space:
     * it takes log n time and constant space

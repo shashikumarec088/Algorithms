@@ -73,9 +73,68 @@ public class Problem300 {
     * return list size at the end
     time & space:
     * it takes n log n time and n space
+
+    Approach 4: recursion solution
+    * intuition is that at any point either we can include the element or exclude the element,
+        if we include the element we add 1 to the length and move to next element else we move to
+        next element.
+    algo:
+    * call rec with nums,0,-1 as pos and prev
+    * in rec base case is if pos >= nums.length return 0
+    * inititalize exclude with rec(nums,pos+1,prev)
+    * init include with 0
+    * if prev=-1 or nums[pos] > nums[prev] then include = 1+rec(nums,pos+1,pos)
+    * return max of include and exclude
+    time & space:
+    * it takes 2^n time and n space for recursion stack
+
+    Approach 5:
+    * intuition is same as approach 4 with memoization to avoid repeated calculations
+    algo:
+    * init memo array of size nums.length, nums.length+1 of type Integer
+    * call rec2 with nums,0,-1
+    * in rec2 base case is if pos >= nums.length return 0
+    * if memo[pos][prev+1] is not null return from memo
+    * init exclude with rec2(nums,pos+1,prev)
+    * init include with 0
+    * if prev=-1 or nums[pos] > nums[prev] then include = 1+rec2(nums,pos+1,pos)
+    * store max of include and exclude in memo[pos][prev+1]
+    * return from memo
+    time & space:
+    * it takes n^2 time and n^2 space.
      */
     public int lengthOfLIS(int[] nums) {
         return lengthOfLISA3(nums);
+    }
+
+    Integer[][] memo;
+    public int lengthOfLISA5(int[] nums) {
+        memo = new Integer[nums.length][nums.length+1];
+        return rec2(nums,0,-1);
+    }
+
+    public int rec2(int[] nums, int i, int prev){
+        if(i>=nums.length)return 0;
+        if(memo[i][prev+1]!=null)return memo[i][prev+1];
+        int exclude=rec2(nums,i+1,prev);
+        int include=0;
+        if(prev==-1 || nums[i]>nums[prev])
+            include= rec2(nums, i+1,i)+1;
+        memo[i][prev+1]=Math.max(exclude,include);
+        return memo[i][prev+1];
+    }
+
+    public int lengthOfLISA4(int[] nums) {
+        return rec(nums,0,-1);
+    }
+
+    public int rec(int[] nums, int i, int prev){
+        if(i>=nums.length)return 0;
+        int exclude=rec(nums,i+1,prev);
+        int include=0;
+        if(prev==-1 || nums[i]>nums[prev])
+            include= rec(nums, i+1,i)+1;
+        return Math.max(exclude,include);
     }
 
     public int lengthOfLISA3(int[] nums) {

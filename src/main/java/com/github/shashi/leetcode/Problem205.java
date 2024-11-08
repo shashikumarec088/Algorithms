@@ -41,7 +41,7 @@ public class Problem205 {
 
         * the issue we face with above logic is when s = badc and t= baba if we have one mapping from s  t
         it then we proceed with mapping and tell that this is valid but actually for the strings tobe
-        isomorphic viceversa also should be true, mapping from t to s also should be valid which
+        isomorphic vice versa also should be true, mapping from t to s also should be valid which
         is not the case with above t
         * to address this we need to maintain 2 maps and validate on both the mappings
 

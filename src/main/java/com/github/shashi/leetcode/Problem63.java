@@ -34,7 +34,7 @@ public class Problem63 {
     recursive approach
     * the base case is when we hit the boundaries or value at position is 1 which indicates their is an obstacle
     in that case we return 0
-    * when we rech the bottom right and if value at position is 0 then we return 1 else 0 indicating if this
+    * when we reach the bottom right and if value at position is 0 then we return 1 else 0 indicating if this
     path can be considered or not
     * at the end we call the recursion for 2 choices i+1,j and i,j+1 and return the sum.
     algo:

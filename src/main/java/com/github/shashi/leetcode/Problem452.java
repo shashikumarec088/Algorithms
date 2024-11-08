@@ -39,7 +39,7 @@ public class Problem452{
     * intuition is to sort the elements based on start point and find the number of overlapping ranges, if
     not overlapping then consider as new range and continue to merge, total ranges we got will be the ans
     algo:
-    * sort the points in asc based on start points rememer that we should not use a[0]-b[0] it will lead to
+    * sort the points in asc based on start points remember that we should not use a[0]-b[0] it will lead to
     overflow error instead we can compare using a[0]==b[0] 0 a[0]<b[0] -1 else 1
     * consider the 1 point as last point and count as 1, iterate array from index 1
     * if cur[0] <= last[1] then they are overlapping update the last point as

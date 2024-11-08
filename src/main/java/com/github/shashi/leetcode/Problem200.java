@@ -64,7 +64,7 @@ public class Problem200 {
         grid and dec islands when we union 2 adjacent cells
         algo:
         * create the union find ds which takes size and number if islands
-        * count the number if islands, define the unionfind with size m*n and numIslands
+            * count the number if islands, define the unionfind with size m*n and numIslands
         * iterate over the grid and when it is 1, iterate over the neighbors and when neighbor
         is 1 then call union with i*n+j, nei*n+nej
         * return isLands at the end

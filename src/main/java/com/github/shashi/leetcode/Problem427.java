@@ -50,12 +50,12 @@ public class Problem427 {
     n == 2x where 0 <= x <= 6
 
     Approach 1: recursion
-    * Intuition is to perform what is asked in the problem. From the problem it states that the grid is devided
-    into 4 subparts again and again which indicates recursive nature of the problem,
+    * Intuition is to perform what is asked in the problem. From the problem it states that the grid is divided
+    into 4 sub parts again and again which indicates recursive nature of the problem,
     matrix can be represented with two coordinates and length, using this information we can find all corners of
     the square, if all elements in grid are same then it is the leaf node in that case we can create a node with
     leaf set to true and return. if not we need to create the root node and recursively build the tree for all
-    the 4 subparts of the tree.
+    the 4 sub parts of the tree.
     algo:
     * iterate over the grid and check if all elements are same if so crate the node with value set to true if
     grid has 1s else false and leaf set to true and return the node.

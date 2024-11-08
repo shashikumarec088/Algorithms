@@ -1,2 +1,76 @@
-select name as Customers from customers c
-where id not in (select distinct customerId from orders)
+183. Customers Who Never Order
+Table: Customers
+
++-------------+---------+
+| Column Name | Type    |
++-------------+---------+
+| id          | int     |
+| name        | varchar |
++-------------+---------+
+id is the primary key (column with unique values) for this table.
+Each row of this table indicates the ID and name of a customer.
+
+
+Table: Orders
+
++-------------+------+
+| Column Name | Type |
++-------------+------+
+| id          | int  |
+| customerId  | int  |
++-------------+------+
+id is the primary key (column with unique values) for this table.
+customerId is a foreign key (reference columns) of the ID from the Customers table.
+Each row of this table indicates the ID of an order and the ID of the customer who ordered it.
+
+
+Write a solution to find all customers who never order anything.
+
+Return the result table in any order.
+
+The result format is in the following example.
+
+Example 1:
+
+Input:
+Customers table:
++----+-------+
+| id | name  |
++----+-------+
+| 1  | Joe   |
+| 2  | Henry |
+| 3  | Sam   |
+| 4  | Max   |
++----+-------+
+Orders table:
++----+------------+
+| id | customerId |
++----+------------+
+| 1  | 3          |
+| 2  | 1          |
++----+------------+
+Output:
++-----------+
+| Customers |
++-----------+
+| Henry     |
+| Max       |
++-----------+
+
+intuition:
+* here we need to filter the user names which are not there in orders table
+
+approach 1:
+* use not in clause to filter the user names and include all the users ids which are in orders table
+in the not in clause.
+
+query:
+select name as Customers from customers where id not in
+(select customerId from Orders)
+
+approach 2:
+* use the left join to get the customers who never ordered anything and the filter by using the
+where clause and considering the users with orders id is null.
+
+select name as Customers from customers c1 left join Orders o1 on
+c1.id = o1.customerId where o1.id is null

@@ -43,7 +43,7 @@ public class Problem222 {
     * last level can have between 1 to 2^d nodes, indexed from l=0, r=2^d-1
     * do binary search to find the values at last level
     * mid = l+(r-l)/2
-    * check if node exists at mid if so male l=mid+1 else r = mid-1
+    * check if node exists at mid if so make l=mid+1 else r = mid-1
     * at the end return 2^d-1+ l nodes (here after binary search l will have 1 greater than node position ie if
     node present till 0th position then l will be 1 after binary search, even if we are initializing l with 0
     after binary search its value will be > 1 since it is guarenteed that atleat 1 node will be there at the

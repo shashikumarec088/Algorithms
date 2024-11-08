@@ -25,7 +25,7 @@ public class Problem56 {
     algo:
     * sort the input array based on custom comparator Arrays.sort(input,(a,b)->a[0]-b[0])
     * create arrayList of arrays to hold the ans, add first element to array.
-    * iterate from i=1 to n, for reach cur check if prev end is >= cur start if so then update the prev end with
+    * iterate from i=1 to n, for each cur check if prev end is >= cur start if so then update the prev end with
     max of prev end and cur end
     * else add the cur interval to list
     * at the end convert the list array using list.toArray(new int[list.size()][])

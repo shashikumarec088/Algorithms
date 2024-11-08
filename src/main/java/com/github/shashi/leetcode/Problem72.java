@@ -43,7 +43,7 @@ public class Problem72 {
     * hence min among these 3 options in 1 so the edit distance in this case is 1
     * this leads us to the conclusion that Edit distance to transform w1 to w2 = 1 + min(Number of operations
     after deleting e from w1, Number of operations after inserting e in w1, Number of operations after replacing
-    c with e in w1) + 1. Here the 1 is needed to count the current operation which also a modification.
+    c with e in w1). Here the 1 is needed to count the current operation which also a modification.
     * when we are trying to find all possible solutions and choosing the most optimal one then recursion is the
     natural way to implement it.
     * when we reach the start of string then we reached the base case then we return length of remaining among

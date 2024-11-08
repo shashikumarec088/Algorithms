@@ -89,7 +89,7 @@ public class Problem4 {
     algo:
     * init m=nums1.length and n = nums2.length, l=0, r=m (remember this r=m not m-1) this is because on the
     left part all the elements from A can be there when all elements in A < B this will hold true.
-    * if m>then we call the same method with nums2,nums1 this is to make sure that we always consider the
+    * if m>n then we call the same method with nums2,nums1 this is to make sure that we always consider the
     smallest array for binary search so time complexity is reduced
     * iterate loop until l<=r
     * find partA= (l+r)/2 and partB = (m+n+1)/2-partA
