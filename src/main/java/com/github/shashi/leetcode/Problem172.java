@@ -2,7 +2,7 @@ package com.github.shashi.leetcode;
 
 import java.math.BigInteger;
 
-public class Problem172 {
+public class    Problem172 {
     /*
     Factorial Trailing Zeroes
     Given an integer n, return the number of trailing zeroes in n!.
