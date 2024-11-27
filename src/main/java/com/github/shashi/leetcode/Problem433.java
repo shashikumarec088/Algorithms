@@ -33,6 +33,7 @@ public class Problem433 {
     shortest path bfs is the better approach to solve.
     algo:
     * convert the bank to list or set, so that we can do const time lookup to check if transition is in bank
+    * if end is not in bank return -1
     * initialize the queue and add start to the queue, make d=0, create empty set to hold visited nodes
     * iterate until queue is empty, for each iteration
     * get the queue size inc d, iterate over the size, get the cur state
