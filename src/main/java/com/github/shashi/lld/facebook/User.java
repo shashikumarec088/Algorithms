@@ -1,14 +1,15 @@
 package com.github.shashi.lld.facebook;
 
 import java.util.Date;
+import java.util.List;
 
 public class User extends Person implements PageFunctionsByUser{
     private int userId;
     private String name;
     private Date dateOfJoining;
     // The following lists contain the pages and groups that a user is admin of
-    private List<Pages> pagesAdmin;
-    private List<Groups> groupsAdmin;
+    private List<Page> pagesAdmin;
+    private List<Group> groupsAdmin;
 
     private Profile profile;
 

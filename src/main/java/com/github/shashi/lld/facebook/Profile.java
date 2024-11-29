@@ -14,7 +14,7 @@ public class Profile {
 
     private List<Work> workExperience;
     private List<Education> educationInfo;
-    private List<Place> places;
+    private List<Places> places;
 
     public boolean addWorkExperience(Work work) {
         return false;
@@ -24,7 +24,7 @@ public class Profile {
         return false;
     }
 
-    public boolean addPlace(Place place) {
+    public boolean addPlace(Places place) {
         return false;
     }
 
