@@ -17,6 +17,7 @@ public class Member extends Account {
     public ErrorCode placeBuyLimitOrder(String stockId, float quantity, int limitPrice, TimeEnforcementType enforcementType) {
 
 
+        return null;
     }
 
     public void callbackStockExchange(int orderId, List<OrderPart> orderParts, OrderStatus status) {

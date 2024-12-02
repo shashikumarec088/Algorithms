@@ -77,9 +77,9 @@ public class Problem4 {
     Approach 4: binary search on min length array
     * intuition is to partition both the arrays such that the number of elements on left parts are <=
     right parts and then check if edge elements are in proper order, ie aleft<=bright and bleft<=aright
-    where aleft is left part of array a and aright is right part of a similary bleft and bright are for
+    where aleft is left part of array a and aright is right part of a similarly bleft and bright are for
     array b
-    * to parition the array at right position of smaller array 1 we need to do the binary search and
+    * to partition the array at right position of smaller array 1 we need to do the binary search and
     get the amid and find the position of array b such that number of elements in left part and right
     parts are same  partA = (l+r)/2 then partb = (m+n+1)/2-partA , we added 1 to handle the odd elements
     cas and also partA and partB position belongs to right part of the array
