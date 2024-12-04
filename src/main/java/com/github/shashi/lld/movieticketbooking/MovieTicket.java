@@ -5,5 +5,5 @@ public class MovieTicket {
     private int ticketId;
     private Seat seat;
     private Movie movie;
-    private ShowTime show;
+    private Show show;
 }

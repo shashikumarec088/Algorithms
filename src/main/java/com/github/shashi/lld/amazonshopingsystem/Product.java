@@ -1,5 +1,7 @@
 package com.github.shashi.lld.amazonshopingsystem;
 
+import java.util.List;
+
 public class Product {
     private String productId;
     private String name;

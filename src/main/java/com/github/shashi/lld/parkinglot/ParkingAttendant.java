@@ -8,5 +8,6 @@ public class ParkingAttendant extends Account {
     // Will implement the functionality in this class
     public boolean resetPassword() {
         // definition
+        return false;
     }
 }

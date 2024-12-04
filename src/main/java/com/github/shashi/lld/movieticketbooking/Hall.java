@@ -5,10 +5,10 @@ import java.util.List;
 public class Hall {
     // Data members
     private int hallId;
-    private List<ShowTime> shows;
+    private List<Show> shows;
 
     // Returns list of shows
-    public List<ShowTime> findCurrentShows() {
+    public List<Show> findCurrentShows() {
         return null;
     }
 }

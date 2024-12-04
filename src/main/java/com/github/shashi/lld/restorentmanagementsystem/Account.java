@@ -6,5 +6,7 @@ public class Account {
     private Address address;
     private AccountStatus status;
 
-    public boolean resetPassword();
+    public boolean resetPassword() {
+        return false;
+    }
 }

@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Queue;
 
 public class Team {
-    public String name;
+    public String teamName;
     public Queue<PlayerDetails> playing11;
     public List<PlayerDetails> bench;
     public PlayerBattingController playerBattingController;
@@ -16,7 +16,7 @@ public class Team {
     public boolean isWinner;
 
     public Team(String name, Queue<PlayerDetails> playing11, List<PlayerDetails> bench, List<PlayerDetails> bowlers){
-        this.name = name;
+        this.teamName = name;
         this.playing11 = playing11;
         this.bench = bench;
         playerBattingController = new PlayerBattingController(playing11);
@@ -24,7 +24,7 @@ public class Team {
     }
 
     public String getTeamName() {
-        return name;
+        return teamName;
     }
 
     public void chooseNextBatsMan() throws Exception{

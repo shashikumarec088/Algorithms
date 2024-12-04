@@ -1,7 +1,9 @@
 package com.github.shashi.lld.amazonshopingsystem;
 
 public class Guest extends Customer {
-    public boolean registerAccount();
+    public boolean registerAccount() {
+        return false;
+    }
 
     public ShoppingCart getShoppingCart() {
         // functionality

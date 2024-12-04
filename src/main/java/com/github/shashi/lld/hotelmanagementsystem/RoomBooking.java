@@ -1,6 +1,7 @@
 package com.github.shashi.lld.hotelmanagementsystem;
 
 import java.util.Date;
+import java.util.List;
 
 public class RoomBooking {
     private String reservationNumber;

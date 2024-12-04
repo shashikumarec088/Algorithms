@@ -4,7 +4,7 @@ public class BowlingScoreCard {
     public int totalOversCount;
     public int runsGiven;
     public int wicketsTaken;
-    public int noBallsCount;
-    public int wideBallsCount;
+    public int noBallCount;
+    public int wideBallCount;
     public double economyRate;
 }

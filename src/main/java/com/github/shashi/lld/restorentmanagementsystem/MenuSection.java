@@ -1,5 +1,7 @@
 package com.github.shashi.lld.restorentmanagementsystem;
 
+import java.util.List;
+
 public class MenuSection {
     private int menuSectionID;
     private String title;

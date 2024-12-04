@@ -3,7 +3,7 @@ package com.github.shashi.lld.movieticketbooking;
 import java.util.Date;
 import java.util.List;
 
-public class ShowTime {
+public class Show {
     // Data members
     private int showId;
 

@@ -1,8 +1,10 @@
 package com.github.shashi.lld.amazonshopingsystem;
 
+import java.util.List;
+
 public class ShoppingCart {
     private int totalPrice;
-    private List<Items> items;
+    private List<Item> items;
 
     public boolean addItem(Item item) {
         return false;
