@@ -109,4 +109,33 @@ public class Problem22 {
         }
         return left==0;
     }
+
+    public List<String> generateParenthesisA3(int n) {
+        List<String> res = new ArrayList<>();
+        rec(res,n,new StringBuilder());
+        return res;
+    }
+
+    private void rec(List<String> res, int n, StringBuilder sb){
+        if(sb.length()==2*n){
+            String s1=sb.toString();
+            if(valid(s1))res.add(s1);
+            return;
+        }
+        for(char c: "()".toCharArray()){
+            sb.append(c);
+            rec(res,n,sb);
+            sb.deleteCharAt(sb.length()-1);
+        }
+    }
+
+    private boolean valid(String s){
+        int open=0;
+        for(char c: s.toCharArray()){
+            if(c=='(')open++;
+            else open--;
+            if(open<0)return false;
+        }
+        return open==0;
+    }
 }

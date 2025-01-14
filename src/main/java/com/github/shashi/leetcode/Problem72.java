@@ -77,7 +77,7 @@ public class Problem72 {
     * we get replace (ap,aq) insert (apc,aq) and delete (ap,aqc)
     * if we consider (ap,aq) then replace(a,a) insert (ap,a) delete (a,aq)
     * consider (apc,aq) then replace(ap,a) insert (apc,a) and delete (ap,aq)
-    * if we observe the above recursion tree there are many repetitions which can we avoided if we store the
+    * if we observe the above recursion tree there are many repetitions which can be avoided if we store the
     results and reuse this can be done using the 2d array at storing the result for each computed combination
     of i,j.
     * if it is already computed then we can return from the array this brings down compute from exponential to mn

@@ -36,7 +36,7 @@ public class Problem295 {
     If 99% of all integer numbers from the stream are in the range [0, 100], how would you optimize your solution?
 
     Approach 1: using 2 heaps
-    * intuition is if we could maitain the access for the median elements all the time then we can compute the
+    * intuition is if we could maintain the access for the median elements all the time then we can compute the
     median in constant time, and if we could find the way to add the elements with less time complexity then
     adding new elements will also incur less cost.
     * this can be achieved with 2 data structures heaps and self balancing BST, in heap we can get the min or

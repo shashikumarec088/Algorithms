@@ -69,6 +69,14 @@ public class Problem207 {
     * return false indicating that no cycle is detected
     time & space:
     * time is m+n where m is prereqs and n is nodes and space is also m+n
+
+    approach 3: dfs2
+    algo:
+    * same as approach 2 only difference is how we are adding the elements to visited set
+    * if we add the element to both visited and path at the same place then we need to check the
+    path before checking the visited (check for case [0,1],[1,0])
+    * but if we add the visited node at the end of visiting all the nodes in the path then
+    order does not matter if mark node as visited only after traversing the complete path
      */
     public boolean canFinish(int numCourses, int[][] prerequisites) {
         return canFinishA2(numCourses,prerequisites);
@@ -122,6 +130,19 @@ public class Problem207 {
         for(int nei : map.get(course))
             if(dfs(map,visited,path,nei))return true;
         path.remove(course);
+        return false;
+    }
+
+    private boolean dfs2(Map<Integer,List<Integer>> map, int pos, Set<Integer> visited,
+                        Set<Integer> path){
+        if(visited.contains(pos))return false;
+        if(path.contains(pos))return true;
+        path.add(pos);
+        for(int nei: map.get(pos)){
+            if(dfs2(map,nei,visited,path))return true;
+        }
+        path.remove(pos);
+        visited.add(pos);
         return false;
     }
 

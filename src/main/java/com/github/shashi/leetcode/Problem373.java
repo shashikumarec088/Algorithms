@@ -41,7 +41,7 @@ public class Problem373 {
     * to get the next lowest pair from the available pairs we use min heap.
     * iterate over the heap until we have k pairs or heap is empty
     algo:
-    * create a pais class with key and value of type integer and define equals and hashcode methods, create
+    * create a pairs class with key and value of type integer and define equals and hashcode methods, create
     visited set of type pairs and res of type list of list of integers
     * create priority queue of type int[] and add nums1[0]+nums2[0],0,0 to it and also add pair(0,0) to visited
     * iterate until res.size is < k and pq is not empty

@@ -54,7 +54,7 @@ public class Problem146 {
     head next and sets the head next to current node and also makes head.next.prev to current node
     * increased the dll size by 1
     * remove method takes node and gets its prev and next nodes. then sets prev.next to next and next.prev = prev
-    *removeLast method get the last node by doing tail.prev and calls remove method then returns the removed node
+        *removeLast method get the last node by doing tail.prev and calls remove method then returns the removed node
     * LRU cache has map of int, node and dll and capacity, we define these in constructor and initialize capacity
     * in get we check if key exists if so then get the node from map, then remove from dll so that the position
     of node is reset to the head node and then add the node so that the node is added at the head and will
