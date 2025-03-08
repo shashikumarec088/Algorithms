@@ -51,7 +51,7 @@ public class Problem80 {
     algo:
     * initialize i=2 iterate j from 2 to n
     * copy value at j to i
-    * check if value at nums[i] is different from nums[j] is so inc i else continue
+    * check if value at nums[i] is different from nums[i-2] is so inc i else continue
     * return i at the end
     time & space:
     * n time and constant space

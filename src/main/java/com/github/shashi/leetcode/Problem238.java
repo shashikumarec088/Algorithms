@@ -32,7 +32,7 @@ public class Problem238 {
     * create ans array of size n, define int variable prod=1;
     * initialize 0th element in ans as 1
     * iterate from i=1 to n and compute ans[i] = ans[i-1]*nums[i-1]
-    * then iterate from i=n-1 to n and compute ans[i] = ans[i] * prod and update prod = prod * nums[i];
+    * then iterate from i=n-1 to 0 and compute ans[i] = ans[i] * prod and update prod = prod * nums[i];
     * return ans at end
     time & space:
     * time is o(n) and space is const except ans

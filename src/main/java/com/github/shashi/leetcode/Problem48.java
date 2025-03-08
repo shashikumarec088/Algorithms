@@ -32,7 +32,7 @@ public class Problem48 {
         inwords
         * there will be total n/2 layers. in each layer the first element will be layer and last
         element will be n - layer - 1.
-        * we need to rotate total i=layer to n-layer - 1, ex if n = 3 then i=0,1 since 2nd element will
+        * we need to rotate total i=0 to n-layer - 1, ex if n = 3 then i=0,1 since 2nd element will
         be swapped with 0th element.
         * we need to replace the 1st element in the row by the last element from the 1st column
         and 2nd element in the row by 2nd element from the last from the 1st column
