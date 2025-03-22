@@ -32,8 +32,8 @@ public class Problem274 {
     from end are > i. find the max value of i for which condition holds true.
     algo:
     * sort the citations initialize i=0, n = citations.length
-    * iterate from end and check if citations[n-1-i] > i then inc i.
-    * return value of i at the end
+    * iterate from end and check if citations[n-1-i] > i then inc h.
+    * return value of h at the end
 
     Approach 2:
     * intuition is to use the counting sort to reduce the time complexity to n from nlogn. create

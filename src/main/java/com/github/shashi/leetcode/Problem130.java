@@ -64,6 +64,7 @@ public class Problem130 {
     }
 
     public void solveA1(char[][] board) {
+
         int m=board.length, n=board[0].length;
         List<int[]> borders = new ArrayList<>();
         for(int r=0; r<m; r++){

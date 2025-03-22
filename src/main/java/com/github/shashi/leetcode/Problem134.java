@@ -42,7 +42,7 @@ public class Problem134 {
     algo:
     * iterate i =0 to n  where n is number of stations
     * initialize fuel=0, j=i, stations covered count=0 and iterate until count<n
-    * for each value of j fuel = fuel[i] - cost[i] , check if fuel is still +ve if not break the loop
+    * for each value of j fuel += fuel[j] - cost[j] , check if fuel is still +ve if not break the loop
     and start over from next value of i
     * count is n then return the current value of i as result
     time & space:

@@ -1,7 +1,5 @@
 package com.github.shashi.datastructures.minheap;
 
-import com.sun.xml.internal.ws.api.model.CheckedException;
-
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;

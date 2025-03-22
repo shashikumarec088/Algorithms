@@ -43,7 +43,7 @@ public class Problem146 {
     Approach 1:
     * intuition is to make lru we need to have map which has constant time lookup and constant time addition,
     to support the recency we can use dll and keep appending the nodes at head and remove the nodes from start
-    when capacity is reached, when the get is called up keep the recency in sync by betting the node removing it
+    when capacity is reached, when the get is called up keep the recency in sync by getting the node removing it
     from the list and adding at the end so that it will not be evicted when there is a capacity crunch.
     algo:
     * create a node class with prev, next, key and value properties and constructor takes key and val

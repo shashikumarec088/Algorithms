@@ -46,7 +46,7 @@ public class    Problem172 {
     and find the 5, 2 pairs.
     * but if we look closely we no need to consider 2s ex: for 5 factors are 2, 2,2  3 2 1. number of 2s will always
     be greater than 5 so if we look for number of 5 factors across numbers that is enough
-    * to find 5 factors across numbers we need to interate each number until number%5 == 0 and count 5s and make num=
+    * to find 5 factors across numbers we need to integrate each number until number%5 == 0 and count 5s and make num=
     num/5. this is to count the multiple factors for numbers like 25 which is 5 * 5 so there are 2 factors of 5 we
     need to count twice
     * to count 5s if we start from 5 and inc by 5 each step that is enough since we only need to find the factors

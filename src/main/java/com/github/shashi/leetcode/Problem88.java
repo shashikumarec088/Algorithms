@@ -42,7 +42,7 @@ public class Problem88 {
     * intuition is to start merging from end of both arrays using 3 pointers
     algo:
     * make i=m-1, j=n-1, k=nums1.length-1 , iterate until i>=0, j>=0
-    * at each iteration if nums1[i] > nums2[i] then copy nums1[i] to nums1[k] else copy nums2[i], then dec i,k or j, k
+    * at each iteration if nums1[i] > nums2[j] then copy nums1[i] to nums1[k] else copy nums2[j], then dec i,k or j, k
     * at the end if j>=0 iterate over nums2 and copy to nums1[k]
     time & space:
     * it requires m+n time and constant space
