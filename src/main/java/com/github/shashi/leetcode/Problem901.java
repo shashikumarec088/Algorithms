@@ -49,7 +49,7 @@ public class Problem901 {
     At most 104 calls will be made to next.
 
     Approach 1: using stack
-    * intuition is that for reach element we need to find the number od days before which we have seen the price
+    * intuition is that for reach element we need to find the number of days before which we have seen the price
     greater than the current price, to do this we need to have the previous prices and the position of those
     prices in the array, we can use stack to store the prices and their position in the array
     * then we can compare the current prices with the values on stack and remove the older ones and add the
