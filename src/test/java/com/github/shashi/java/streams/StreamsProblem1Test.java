@@ -21,6 +21,8 @@ public class StreamsProblem1Test {
     public void ThreeDupChars(){
         String input = "shashi kumar";
         List<String> res = streamsProblem1.findDuplicateCharacter(input);
+        int ans1 = 6 % 5;
+
         List<String> expected = Arrays.asList("a","s","h");
         assertEquals(res,expected);
     }
