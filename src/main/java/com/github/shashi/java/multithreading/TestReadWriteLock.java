@@ -39,7 +39,10 @@ class ReadWriteLockExample {
         lock.readLock().lock();
         try {
             // Reading data
+            Thread.sleep(1000);
             System.out.println("Reading data");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         } finally {
             lock.readLock().unlock();
         }

@@ -13,6 +13,8 @@ public class StreamsProblem5 {
 
     public record Employee(String name, String department, Integer salary){}
 
+    public record Employee2(String name, String department, String subDepartment, Integer salary){}
+
     public Map<String,Integer> findNthSalaryPerDepartment(List<Employee> employees, int n){
                 return employees.stream()
                         .collect(
@@ -27,6 +29,38 @@ public class StreamsProblem5 {
                                                         .skip(n-1)
                                                         .findFirst().orElse(0)
                                         )));
+    }
+
+    public Map<String,Map<String,Integer>> findNthSalaryPerSubDepartment(List<Employee2> employees, int n){
+        return employees.stream()
+                .collect(
+                        Collectors.groupingBy(
+                                e -> e.department,
+                                Collectors.groupingBy(
+                                        e->e.subDepartment,
+                                        Collectors.collectingAndThen(
+                                                Collectors.mapping(e->e.salary,Collectors.toList()),
+                                                salaries->salaries.stream()
+                                                        .sorted(Collections.reverseOrder())
+                                                        .skip(n-1)
+                                                        .findFirst().orElse(0)
+                                        )
+                                )
+                        )
+                );
+    }
+
+    public Map<String,Map<String,Double>> findAvgSalaryPerSubDepartment(List<Employee2> employees){
+        return employees.stream()
+                .collect(
+                        Collectors.groupingBy(
+                                e -> e.department,
+                                Collectors.groupingBy(
+                                        e->e.subDepartment,
+                                        Collectors.averagingInt(e->e.salary)
+                                )
+                        )
+                );
     }
 
 

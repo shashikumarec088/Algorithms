@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertEquals;
 
@@ -23,7 +24,10 @@ public class StreamsProblem10Test {
         int[] arr = {1,2,3,23,44,333};
         List<Integer> exp = Arrays.asList(2,23);
         List<Integer> res = streamsProblem10.findAllStartWith2(arr);
-        assertEquals(exp,res);
+        List<Integer> ans = Arrays.stream(arr)
+                        .boxed()
+                                .filter(e->Integer.toString(e).startsWith("2")).collect(Collectors.toList());
+        assertEquals(ans,res);
     }
 
 
