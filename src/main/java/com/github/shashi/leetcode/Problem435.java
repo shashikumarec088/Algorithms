@@ -1,51 +1,63 @@
 package com.github.shashi.leetcode;
 import java.util.*;
 public class Problem435 {
+    /*
+    Given an array of intervals intervals where intervals[i] = [starti, endi], return the minimum number of intervals
+    you need to remove to make the rest of the intervals non-overlapping.
+
+    Note that intervals which only touch at a point are non-overlapping. For example, [1, 2] and [2, 3] are
+    non-overlapping.
+
+    Example 1:
+
+    Input: intervals = [[1,2],[2,3],[3,4],[1,3]]
+    Output: 1
+    Explanation: [1,3] can be removed and the rest of the intervals are non-overlapping.
+    Example 2:
+
+    Input: intervals = [[1,2],[1,2],[1,2]]
+    Output: 2
+    Explanation: You need to remove two [1,2] to make the rest of the intervals non-overlapping.
+    Example 3:
+
+    Input: intervals = [[1,2],[2,3]]
+    Output: 0
+    Explanation: You don't need to remove any of the intervals since they're already non-overlapping.
+
+    approach 1: sorting and counting
+    * intuition is to sort the intervals on start
+    and count when end overlaps with next and update end
+    to min of both
+    algo:
+    * sort intervals on start time
+    * init prev=0,count=0,cur=1,n = len(intervals)
+    * iterate i=1 to n
+        * if cur[0] >= prev
+            prev = cur[1]
+        else
+            prev = min(prev,cur[1])
+            count ++
+    return count
+
+    time & space:
+    * it takes n log n time and n space
+
+     */
     public int eraseOverlapIntervals(int[][] intervals) {
-        return eraseOverlapIntervalsA3(intervals);
+        return eraseOverlapIntervalsA1(intervals);
     }
 
-    public int eraseOverlapIntervalsA3(int[][] intervals){
-        Arrays.sort(intervals,(a,b)->a[1]-b[1]);
-        int ans=1, max=0, n=intervals.length;
-        int[] dp = new int[intervals.length];
-        dp[0]=1;
-        for(int i=1; i<n; i++){
-            max = 0;
-            for(int j=i-1; j>=0; j--){
-                if(intervals[j][1] <= intervals[i][0]){
-                    max = Math.max(max,dp[j]);
-                    break;
-                }
 
-            }
-            dp[i]=Math.max(max+1,dp[i-1]);
-            ans = Math.max(ans,dp[i]);
-        }
-        return intervals.length-ans;
-    }
-
-    public int eraseOverlapIntervalsA2(int[][] intervals){
-        Arrays.sort(intervals,(a,b)->a[1]-b[1]);
-        return rec(-1,0, intervals);
-    }
-
-    public int rec(int prev, int cur, int[][] intervals){
-        if(cur == intervals.length)return 0;
-        int taken=Integer.MAX_VALUE, notTaken=0;
-        if(prev == -1 || intervals[prev][1]<= intervals[cur][0])
-            taken = rec(cur, cur+1, intervals);
-        notTaken = rec(prev, cur+1,intervals)+1;
-        return Math.min(taken, notTaken);
-    }
-    public int eraseOverlapIntervalsA1(int[][] intervals){
+    public int eraseOverlapIntervalsA1(int[][] intervals) {
+        int prev=Integer.MIN_VALUE, count=0;
         Arrays.sort(intervals,(a,b)->a[0]-b[0]);
-        int end = intervals[0][1], count=0;
-        for(int i=1; i<intervals.length; i++){
-            if(end> intervals[i][0]){
+        for(int i=0; i<intervals.length;i++){
+            if(intervals[i][0]>=prev){
+                prev = intervals[i][1];
+            }else{
                 count++;
-                end = Math.min(end,intervals[i][1]);
-            }else end  = intervals[i][1];
+                prev = Math.min(prev,intervals[i][1]);
+            }
         }
         return count;
     }

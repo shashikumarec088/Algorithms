@@ -38,16 +38,15 @@ public class Problem1456 {
     Approach 1: sliding window sum
     * intuition is to count first k vowels and then update max and count based on liding window from k
     algo:
-    * init max=0,count=0,n = s.length()
-    * define set to check if char is vowel by comparing with aeiou
-    * iterate from i=0 to i<k
-        * if char is vowel count++
-    * init max = count
-    * iterate i==k to i<n
-        * if char at i is vowel count++;
-        * if char at i-k is vowel count--;
-        * update max = max(max,count)
-    * return max;
+    * have the set of ovel chars
+    * max = 0, count=0, i=0,j=0
+    * iterate j to n
+    * if char is ovel count++
+    * if((j-i+1)>k){
+        if(char at i is ovel)count--
+        i++
+    }
+    max = max(max,count)
 
     time & space:
     * n time const space
@@ -60,15 +59,14 @@ public class Problem1456 {
 
 
     public int maxVowelsA1(String s, int k) {
-        int max=0,count=0,n=s.length();
         Set<Character> vowels = Set.of('a','e','i','o','u');
-        for(int i=0; i<k;i++)
-            if(vowels.contains(s.charAt(i)))
-                count++;
-        max = count;
-        for(int i=k;i<n;i++){
-            if(vowels.contains(s.charAt(i)))count++;
-            if(vowels.contains(s.charAt(i-k)))count--;
+        int max=0,i=0,count=0;
+        for(int j=0; j<s.length();j++){
+            if(vowels.contains(s.charAt(j)))count++;
+            if((j-i+1)>k){
+                if(vowels.contains(s.charAt(i)))count--;
+                i++;
+            }
             max = Math.max(max,count);
         }
         return max;

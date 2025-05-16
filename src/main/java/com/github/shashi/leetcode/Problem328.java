@@ -1,28 +1,80 @@
 package com.github.shashi.leetcode;
 
 public class Problem328 {
+    /*
+
+    328. Odd Even Linked List
+
+    Given the head of a singly linked list, group all the nodes with odd indices together followed by the nodes
+    with even indices, and return the reordered list.
+
+    The first node is considered odd, and the second node is even, and so on.
+
+    Note that the relative order inside both the even and odd groups should remain as it was in the input.
+
+    You must solve the problem in O(1) extra space complexity and O(n) time complexity.
+
+
+
+    Example 1:
+
+
+    Input: head = [1,2,3,4,5]
+    Output: [1,3,5,2,4]
+    Example 2:
+
+
+    Input: head = [2,1,3,5,6,4,7]
+    Output: [2,3,6,7,1,5,4]
+
+
+    Constraints:
+
+    The number of nodes in the linked list is in the range [0, 104].
+    -106 <= Node.val <= 106
+
+    Approach1: iterative approach
+    * intuition is to have the odd and even prev nodes and link
+    these nodes to odd and even nodes
+    algo:
+    * init dummy1, dummy2 assign these to prev1, prev2
+    * init count = 1
+    * iterate until head is not null
+        * if count%2 == 1
+            make prev1.next = head
+            prev1 = prev1.next
+        else
+            make prev2.next = head
+            prev2 = prev2.next
+    * prev1.next = dummy2.next
+    * prev2.next = null
+    * return dummy1.next
+
+    time & space:
+    * it takes n time and constant space
+     */
     public ListNode oddEvenList(ListNode head) {
         return oddEvenListA1(head);
     }
 
     public ListNode oddEvenListA1(ListNode head) {
-        ListNode dOdd = new ListNode(0), dEven = new ListNode(0),cur = head;
-        ListNode cOdd = dOdd, cEven = dEven;
-        int count = 1;
-        while(cur != null){
-            ListNode next = cur.next;
-            cur.next = null;
-            if(count%2 != 0){
-                cOdd.next = cur;
-                cOdd = cOdd.next;
+        ListNode dummy1 = new ListNode(0);
+        ListNode dummy2 = new ListNode(0);
+        ListNode prev1 = dummy1, prev2 = dummy2;
+        int count=1;
+        while(head != null){
+            if(count%2==1){
+                prev1.next = head;
+                prev1 = prev1.next;
             }else{
-                cEven.next = cur;
-                cEven = cEven.next;
+                prev2.next = head;
+                prev2 = prev2.next;
             }
-            cur = next;
             count++;
+            head = head.next;
         }
-        cOdd.next = dEven.next;
-        return dOdd.next;
+        prev1.next = dummy2.next;
+        prev2.next = null;
+        return dummy1.next;
     }
 }
